@@ -1,52 +1,13 @@
 <html>
-
     <head>
-        <style>
-
-            body {
-              margin: 0px;
-              padding: 0px;
-            }
-
-            /* è il div principale, quello in alto lungo tutto lo schermo */
-            .principale {
-              width: 100%;
-              height: 70px;
-              color: white;
-              background-color: rgb(68, 68, 68);
-            }
-
-            /* div dentro il div principale, dove ci sono le icone e nome del WBS, GANTT*/
-            .secondari{
-              text-align: center;
-              cursor: pointer;
-              width: 70px;
-              height: 70px;
-              float: left;
-            }
-
-            /*quando c'è il cursore sul div, lo sfondo diventa nero e la scritta si illumina */
-            div.secondari:hover{
-              background-color: #262626;
-              text-shadow: 0px 0px 5px white; 
-            }
-
-
-            /*è la barra verticale bianca per dividere i div */
-            .breaker{
-              float: left;
-              border-right : 2px solid white;
-              height: 70px;
-            }
-
-        </style>
+        <link rel="stylesheet" type="text/css" href="homepage.css">
     </head>
 
     <body>
         <div class="principale">
-            <div class="secondari"><img src="https://i.imgur.com/KY7rcBF.png">WBS</div>
+            <div class="secondari"><img src="gamecontroller-512.png" width="40" height="40">WBS</div>
             <div class="breaker"></div>
-            <div class="secondari">GANTT</div>
+            <div class="secondari"><img src="gamecontroller-512.png" width="40" height="40">GANTT</div>
             <div class="breaker"></div>
         </div>
     </body>

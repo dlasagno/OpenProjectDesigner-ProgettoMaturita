@@ -1,0 +1,44 @@
+
+:root {
+    --button-dim: 70px;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+}
+        
+/* è il div principale, quello in alto lungo tutto lo schermo */
+.principale {
+    width: 100%;
+    height: var(--button-dim);
+    color: white;
+    background-color: rgb(68, 68, 68);
+}
+
+/* div dentro il div principale, dove ci sono le icone e nome del WBS, GANTT*/
+.secondari {
+    text-align: center;
+    cursor: pointer;
+    width: var(--button-dim);
+    height: 70px;
+    float: left;
+}
+
+/*quando c'è il cursore sul div, lo sfondo diventa nero e la scritta si illumina */
+div.secondari:hover {
+    background-color: #262626;
+}
+
+
+/*è la barra verticale bianca per dividere i div */
+.breaker {
+    margin: 5px 0;
+    float: left;
+    border-right : 1px solid white;
+    height: 60px;
+}
+
+img {
+    padding: 5px;
+}
