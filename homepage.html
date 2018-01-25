@@ -2,18 +2,26 @@
     <head>
         <style>
 
-            ul, li{
-              display: inline;
+            :root {
+                --dim: 70;
             }
 
             body {
-              margin: 0;
-              padding: 0;
+                margin: 0;
+                padding: 0;
             }
 
-            div {
+            div.top {
                 width: 100%;
-                height: 70;
+                height:var(--dim);
+                margin: 0;
+                color: white;
+                background-color: rgb(68, 68, 68);
+            }
+
+            div.menuButton {
+                width: var(--dim);
+                height: var(--dim);
                 margin: 0;
                 color: white;
                 background-color: rgb(68, 68, 68);
@@ -22,8 +30,18 @@
         </style>
     </head>
     <body>
-        <div>
-            <header><ul><li>Ciao</li><li>We</li></ul></header>
+        <div class="top">
+            <table>
+                <tr>
+                    <td>
+                        <div background-color = white>
+                            Ciao<br>Ciao
+                        <div>
+                    </td>
+                    <td>Ciao</td>
+                    <td>Ciao</td>
+                </tr>
+            </table>
         </div>
     </body>
 </html>
