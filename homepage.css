@@ -1,6 +1,7 @@
 /*Variabili del documento css*/
 :root {
     --button-dim: 70px;
+    --side-bar-dim: 300px;
 }
 
 /*Corpo della pagina HTML*/
@@ -47,6 +48,7 @@ div.side-bar i.button {
 div.side-bar {
     text-align: center;
     font-weight: bold;
+    color: white;
     cursor: pointer;
     width: var(--button-dim);
     height: 100%;
@@ -54,9 +56,14 @@ div.side-bar {
 }
 
 div.side-bar:hover {
-    background-color: #262626;
-    width: calc(var(--button-dim) + 100px);
-    height: 200%;
+    background-color: black;
+    width: var(--side-bar-dim);
+    height: 100%;
+    cursor: default;
+}
+
+div.side-bar:hover i.button {
+    float: right;
 }
 
 /*è la barra verticale bianca per dividere i div */
