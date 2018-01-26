@@ -7,6 +7,7 @@
 body {
     margin: 0px;
     padding: 0px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 /* è il div principale, quello in alto lungo tutto lo schermo */
@@ -14,12 +15,13 @@ body {
     width: 100%;
     height: var(--button-dim);
     color: white;
-    background-color: rgb(68, 68, 68);
+    background-color: #414141;
 }
 
 /* div dentro il div principale, dove ci sono le icone e nome del WBS, GANTT*/
 div.top-bar div.button {
     text-align: center;
+    font-weight: bold;
     cursor: pointer;
     width: var(--button-dim);
     height: 100%;
@@ -31,6 +33,15 @@ div.top-bar div.button:hover {
     background-color: #262626;
 }
 
+div.top-bar i.button {
+    text-align: center;
+    font-size: calc(var(--button-dim) - 10px);
+    line-height: var(--button-dim);
+    cursor: pointer;
+    width: var(--button-dim);
+    height: 100%;
+    float: left;
+}
 
 /*è la barra verticale bianca per dividere i div */
 .breaker {
