@@ -1,6 +1,6 @@
 /*Variabili del documento css*/
 :root {
-    --button-dim: 100px;
+    --button-dim: 70px;
 }
 
 /*Corpo della pagina HTML*/
@@ -10,7 +10,7 @@ body {
 }
 
 /* è il div principale, quello in alto lungo tutto lo schermo */
-.principale {
+.top-bar {
     width: 100%;
     height: var(--button-dim);
     color: white;
@@ -18,7 +18,7 @@ body {
 }
 
 /* div dentro il div principale, dove ci sono le icone e nome del WBS, GANTT*/
-.secondari {
+div.top-bar div.button {
     text-align: center;
     cursor: pointer;
     width: var(--button-dim);
@@ -27,7 +27,7 @@ body {
 }
 
 /*quando c'è il cursore sul div, lo sfondo diventa nero e la scritta si illumina */
-div.secondari:hover {
+div.top-bar div.button:hover {
     background-color: #262626;
 }
 
