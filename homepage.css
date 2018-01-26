@@ -34,17 +34,17 @@ div.top-bar div.button:hover {
 }
 
 /*tasto della sidebar(menu)*/
-div.top-bar i.button {
+div.side-bar i.button {
     text-align: center;
     font-size: calc(var(--button-dim) - 10px);
     line-height: var(--button-dim);
     cursor: pointer;
     width: var(--button-dim);
-    height: 100%;
+    height: var(--button-dim);
     float: left;
 }
 
-div.top-bar div.side-bar {
+div.side-bar {
     text-align: center;
     font-weight: bold;
     cursor: pointer;
@@ -53,7 +53,7 @@ div.top-bar div.side-bar {
     float: left;
 }
 
-div.top-bar div.side-bar:hover {
+div.side-bar:hover {
     background-color: #262626;
     width: calc(var(--button-dim) + 100px);
     height: 200%;
