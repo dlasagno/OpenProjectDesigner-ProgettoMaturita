@@ -1,13 +1,14 @@
-
+/*Variabili del documento css*/
 :root {
-    --button-dim: 70px;
+    --button-dim: 100px;
 }
 
+/*Corpo della pagina HTML*/
 body {
     margin: 0px;
     padding: 0px;
 }
-        
+
 /* è il div principale, quello in alto lungo tutto lo schermo */
 .principale {
     width: 100%;
@@ -21,7 +22,7 @@ body {
     text-align: center;
     cursor: pointer;
     width: var(--button-dim);
-    height: 70px;
+    height: 100%;
     float: left;
 }
 
@@ -36,9 +37,11 @@ div.secondari:hover {
     margin: 5px 0;
     float: left;
     border-right : 1px solid white;
-    height: 60px;
+    height: calc(var(--button-dim) - 10px);
 }
 
 img {
+    width: calc(var(--button-dim) - 30px);
+    height: calc(var(--button-dim) - 30px);
     padding: 5px;
 }
