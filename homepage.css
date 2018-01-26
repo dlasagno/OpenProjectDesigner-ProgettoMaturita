@@ -18,7 +18,7 @@ body {
     background-color: #414141;
 }
 
-/* div dentro il div principale, dove ci sono le icone e nome del WBS, GANTT*/
+/* div dentro il div top-bar, dove ci sono le icone e i nomi delle schede*/
 div.top-bar div.button {
     text-align: center;
     font-weight: bold;
@@ -28,11 +28,12 @@ div.top-bar div.button {
     float: left;
 }
 
-/*quando c'è il cursore sul div, lo sfondo diventa nero e la scritta si illumina */
+/*quando c'è il cursore sul div, lo sfondo diventa nero*/
 div.top-bar div.button:hover {
     background-color: #262626;
 }
 
+/*tasto della sidebar(menu)*/
 div.top-bar i.button {
     text-align: center;
     font-size: calc(var(--button-dim) - 10px);
@@ -41,6 +42,21 @@ div.top-bar i.button {
     width: var(--button-dim);
     height: 100%;
     float: left;
+}
+
+div.top-bar div.side-bar {
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    width: var(--button-dim);
+    height: 100%;
+    float: left;
+}
+
+div.top-bar div.side-bar:hover {
+    background-color: #262626;
+    width: calc(var(--button-dim) + 100px);
+    height: 200%;
 }
 
 /*è la barra verticale bianca per dividere i div */
