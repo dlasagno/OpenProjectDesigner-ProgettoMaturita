@@ -20,7 +20,7 @@ body {
 }
 
 /* div dentro il div top-bar, dove ci sono le icone e i nomi delle schede*/
-div.top-bar div.button {
+.top-bar div.button {
     text-align: center;
     font-weight: bold;
     cursor: pointer;
@@ -30,7 +30,7 @@ div.top-bar div.button {
 }
 
 /*quando c'è il cursore sul div, lo sfondo diventa nero*/
-div.top-bar div.button:hover {
+.top-bar div.button:hover {
     background-color: #262626;
 }
 
@@ -51,7 +51,7 @@ div.side-bar {
     color: white;
     cursor: pointer;
     width: var(--button-dim);
-    height: 100%;
+    height: var(--button-dim);
     float: left;
 }
 
