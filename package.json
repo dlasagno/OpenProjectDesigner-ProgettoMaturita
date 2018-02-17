@@ -4,10 +4,13 @@
   "description": "Software for the creation of WBS, GANTT, ...",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron ."
   },
   "license": "ISC",
   "devDependencies": {
-    "electron-prebuilt-compile": "^0.37.7"
+    "electron-prebuilt-compile": "^1.8.2"
+  },
+  "dependencies": {
+    "electron": "^1.8.2"
   }
 }
