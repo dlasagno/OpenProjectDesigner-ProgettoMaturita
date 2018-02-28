@@ -8,9 +8,10 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "electron-prebuilt-compile": "^1.8.2"
+    "electron-prebuilt-compile": "^1.8.2",
+    "electron": "^1.8.2"
   },
   "dependencies": {
-    "electron": "^1.8.2"
+    
   }
 }

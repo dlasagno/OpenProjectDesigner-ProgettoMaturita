@@ -1,0 +1,51 @@
+//Variables
+$darkGrey: #464646;
+$tab-nav-height: 100px;
+$tab-button-margin: 10px;
+
+body {
+  margin: 0px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+//Tab navigation
+.tab-nav {
+  background: $darkGrey;
+  height: $tab-nav-height;
+  width: 100%;
+
+  ul {
+    display: inline;
+  }
+
+  .button {
+    margin: 10px;
+    color: white;
+    list-style: none;
+    float: left;
+
+    img {
+      height: $tab-nav-height - $tab-button-margin * 2;
+    }
+  }
+}
+
+//Side menu
+.side-menu {
+  background: black;
+  height: $tab-nav-height;
+  width: 100px;
+  float: left;
+
+  .button {
+    margin: 10px;
+    color: white;
+    list-style: none;
+    float: left;
+
+    img {
+      height: $tab-nav-height - $tab-button-margin * 2;
+    }
+  }
+}

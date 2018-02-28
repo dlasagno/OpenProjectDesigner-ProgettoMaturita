@@ -1,6 +1,9 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
+const {enableLiveReload} = require('electron-compile')
+
+enableLiveReload()
 
 // Mantenere un riferimento globale dell'oggetto window, altrimenti la finestra verrà 
 // chiusa automaticamente quando l'oggetto JavaScript è raccolto nel Garbage Collector.
@@ -12,7 +15,7 @@ function createWindow () {
 
   // e viene caricato il file index.html della nostra app.
   win.loadURL(url.format({
-    pathname: path.join(__dirname, 'index.jade'),
+    pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
     slashes: true
   }))
