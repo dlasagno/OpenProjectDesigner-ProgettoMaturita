@@ -11,7 +11,5 @@
     "electron-prebuilt-compile": "^1.8.2",
     "electron": "^1.8.2"
   },
-  "dependencies": {
-    
-  }
+  "dependencies": {}
 }
