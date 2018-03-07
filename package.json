@@ -2,7 +2,7 @@
   "name": "progettoesame",
   "version": "1.0.0",
   "description": "Software for the creation of WBS, GANTT, ...",
-  "main": "index.js",
+  "main": "app.ts",
   "scripts": {
     "start": "electron ."
   },
