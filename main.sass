@@ -1,51 +1,58 @@
 //Variables
+//Colors
 $dark-grey: #464646
-$tab-nav-height: 100px
+
+//Tabs navigation properties
+$tab-nav-height: 60px
 $tab-button-margin: 10px
+
+//Side menu properties
+$side-menu-width: 300px
 
 body 
   margin: 0px
-
-
-div
   
 
 div.test
   height: 100vh
   width: 100vw
   display: grid;
-  grid-template-columns: repeat(3, 1fr)
+  grid-template-columns: $side-menu-width repeat(2, 1fr)
   grid-template-rows: repeat(3, 1fr)
 
-//Tab navigation
-.tab-nav
-  background: $dark-grey
-  height: $tab-nav-height
-  width: 100%
-  grid-row: 1/2
-  grid-column: 1/4
 
-  ul
-    display: inline
-  
-  .button
-    margin: 10px
-    color: white
-    list-style: none
-    float: left
+//Tab window
+.tab-window
+  height: 100%
 
-    img 
-      height: $tab-nav-height - $tab-button-margin * 2
+  .tab-nav
+    display: flex
+    background: $dark-grey
+    height: $tab-nav-height
+    width: 100%
+
+    ul
+      display: inline
+    
+    .button
+      padding: 10px
+      color: white
+
+      img 
+        height: $tab-nav-height - $tab-button-margin * 2
+    
+  .tab-menu
+    height: 20px
+    background: #202020
 
 
 //Side menu
 .side-menu
   background: black;
-  height: $tab-nav-height
-  width: 100px
-  float: left
-  grid-row: 1/4
-  grid-column: 1/2
+  height: 100px
+  width: $side-menu-width
+  position: absolute
+  z-index: -1
 
   .button
     margin: 10px

@@ -10,7 +10,20 @@ html(lang="en")
         title Open PROject
 
     body
-        div.test
+        .side-menu(id="a")
+
+        .tab-window(id="b")
+            .tab-nav
+                .button(style="background: yellowgreen" onclick="ciao()")
+                    img(src="test.png", alt="")
+                .button(style="background: orange")
+                    img(src="test.png", alt="")
+                .button(style="background: turquoise")
+                    img(src="test.png", alt="")
+            .tab-menu
+            .tab-view
+        
+        //div.test
             div(style="background: yellow") testo
             div(style="background: orange") testo
             div(style="background: orangered") testo
@@ -20,3 +33,5 @@ html(lang="en")
             div(style="background: cyan") testo
             div(style="background: yellowgreen") testo
             div(style="background: green") testo
+
+        script var opened = false; function ciao(){if(!opened){document.getElementById("a").style.width ="300px"; opened=true;} else {document.getElementById("a").style.width ="0px"; opened=false;}}
