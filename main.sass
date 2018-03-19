@@ -1,67 +1,99 @@
 //Variables
 //Colors
 $dark-grey: #464646
+$dark-grey-2: #303030
 
 //Tabs navigation properties
 $tab-nav-height: 60px
+$tab-menu-height: 25px
 $tab-button-margin: 10px
 
 //Side menu properties
 $side-menu-width: 300px
 
+
 body 
   margin: 0px
-  
-
-div.test
-  height: 100vh
-  width: 100vw
-  display: grid;
-  grid-template-columns: $side-menu-width repeat(2, 1fr)
-  grid-template-rows: repeat(3, 1fr)
+  font-family: "Arial"
+  font-size: 12px
 
 
 //Tab window
 .tab-window
-  height: 100%
+  height: 100vh
+  display: grid
+  grid-template-rows: $tab-nav-height $tab-menu-height
 
   .tab-nav
     display: flex
     background: $dark-grey
-    height: $tab-nav-height
-    width: 100%
+    transition: 0.5s
 
-    ul
-      display: inline
-    
     .button
       padding: 10px
       color: white
+
+      &:hover
+        background: grey
+      
+      &.active
+        background: $dark-grey-2
 
       img 
         height: $tab-nav-height - $tab-button-margin * 2
     
   .tab-menu
-    height: 20px
-    background: #202020
+    background: $dark-grey-2
+    color: white
+
+    ul
+      margin: 0px
+      padding: 0px
+      height: 100%
+      list-style: none
+
+      li
+        display: inline-flex
+        align-items: center
+        height: 100%
+        padding: 0px 8px
+
+        &:hover
+          background: grey
+
+  .tab-view
 
 
 //Side menu
 .side-menu
-  background: black;
-  height: 100px
-  width: $side-menu-width
-  position: absolute
-  z-index: -1
+  height: 100%
+  width: 0px //$side-menu-width
+  position: fixed
+  padding-top: $tab-nav-height
+  background: black
+  color: white
+  transition: 0.5s
 
-  .button
-    margin: 10px
-    color: white
+  ul
+    display: flex
+    flex-direction: column
+    margin: 0px
+    padding: 0px
     list-style: none
-    float: left
+    overflow: hidden
+
+    li
+      display: inline-flex
+      align-items: center
+      height: $tab-menu-height
+      padding: 0px 8px
+      overflow: hidden
+
+      span
+        overflow: hidden
+
+      &:hover
+        background: grey
 
     img
       height: $tab-nav-height - $tab-button-margin * 2
-
-ul
-  background: $dark-grey

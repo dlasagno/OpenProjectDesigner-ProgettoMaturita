@@ -10,28 +10,45 @@ html(lang="en")
         title Open PROject
 
     body
-        .side-menu(id="a")
+        .side-menu#a
+            ul
+                li
+                    span Nuovo progetto
+                li
+                    span Apri progetto
+                li
+                    span Salva
+                li
+                    span Salva con nome
+                li
+                    span Esporta...
+                li
+                    span Opzioni
+                li
+                    span Info
 
-        .tab-window(id="b")
-            .tab-nav
-                .button(style="background: yellowgreen" onclick="ciao()")
+        .tab-window#b
+            .tab-nav#c
+                .button#side-menu-toggler(onclick="ciao()" style="z-index: 1")
                     img(src="test.png", alt="")
-                .button(style="background: orange")
+                .button
                     img(src="test.png", alt="")
-                .button(style="background: turquoise")
+                .button.active
                     img(src="test.png", alt="")
+            
             .tab-menu
+                ul
+                    li
+                        span File
+                    li
+                        span Modifica
+                    li
+                        span Selezione
+                    li
+                        span Visualizza
+                    li
+                        span Esegui
+            
             .tab-view
-        
-        //div.test
-            div(style="background: yellow") testo
-            div(style="background: orange") testo
-            div(style="background: orangered") testo
-            div(style="background: red") testo
-            div(style="background: purple") testo
-            div(style="background: blue") testo
-            div(style="background: cyan") testo
-            div(style="background: yellowgreen") testo
-            div(style="background: green") testo
 
-        script var opened = false; function ciao(){if(!opened){document.getElementById("a").style.width ="300px"; opened=true;} else {document.getElementById("a").style.width ="0px"; opened=false;}}
+        script(src="test.ts")
