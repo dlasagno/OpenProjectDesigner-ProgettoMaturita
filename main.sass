@@ -39,8 +39,19 @@ body
       &.active
         background: $dark-grey-2
 
-      img 
-        height: $tab-nav-height - $tab-button-margin * 2
+      div
+        position: absolute
+        height: $tab-nav-height
+        width: $tab-nav-height
+        background: orangered
+
+        span
+          background: yellowgreen
+        
+
+      img
+        height: 100%
+        width: 100%
     
   .tab-menu
     background: $dark-grey-2
@@ -87,6 +98,8 @@ body
       align-items: center
       height: $tab-menu-height
       padding: 0px 8px
+      margin: 0px 10px
+      border-bottom: 1px solid white
       overflow: hidden
 
       span
