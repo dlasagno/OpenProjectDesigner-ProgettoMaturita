@@ -2,14 +2,15 @@
 //Colors
 $dark-grey: #464646
 $dark-grey-2: #303030
+$dark-grey-3: #151515
 
 //Tabs navigation properties
 $tab-nav-height: 60px
-$tab-menu-height: 25px
+$tab-menu-height: 30px
 $tab-button-margin: 10px
 
 //Side menu properties
-$side-menu-width: 300px
+$side-menu-width: 200px
 
 
 body 
@@ -78,35 +79,44 @@ body
 //Side menu
 .side-menu
   height: 100%
-  width: 0px //$side-menu-width
+  width: $side-menu-width
   position: fixed
+  transform: translateX(-$side-menu-width)
   padding-top: $tab-nav-height
-  background: black
+  background: $dark-grey-3
   color: white
   transition: 0.5s
+
+  &.active
+    transform: translateX(0)
+
+    ul
+      opacity: 1
 
   ul
     display: flex
     flex-direction: column
+    opacity: 0
     margin: 0px
     padding: 0px
     list-style: none
     overflow: hidden
+    transition: 0.5s
 
     li
       display: inline-flex
       align-items: center
-      height: $tab-menu-height
-      padding: 0px 8px
       margin: 0px 10px
+      padding: 10px
       border-bottom: 1px solid white
       overflow: hidden
 
       span
         overflow: hidden
 
-      &:hover
-        background: grey
+      &:last-child
+        border: none
 
-    img
-      height: $tab-nav-height - $tab-button-margin * 2
+      &:hover
+        background: white
+        color: black
