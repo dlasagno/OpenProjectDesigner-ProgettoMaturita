@@ -4,12 +4,16 @@
   "description": "Software for the creation of WBS, GANTT, ...",
   "main": "src/app.ts",
   "scripts": {
-    "start": "electron ."
+    "start": "npm-run-all --parallel electron sass",
+    "electron": "electron .",
+    "sass": "node-sass -w src/ -o src/"
   },
   "license": "ISC",
   "devDependencies": {
+    "electron": "^1.8.2",
     "electron-prebuilt-compile": "^1.8.2",
-    "electron": "^1.8.2"
+    "node-sass": "^4.7.2",
+    "npm-run-all": "^4.1.2"
   },
   "dependencies": {}
 }

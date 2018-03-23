@@ -1,16 +1,5 @@
-//Variables
-//Colors
-$dark-grey: #464646
-$dark-grey-2: #303030
-$dark-grey-3: #151515
-
-//Tabs navigation properties
-$tab-nav-height: 60px
-$tab-menu-height: 30px
-$tab-button-padding: 10px
-
-//Side menu properties
-$side-menu-width: 200px
+//Imports
+@import "1-helpers/1-helpers"
 
 
 body 
@@ -34,17 +23,15 @@ body
       margin-left: $side-menu-width - $tab-nav-height
 
     .button
+      position: relative
       flex-basis: $tab-nav-height
       box-sizing: border-box
       padding: $tab-button-padding
       color: white
 
-      &:hover
-        background: grey
-
+      &:not(.active):hover
         div
-          span
-            transform: rotateX(45deg)
+          transform: translateY(0px)
       
       &.active
         background: $dark-grey-2
@@ -54,14 +41,24 @@ body
 
       div
         position: absolute
-        background: orangered
+        top: 0
+        right: 0
+        bottom: 0
+        left: 0
+        transform: translateY(-100%)
+        display: flex
+        justify-content: center
+        align-items: center
+        background: white
+        color: black
+        transition: 0.3s
 
         span
-          top: 0px
-          left: 0px
-          background: yellowgreen
-        
-
+          text-transform: uppercase
+          font-size: 14px
+          font-weight: 400
+          user-select: none
+          
       img
         height: 100%
         width: 100%
@@ -81,9 +78,14 @@ body
         align-items: center
         height: 100%
         padding: 0px 8px
+        cursor: pointer
 
         &:hover
-          background: grey
+          background: white
+          color: black
+
+        span
+          @extend %first-letter-capitalized
 
   .tab-view
 
@@ -112,7 +114,6 @@ body
     margin: 0px
     padding: 0px
     list-style: none
-    overflow: hidden
     transition: 0.5s
 
     li
@@ -121,14 +122,22 @@ body
       margin: 0px 10px
       padding: 10px
       border-bottom: 1px solid white
-      overflow: hidden
+      transition: 0.5s padding-left
+      cursor: pointer
 
       span
         overflow: hidden
+        @extend %first-letter-capitalized
 
       &:last-child
         border: none
 
       &:hover
+        padding-left: 20px
         background: white
         color: black
+        font-weight: 600
+
+
+.button *
+  cursor: pointer
