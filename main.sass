@@ -7,7 +7,7 @@ $dark-grey-3: #151515
 //Tabs navigation properties
 $tab-nav-height: 60px
 $tab-menu-height: 30px
-$tab-button-margin: 10px
+$tab-button-padding: 10px
 
 //Side menu properties
 $side-menu-width: 200px
@@ -30,23 +30,35 @@ body
     background: $dark-grey
     transition: 0.5s
 
+    &.move-left
+      margin-left: $side-menu-width - $tab-nav-height
+
     .button
-      padding: 10px
+      flex-basis: $tab-nav-height
+      box-sizing: border-box
+      padding: $tab-button-padding
       color: white
 
       &:hover
         background: grey
+
+        div
+          span
+            transform: rotateX(45deg)
       
       &.active
         background: $dark-grey-2
 
+      &:first-child
+        z-index: 1
+
       div
         position: absolute
-        height: $tab-nav-height
-        width: $tab-nav-height
         background: orangered
 
         span
+          top: 0px
+          left: 0px
           background: yellowgreen
         
 
