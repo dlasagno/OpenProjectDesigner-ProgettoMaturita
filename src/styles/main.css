@@ -1,4 +1,4 @@
-.tab-window .tab-menu ul li span::first-letter, .side-menu ul li span::first-letter {
+.tab-window .tab-menu ul li span::first-letter, #side-menu ul li span::first-letter {
   text-transform: capitalize; }
 
 body {
@@ -80,7 +80,7 @@ body {
   background: white;
   color: black; }
 
-.side-menu {
+#side-menu {
   height: 100%;
   width: 200px;
   position: fixed;
@@ -90,13 +90,13 @@ body {
   color: white;
   transition: 0.5s; }
 
-.side-menu.active {
+#side-menu.active {
   transform: translateX(0); }
 
-.side-menu.active ul {
+#side-menu.active ul {
   opacity: 1; }
 
-.side-menu ul {
+#side-menu ul {
   display: flex;
   flex-direction: column;
   opacity: 0;
@@ -105,7 +105,7 @@ body {
   list-style: none;
   transition: 0.5s; }
 
-.side-menu ul li {
+#side-menu ul li {
   display: inline-flex;
   align-items: center;
   margin: 0px 10px;
@@ -114,13 +114,13 @@ body {
   transition: 0.5s padding-left;
   cursor: pointer; }
 
-.side-menu ul li span {
+#side-menu ul li span {
   overflow: hidden; }
 
-.side-menu ul li:last-child {
+#side-menu ul li:last-child {
   border: none; }
 
-.side-menu ul li:hover {
+#side-menu ul li:hover {
   padding-left: 20px;
   background: white;
   color: black;
