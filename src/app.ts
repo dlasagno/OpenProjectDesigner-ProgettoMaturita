@@ -6,7 +6,7 @@ import {enableLiveReload} from 'electron-compile';
 // Attiva l'aggiornamento automatico della finestra alla modifica di un file dell'app
 enableLiveReload();
 
-// Mantenere un riferimento globale dell'oggetto window, altrimenti la finestra verrà 
+// Mantenere un riferimento globale dell'oggetto window, altrimenti la finestra verrà
 // chiusa automaticamente quando l'oggetto JavaScript è raccolto nel Garbage Collector.
 let win;
 
@@ -16,7 +16,7 @@ function createWindow () {
 
   // e viene caricato il file index.html della nostra app.
   win.loadURL(url.format({
-    pathname: path.join(__dirname, '../index.jade'),
+    pathname: path.join(__dirname, '../provawbs.jade'),
     protocol: 'file:',
     slashes: true
   }));
@@ -27,7 +27,7 @@ function createWindow () {
   // Emesso quando la finestra viene chiusa.
   win.on('closed', () => {
     // Eliminiamo il riferimento dell'oggetto window;  solitamente si tiene traccia delle finestre
-    // in array se l'applicazione supporta più finestre, questo è il momento in cui 
+    // in array se l'applicazione supporta più finestre, questo è il momento in cui
     // si dovrebbe eliminare l'elemento corrispondente.
     win = null;
   });
@@ -40,7 +40,7 @@ app.on('ready', createWindow);
 
 // Terminiamo l'App quando tutte le finestre vengono chiuse.
 app.on('window-all-closed', () => {
-  // Su macOS è comune che l'applicazione e la barra menù 
+  // Su macOS è comune che l'applicazione e la barra menù
   // restano attive finché l'utente non esce espressamente tramite i tasti Cmd + Q
   if (process.platform !== 'darwin') {
     app.quit();
@@ -55,5 +55,5 @@ app.on('activate', () => {
   }
 });
 
-// in questo file possiamo includere il codice specifico necessario 
+// in questo file possiamo includere il codice specifico necessario
 // alla nostra app. Si può anche mettere il codice in file separati e richiederlo qui.
