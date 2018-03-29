@@ -1,17 +1,23 @@
-$variabile: 10px;
+$widthSvg: 500px
+$heightSvg: 500px
+$widthRect: 100px
+$heigthRect: 50px
 
 svg
-  display: flex
-  justify-content: center
-  width: 100%
-  height: 100%
-  border: 1px solid red
+    border: 1px solid red
+    width: $widthSvg
+    height: $heightSvg
 
 rect
-  width: 100px
-  height: 50px
+  width: $widthRect
+  height: $heigthRect
   fill: white
   stroke-width: 2px
   stroke: black
-  x: 5
-  y: 5
+  x: calc((#{$widthSvg} / 2) - (#{$widthRect} / 2))
+  y: calc((#{$heightSvg} /2) - (#{$heigthRect} / 2))
+
+
+text
+  x: calc((#{$widthSvg} / 2) - (#{$widthRect} / 2))
+  y: calc((#{$heightSvg} /2) - (#{$heigthRect} / 2))
