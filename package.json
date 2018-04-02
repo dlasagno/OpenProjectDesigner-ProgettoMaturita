@@ -8,7 +8,7 @@
     "electron": "electron .",
     "sass": "node-sass -w src/ -o src/"
   },
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "electron": "^1.8.2",
     "electron-prebuilt-compile": "^1.8.2",
