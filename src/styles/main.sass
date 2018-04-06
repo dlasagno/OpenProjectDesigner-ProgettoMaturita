@@ -9,12 +9,12 @@ body
 
 
 //Tab window
-.tab-window
+#tab-window
   height: 100vh
   display: grid
   grid-template-rows: $tab-nav-height $tab-menu-height
 
-  .tab-nav
+  #tab-nav
     display: flex
     background: $dark-grey
     transition: 0.5s
@@ -63,7 +63,7 @@ body
         height: 100%
         width: 100%
     
-  .tab-menu
+  #tab-menu
     background: $dark-grey-2
     color: white
 
@@ -87,8 +87,32 @@ body
         span
           @extend %first-letter-capitalized
 
-  .tab-view
-    font-size: 5em
+  #tab-view
+    display: flex
+    flex-direction: row-reverse
+
+    #properties-panel
+      width: $properties-panel-width
+      background: $dark-grey
+      color: white
+
+      .property-list
+        display: flex
+        flex-direction: column
+
+        .property
+          margin: 0px 10px
+          +separator(1px, solid, white)
+
+          .property-head
+            @extend %first-letter-capitalized
+            font-weight: 600
+
+            &::first-letter
+              text-transform: uppercase
+          
+          .property-body
+
 
 
 //Side menu
@@ -102,7 +126,7 @@ body
   color: white
   transition: 0.5s
 
-  &.active
+  &.opened
     transform: translateX(0)
 
     ul
@@ -122,16 +146,9 @@ body
       align-items: center
       margin: 0px 10px
       padding: 10px
-      border-bottom: 1px solid white
       transition: 0.5s padding-left
       cursor: pointer
-
-      span
-        overflow: hidden
-        @extend %first-letter-capitalized
-
-      &:last-child
-        border: none
+      +separator(1px, solid, white)
 
       &:hover
         padding-left: 20px
@@ -139,6 +156,9 @@ body
         color: black
         font-weight: 600
 
+      span
+        overflow: hidden
+        @extend %first-letter-capitalized
 
 .button *
   cursor: pointer
