@@ -91,10 +91,10 @@ body {
 
 #tab-window #tab-view #properties-panel .property-list {
   display: flex;
-  flex-direction: column; }
+  flex-direction: column;
+  margin: 10px; }
 
 #tab-window #tab-view #properties-panel .property-list .property {
-  margin: 0px 10px;
   border-bottom: 1px solid white; }
 
 #tab-window #tab-view #properties-panel .property-list .property:last-child {

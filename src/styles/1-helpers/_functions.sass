@@ -2,3 +2,9 @@
 %first-letter-capitalized
   &::first-letter
     text-transform: uppercase
+
+//Counter before the text
+%conter-before
+  counter-increment: a
+  &::before
+    content: counter(a)

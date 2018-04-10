@@ -99,17 +99,17 @@ body
       .property-list
         display: flex
         flex-direction: column
+        margin: 10px
 
         .property
-          margin: 0px 10px
           +separator(1px, solid, white)
 
           .property-head
             @extend %first-letter-capitalized
             font-weight: 600
 
-            &::first-letter
-              text-transform: uppercase
+          .property-head::first-letter
+            text-transform: uppercase
           
           .property-body
 
