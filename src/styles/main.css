@@ -1,6 +1,3 @@
-#tab-window #tab-menu ul li span::first-letter, #tab-window #tab-view #properties-panel .property-list .property .property-head::first-letter, #side-menu ul li span::first-letter {
-  text-transform: uppercase; }
-
 body {
   margin: 0px;
   font-family: "Arial";
@@ -64,6 +61,7 @@ body {
   color: white; }
 
 #tab-window #tab-menu ul {
+  counter-reset: menus;
   margin: 0px;
   padding: 0px;
   height: 100%;
@@ -79,6 +77,9 @@ body {
 #tab-window #tab-menu ul li:hover {
   background: white;
   color: black; }
+
+#tab-window #tab-menu ul li span::first-letter {
+  text-transform: uppercase; }
 
 #tab-window #tab-view {
   display: flex;
@@ -102,6 +103,9 @@ body {
 
 #tab-window #tab-view #properties-panel .property-list .property .property-head {
   font-weight: 600; }
+
+#tab-window #tab-view #properties-panel .property-list .property .property-head::first-letter {
+  text-transform: uppercase; }
 
 #tab-window #tab-view #properties-panel .property-list .property .property-head::first-letter {
   text-transform: uppercase; }
@@ -151,6 +155,9 @@ body {
 
 #side-menu ul li span {
   overflow: hidden; }
+
+#side-menu ul li span::first-letter {
+  text-transform: uppercase; }
 
 .button * {
   cursor: pointer; }
