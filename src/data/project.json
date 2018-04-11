@@ -1,0 +1,24 @@
+{
+  "task": [
+    {
+      "number": "1",
+      "title": "prova",
+      "description": "descrizione",
+      "wbs_graphics": {
+        "color": "#F2F2F2",
+        "alignment": "center",
+      },
+      "gantt_graphics": {
+
+      },
+      "collapsed": "true",
+      "format": ["bold", "italic"],
+      "start_date": "11/04/2018",
+      "end_date": "11/06/2018",
+      "progress": "0%",
+      "cost": "100",
+      "appointee": "Razvan",
+      "extra_info": "Info"
+    }
+  ]
+}
