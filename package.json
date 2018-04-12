@@ -4,13 +4,15 @@
   "description": "Software for the creation of WBS, GANTT, ...",
   "main": "src/app.ts",
   "scripts": {
-    "start": "electron .",
-    "electron": "electron ."
+    "start": "npm-run-all --parallel electron stylus",
+    "electron": "electron .",
+    "stylus": "stylus -w ./src/styles/main.styl"
   },
   "license": "MIT",
   "devDependencies": {
     "electron": "^1.8.2",
     "electron-prebuilt-compile": "^1.8.2",
+    "npm-run-all": "^4.1.2",
     "stylus": "^0.54.5"
   }
 }
