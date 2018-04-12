@@ -5,27 +5,28 @@ html(lang="en")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         meta(http-equiv="X-UA-Compatible", content="ie=edge")
 
-        link(rel="stylesheet", href="../src/styles/main.styl")
+        link(rel="stylesheet", href="../src/styles/main.css")
         //<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
 
         title Open PROject
 
     body
+    
         #side-menu
-            ul
-                li
+            ul.menu.vertical
+                li.button
                     span nuovo progetto
-                li
+                li.button
                     span apri progetto
-                li
+                li.button
                     span salva
-                li
+                li.button
                     span salva con nome
-                li
+                li.button
                     span esporta...
-                li
+                li.button
                     span opzioni
-                li
+                li.button
                     span info
 
         #tab-window
@@ -42,20 +43,18 @@ html(lang="en")
                     div
                         span gantt
                     img(src="../assets/test.png", alt="")
-            
             #tab-menu
-                ul
-                    li
+                ul.menu
+                    li.button
                         span file
-                    li
+                    li.button
                         span modifica
-                    li
+                    li.button
                         span selezione
-                    li
+                    li.button
                         span visualizza
-                    li
+                    li.button
                         span esegui
-            
             #tab-view
                 #properties-panel
                     .property-list

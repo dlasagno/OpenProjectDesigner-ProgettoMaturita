@@ -1,0 +1,254 @@
+html {
+  background: #fff;
+  font-family: 'Arial';
+  font-size: 12px;
+}
+body {
+  margin: 0px;
+}
+.button {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+}
+.button * {
+  user-select: none;
+}
+.button *::first-letter {
+  text-transform: uppercase;
+}
+ul.menu {
+  display: flex;
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+ul.menu li.button:hover {
+  background: #fff;
+  color: #000;
+}
+ul.menu li.button:hover span {
+  overflow: hidden;
+}
+.menu.vertical {
+  flex-direction: column;
+}
+#side-menu {
+  position: fixed;
+  height: 100%;
+  width: 200px;
+  box-sizing: border-box;
+  padding: 0 10px;
+  padding-top: 60px;
+  background: #151515;
+  color: #fff;
+  transform: translateX(-200px);
+  transition: 0.5s;
+}
+#side-menu .menu {
+  opacity: 0;
+  transition: 0.5s;
+}
+#side-menu .menu .button {
+  transition: 0.5s padding-left;
+  border-bottom: 1px solid #fff;
+}
+#side-menu .menu .button:last-child {
+  border-bottom: none;
+}
+#side-menu .menu .button:hover {
+  padding-left: 20px;
+  font-weight: 600;
+}
+#side-menu.opened {
+  transform: translateX(0);
+}
+#side-menu.opened .menu {
+  opacity: 1;
+}
+#tab-window {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 60px 30px;
+}
+#tab-window #tab-nav {
+  display: flex;
+  background: #464646;
+  transition: 0.5s;
+}
+#tab-window #tab-nav .button {
+  position: relative;
+  flex-basis: 60px;
+  box-sizing: border-box;
+  padding: 10px;
+}
+#tab-window #tab-nav .button div {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  color: #000;
+  transform: translateY(-100%);
+  transition: 0.3s;
+}
+#tab-window #tab-nav .button div span {
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 400;
+}
+#tab-window #tab-nav .button img {
+  height: 100%;
+  width: 100%;
+}
+#tab-window #tab-nav .button:not(.active):hover div {
+  transform: translateY(0px);
+}
+#tab-window #tab-nav .button.active {
+  background: #303030;
+}
+#tab-window #tab-nav.move-left {
+  margin-left: 140px;
+}
+#tab-window #tab-menu {
+  background: #303030;
+  color: #fff;
+}
+#tab-window #tab-menu .menu {
+  height: 100%;
+}
+#tab-window #tab-view {
+  display: flex;
+  flex-direction: row-reverse;
+}
+#tab-window #tab-view #properties-panel {
+  width: 300px;
+  background: #464646;
+  color: #fff;
+}
+#tab-window #tab-view #properties-panel .property-list {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+#tab-window #tab-view #properties-panel .property-list .property {
+  border-bottom: 1px solid #fff;
+}
+#tab-window #tab-view #properties-panel .property-list .property:last-child {
+  border-bottom: none;
+}
+#tab-window #tab-view #properties-panel .property-list .property .property-head {
+  font-weight: 600;
+}
+#tab-window #tab-view #properties-panel .property-list .property .property-head::first-letter {
+  text-transform: uppercase;
+}
+/*
+//Tab window
+#tab-window
+  height: 100vh
+  display: grid
+  grid-template-rows: tab-window.nav.height tab-window.menu.height
+
+  #tab-nav
+    display: flex
+    background: dark-grey[0]
+    transition: 0.5s
+
+    &.move-left
+      margin-left: side-menu.width - tab-window.nav.height
+
+    .button
+      position: relative
+      flex-basis: tab-window.nav.height
+      box-sizing: border-box
+      padding: tab-window.button.padding
+      color: white
+
+      &:not(.active):hover
+        div
+          transform: translateY(0px)
+
+      &.active
+        background: dark-grey[1]
+
+      &:first-child
+        z-index: 1
+
+      div
+        position: absolute
+        top: 0
+        right: 0
+        bottom: 0
+        left: 0
+        transform: translateY(-100%)
+        display: flex
+        justify-content: center
+        align-items: center
+        background: white
+        color: black
+        transition: 0.3s
+
+        span
+          text-transform: uppercase
+          font-size: 14px
+          font-weight: 400
+          user-select: none
+
+      img
+        height: 100%
+        width: 100%
+
+  #tab-menu
+    background: dark-grey[1]
+    color: white
+
+    ul
+      counter-reset: menus
+      margin: 0px
+      padding: 0px
+      height: 100%
+      list-style: none
+
+      li
+        display: inline-flex
+        align-items: center
+        height: 100%
+        padding: 0px 8px
+        cursor: pointer
+
+        &:hover
+          background: white
+          color: black
+
+        span
+          first-letter-capitalized()
+
+  #tab-view
+    display: flex
+    flex-direction: row-reverse
+
+    #properties-panel
+      width: properties-panel.width
+      background: dark-grey[0]
+      color: white
+
+      .property-list
+        display: flex
+        flex-direction: column
+        margin: 10px
+
+        .property
+          separator(1px, solid, white)
+
+          .property-head
+            first-letter-capitalized()
+            font-weight: 600
+
+          .property-head::first-letter
+            text-transform: uppercase*/

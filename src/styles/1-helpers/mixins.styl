@@ -5,6 +5,7 @@ separator($color, $thickness, $style)
   &:last-child
     border-bottom: none
 
+
 //Create a counter before the text
 counter-before($counter, $filler = "")
   counter-increment: $counter
@@ -12,12 +13,14 @@ counter-before($counter, $filler = "")
   &::before
     content: counter($counter) $filler "⁣"
 
+
 //Create a counter after the text
 counter-after($counter, $filler = "")
   counter-increment: $counter
 
   &::after
     content: "⁣" $filler counter($counter)
+
 
 //Capitalize the first letter
 first-letter-capitalized()

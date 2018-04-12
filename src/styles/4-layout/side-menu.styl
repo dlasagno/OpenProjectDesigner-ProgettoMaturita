@@ -1,0 +1,26 @@
+//Side menu
+#side-menu
+  position: fixed
+  height: 100%
+  width: side-menu.width
+  box-sizing: border-box
+  padding: 0 side-menu.horizontal-padding
+  padding-top: tab-window.nav.height  
+  background: dark-grey[2]
+  color: white
+  transform: translateX(- side-menu.width) 
+  transition: 0.5s
+  .menu
+    opacity: 0
+    transition: 0.5s
+    .button
+      transition: 0.5s padding-left
+      separator(1px, solid, white)
+      &:hover
+        padding-left: 20px
+        font-weight: 600
+  
+  &.opened
+    transform: translateX(0)
+    .menu
+      opacity: 1
