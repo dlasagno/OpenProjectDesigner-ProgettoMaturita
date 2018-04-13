@@ -1,25 +1,29 @@
 //Create a separator beetwen elements
-separator($color, $thickness, $style)
-  border-bottom: $color $thickness $style
+separator(direction, values...)
+  unless direction in (vertical horizontal)
+    error("Expected direction to be vertical | or horizontal -")
+  side = direction == horizontal ? bottom : right
+  
+  border-{side}: values
 
   &:last-child
-    border-bottom: none
+    border-{side}: none
 
 
 //Create a counter before the text
-counter-before($counter, $filler = "")
-  counter-increment: $counter
+counter-before(counter, filler = "")
+  counter-increment: counter
 
   &::before
-    content: counter($counter) $filler "⁣"
+    content: counter(counter) filler "⁣"
 
 
 //Create a counter after the text
-counter-after($counter, $filler = "")
-  counter-increment: $counter
+counter-after(counter, filler = "")
+  counter-increment: counter
 
   &::after
-    content: "⁣" $filler counter($counter)
+    content: "⁣" filler counter(counter)
 
 
 //Capitalize the first letter

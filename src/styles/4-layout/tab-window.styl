@@ -57,14 +57,9 @@
     flex-direction: row-reverse
     #properties-panel
       width: properties-panel.width
+      box-sizing: border-box
+      padding: properties-panel.padding
       background: dark-grey[0]
       color: white
-      .property-list
-        display: flex
-        flex-direction: column
-        margin: 10px
-        .property
-          separator(1px, solid, white)
-          .property-head
-            first-letter-capitalized()
-            font-weight: 600
+      .list .property
+        separator(horizontal, 1px solid white)

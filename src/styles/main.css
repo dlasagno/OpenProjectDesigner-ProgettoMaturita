@@ -18,6 +18,10 @@ body {
 .button *::first-letter {
   text-transform: uppercase;
 }
+.list {
+  display: flex;
+  flex-direction: column;
+}
 ul.menu {
   display: flex;
   margin: 0px;
@@ -33,6 +37,12 @@ ul.menu li.button:hover span {
 }
 .menu.vertical {
   flex-direction: column;
+}
+.property .property-head {
+  font-weight: 600;
+}
+.property .property-head::first-letter {
+  text-transform: uppercase;
 }
 #side-menu {
   position: fixed;
@@ -128,127 +138,14 @@ ul.menu li.button:hover span {
 }
 #tab-window #tab-view #properties-panel {
   width: 300px;
+  box-sizing: border-box;
+  padding: 10px;
   background: #464646;
   color: #fff;
 }
-#tab-window #tab-view #properties-panel .property-list {
-  display: flex;
-  flex-direction: column;
-  margin: 10px;
-}
-#tab-window #tab-view #properties-panel .property-list .property {
+#tab-window #tab-view #properties-panel .list .property {
   border-bottom: 1px solid #fff;
 }
-#tab-window #tab-view #properties-panel .property-list .property:last-child {
+#tab-window #tab-view #properties-panel .list .property:last-child {
   border-bottom: none;
 }
-#tab-window #tab-view #properties-panel .property-list .property .property-head {
-  font-weight: 600;
-}
-#tab-window #tab-view #properties-panel .property-list .property .property-head::first-letter {
-  text-transform: uppercase;
-}
-/*
-//Tab window
-#tab-window
-  height: 100vh
-  display: grid
-  grid-template-rows: tab-window.nav.height tab-window.menu.height
-
-  #tab-nav
-    display: flex
-    background: dark-grey[0]
-    transition: 0.5s
-
-    &.move-left
-      margin-left: side-menu.width - tab-window.nav.height
-
-    .button
-      position: relative
-      flex-basis: tab-window.nav.height
-      box-sizing: border-box
-      padding: tab-window.button.padding
-      color: white
-
-      &:not(.active):hover
-        div
-          transform: translateY(0px)
-
-      &.active
-        background: dark-grey[1]
-
-      &:first-child
-        z-index: 1
-
-      div
-        position: absolute
-        top: 0
-        right: 0
-        bottom: 0
-        left: 0
-        transform: translateY(-100%)
-        display: flex
-        justify-content: center
-        align-items: center
-        background: white
-        color: black
-        transition: 0.3s
-
-        span
-          text-transform: uppercase
-          font-size: 14px
-          font-weight: 400
-          user-select: none
-
-      img
-        height: 100%
-        width: 100%
-
-  #tab-menu
-    background: dark-grey[1]
-    color: white
-
-    ul
-      counter-reset: menus
-      margin: 0px
-      padding: 0px
-      height: 100%
-      list-style: none
-
-      li
-        display: inline-flex
-        align-items: center
-        height: 100%
-        padding: 0px 8px
-        cursor: pointer
-
-        &:hover
-          background: white
-          color: black
-
-        span
-          first-letter-capitalized()
-
-  #tab-view
-    display: flex
-    flex-direction: row-reverse
-
-    #properties-panel
-      width: properties-panel.width
-      background: dark-grey[0]
-      color: white
-
-      .property-list
-        display: flex
-        flex-direction: column
-        margin: 10px
-
-        .property
-          separator(1px, solid, white)
-
-          .property-head
-            first-letter-capitalized()
-            font-weight: 600
-
-          .property-head::first-letter
-            text-transform: uppercase*/
