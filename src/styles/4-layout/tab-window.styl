@@ -7,12 +7,12 @@
   #tab-nav
     display: flex
     background: dark-grey[0]
-    transition: 0.5s
     .button
       position: relative
       flex-basis: tab-window.nav.height
       box-sizing: border-box
       padding: tab-window.nav.button.padding
+      transition: 0.5s 0.08s
       div
         position: absolute
         top: 0
@@ -30,9 +30,9 @@
           text-transform: uppercase
           font-size: 14px
           font-weight: 400
-      img
-        height: 100%
-        width: 100%
+      > span
+        color: white
+        font-size: 2.5em
 
       &:not(.active):hover
         div
@@ -42,7 +42,8 @@
         background: dark-grey[1]
 
     &.move-left
-      margin-left: side-menu.width - tab-window.nav.height
+      .button:nth-child(1)
+        margin-left: side-menu.width - tab-window.nav.height
 
 
   #tab-menu

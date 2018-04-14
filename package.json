@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm-run-all --parallel electron stylus",
     "electron": "electron .",
-    "stylus": "stylus -w ./src/styles/main.styl"
+    "stylus": "stylus -w ./src/styles/main.styl --include-css"
   },
   "license": "MIT",
   "devDependencies": {

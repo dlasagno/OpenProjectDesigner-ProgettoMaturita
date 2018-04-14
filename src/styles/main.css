@@ -9,6 +9,7 @@ body {
 .button {
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 10px;
   cursor: pointer;
 }
@@ -38,6 +39,9 @@ ul.menu li.button:hover span {
 .menu.vertical {
   flex-direction: column;
 }
+.menu.vertical .button {
+  justify-content: left;
+}
 .property .property-head {
   font-weight: 600;
 }
@@ -58,7 +62,7 @@ ul.menu li.button:hover span {
 }
 #side-menu .menu {
   opacity: 0;
-  transition: 0.5s;
+  transition: 1s;
 }
 #side-menu .menu .button {
   transition: 0.5s padding-left;
@@ -85,13 +89,13 @@ ul.menu li.button:hover span {
 #tab-window #tab-nav {
   display: flex;
   background: #464646;
-  transition: 0.5s;
 }
 #tab-window #tab-nav .button {
   position: relative;
   flex-basis: 60px;
   box-sizing: border-box;
   padding: 10px;
+  transition: 0.5s 0.08s;
 }
 #tab-window #tab-nav .button div {
   position: absolute;
@@ -112,9 +116,9 @@ ul.menu li.button:hover span {
   font-size: 14px;
   font-weight: 400;
 }
-#tab-window #tab-nav .button img {
-  height: 100%;
-  width: 100%;
+#tab-window #tab-nav .button > span {
+  color: #fff;
+  font-size: 2.5em;
 }
 #tab-window #tab-nav .button:not(.active):hover div {
   transform: translateY(0px);
@@ -122,7 +126,7 @@ ul.menu li.button:hover span {
 #tab-window #tab-nav .button.active {
   background: #303030;
 }
-#tab-window #tab-nav.move-left {
+#tab-window #tab-nav.move-left .button:nth-child(1) {
   margin-left: 140px;
 }
 #tab-window #tab-menu {
