@@ -1,7 +1,9 @@
 var fs = require('fs');
 var data = fs.readFileSync('src/data/project.json', 'utf-8');
 var project = JSON.parse(data);
-var mxgraph = require('mxgraph');
+var mxgraph = require('mxgraph')({
+  mxBasePath: '../'
+});
 //prova per vedere se prende il valore dal file .json
 alert("id dell'oggetto nel file .json:" + project.number);
 mxBasePath = 'javascript/src/';
