@@ -1,8 +1,9 @@
 var fs = require('fs');
-var data = fs.readFileSync('../ProgettoEsame/src/data/project.json', 'utf-8');
+var data = fs.readFileSync('src/data/project.json', 'utf-8');
 var project = JSON.parse(data);
-
-mxBasePath = 'javascript/src';
+//prova per vedere se prende il valore dal file .json
+alert("id dell'oggetto nel file .json:" + project.number);
+mxBasePath = 'javascript/src/';
 
 function main(container) {
 
