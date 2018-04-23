@@ -1,7 +1,18 @@
-import { Property } from "../commons/interfaces"
-import { Tab } from "./tab"
+//--------------------------------------------------tab-menu.ts--------------------------------------------------
+interface MenuItem {
+  name: string,
+  action()
+}
 
-export class TabWindow {
+//----------------------------------------------------tab.ts-----------------------------------------------------
+class Tab {
+  constructor(private _menu: MenuItem[]) { }
+
+  get menu() {return this._menu}
+}
+
+//-------------------------------------------------tab-window.ts-------------------------------------------------
+class TabWindow {
   private currentTab
 
   constructor(private windowObject: Element, private tabs: Tab[]/*, private propertiesPanel: Property<any>[]*/) {

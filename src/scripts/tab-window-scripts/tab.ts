@@ -1,22 +1,8 @@
-//Interfaccia per la creazione di tab da mostrare in tab-window
+import { MenuItem } from "./tab-menu"
+
+//Classe per la creazione di tab da mostrare in tab-window
 export class Tab {
+    constructor(private _menu: MenuItem[]) { }
 
-    //Proprietà
-    tabMenu: {
-
-    }
-
-    //Funzione per l'aggiunta delle voci al menu della tab
-    test(){
-        alert("It works");
-    }
-
+    get menu() {return this._menu}
 }
-
-class Prova {
-    constructor(){}
-}
-
-document.querySelector("#side-menu-toggler").addEventListener('click', function(){
-    new Prova();
-})
