@@ -1,3 +1,10 @@
+//------------------------------------------------interfaces.ts--------------------------------------------------
+interface Property<T> {
+  name: string;
+  description: string;
+  value: T;
+}
+
 //--------------------------------------------------tab-menu.ts--------------------------------------------------
 interface MenuItem {
   name: string,
@@ -6,21 +13,27 @@ interface MenuItem {
 
 //----------------------------------------------------tab.ts-----------------------------------------------------
 class Tab {
-  constructor(private _menu: MenuItem[]) { }
+  constructor(private _name: string, private _icon: string, private _menu: MenuItem[]) { }
 
+  get name() {return this._name}
+  get icon() {return this._icon}
   get menu() {return this._menu}
 }
 
 //-------------------------------------------------tab-window.ts-------------------------------------------------
 class TabWindow {
-  private currentTab
+  private _currentTab: number = 0
+  private propertiesPanel: Property<any>[]
 
-  constructor(private windowObject: Element, private tabs: Tab[]/*, private propertiesPanel: Property<any>[]*/) {
-    this.currentTab = tabs[0];
-  }
+  constructor(private windowObject: Element, private tabs: Tab[]) { }
 
-  changeCurrentTab() {
-
+  get currentTab() {return this._currentTab}
+  set currentTab(n: number) {
+    if(n < this.tabs.length && n >= 0){
+      this._currentTab = n
+      this.updateView()
+      this.updateMenu()
+    }
   }
 
   getPropertiesValues() {
@@ -39,7 +52,7 @@ class TabWindow {
       menu.removeChild(menu.firstChild)
     }
     //Populate the tab's menu
-    for (const menuItem of this.currentTab.menu) {
+    for (const menuItem of this.tabs[this._currentTab].menu) {
       //create a new menu item to append to the menu
       const menuItemElement = document.createElement('li')
       menuItemElement.classList.add('button')
@@ -50,12 +63,32 @@ class TabWindow {
   }
 
   updateNav() {
-    
+    //Select the tabs navigation
+    const menu = this.windowObject.querySelector('#tab-nav')
+    for (const tab of this.tabs) {
+      //create a tab button to append to the tabs navigation
+      const tabElement = document.createElement('div')
+      tabElement.classList.add('button')
+
+      //Create the text for the tab button
+      const tabElementText = document.createElement('span')
+      tabElementText.innerHTML = tab.name
+      tabElement.appendChild(document.createElement('div'))
+      tabElement.firstElementChild.appendChild(tabElementText)
+
+      //Create an icon for the tab button
+      const tabElementIcon = document.createElement('span')
+      tabElementIcon.classList.add('fas', tab.icon)
+      tabElement.appendChild(tabElementIcon)
+
+      //Append all to the tabs navigation
+      menu.appendChild(tabElement)
+    }
   }
 }
 
 const tabWindowObject = new TabWindow(document.querySelector('#tab-window'), [
-  new Tab([
+  new Tab('Tab1', 'fa-user',[
     {
       name: "Menu1",
       action() {
@@ -78,5 +111,4 @@ const tabWindowObject = new TabWindow(document.querySelector('#tab-window'), [
 ])
 
 tabWindowObject.updateMenu()
-
-document.querySelector('#tab-window').querySelector('#tab-view').innerHTML = 'Ciao, funziona!!!'
+tabWindowObject.updateNav()
