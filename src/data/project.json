@@ -1,9 +1,9 @@
 {
   "number": "1",
-  "title": "prova",
+  "title": "titolo",
   "description": "descrizione",
-  "wbs_graphics": "ciao",
-  "gantt_graphics": "ciao2",
+  "wbs_graphics": "",
+  "gantt_graphics": "",
   "collapsed": "true",
   "format": ["bold", "italic"],
   "start_date": "11/04/2018",

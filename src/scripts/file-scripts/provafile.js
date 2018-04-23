@@ -1,27 +1,17 @@
 var fs = require('fs');
 var data = fs.readFileSync('src/data/project.json', 'utf-8');
 var project = JSON.parse(data);
-var mxgraph = require('mxgraph')({
-  mxBasePath: '../'
-});
-//prova per vedere se prende il valore dal file .json
-alert("id dell'oggetto nel file .json:" + project.number);
-mxBasePath = 'javascript/src/';
 
-function main(container) {
+function calc(n1, n2){
+  return (parseInt(n1, 10) + parseInt(n2, 10));
+}
 
-  var graph = new msGraph(container);
-
-  new mxRubberband(graph);
-
-  graph.getModel().beginUpdate();
-
-  try {
-    var v1 = graph.insertVertex(parent, null, "Hello", 20, 20, 80, 30);
-    var v2 = graph.insertVertex(parent, null, project.number, 20, 20, 80, 30);
-    var e1 = graph.insertEdge(parent, null, " ", v1, v2);
-  }
-  finally {
-    graph.getModel().endUpdate();
-  }
+function sistema(){
+  var rect = document.getElementById("rettangolo");
+  var text = document.getElementById("testo");
+  var rect_x = window.getComputedStyle(rect, null).getPropertyValue("x");
+  var rect_y = window.getComputedStyle(rect, null).getPropertyValue("y");
+  text.setAttribute("x", calc(rect_x, "10px"));
+  text.setAttribute("y", calc(rect_y, "35px"));
+  text.innerHTML = project.title;
 }
