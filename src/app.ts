@@ -16,7 +16,7 @@ function createWindow () {
 
   // e viene caricato il file index.html della nostra app.
   win.loadURL(url.format({
-    pathname: path.join(__dirname, '../app/index.jade'),
+    pathname: path.join(__dirname, '../provawbs.html'),
     protocol: 'file:',
     slashes: true
   }));
