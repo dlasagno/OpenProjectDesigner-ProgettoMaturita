@@ -54,6 +54,12 @@ ul.menu li.button:hover span {
 .property .property-head::first-letter {
   text-transform: uppercase;
 }
+.property .property-body {
+  margin-top: 5px;
+}
+.property .property-body::first-letter {
+  text-transform: uppercase;
+}
 #side-menu {
   position: fixed;
   height: 100%;
@@ -159,6 +165,7 @@ ul.menu li.button:hover span {
   color: #fff;
 }
 #tab-window #tab-view #properties-panel .list .property {
+  padding: 10px;
   border-bottom: 1px solid #fff;
 }
 #tab-window #tab-view #properties-panel .list .property:last-child {

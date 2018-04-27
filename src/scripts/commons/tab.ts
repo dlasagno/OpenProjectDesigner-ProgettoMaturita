@@ -8,3 +8,7 @@ export class Tab {
     get icon() {return this._icon}
     get menu() {return this._menu}
 }
+
+export interface TabButton extends MenuItem {
+    icon: string
+}

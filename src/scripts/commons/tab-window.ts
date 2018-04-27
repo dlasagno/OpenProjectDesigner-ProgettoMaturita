@@ -3,7 +3,7 @@ import { Tab } from "./tab"
 
 export class TabWindow {
   private _currentTab: number = 0
-  private propertiesPanel: Property<any>[]
+  //private propertiesPanel: Property<any>[]
 
   constructor(private windowObject: Element, private tabs: Tab[]) { }
 
