@@ -129,6 +129,8 @@ interface Property<T> {
   value: T;
 }
 
+
+
 class TabWindowRenderer {
 
   private static windowElement = document.querySelector('#tab-window')
@@ -215,6 +217,7 @@ class TabWindowRenderer {
 }
 
 
+
 TabWindowRenderer.updateMenu([
   {
     name: "menu - 1",
@@ -277,3 +280,8 @@ TabWindowRenderer.updatePropertiesPanel([
     value: 'insegnante'
   }
 ])
+
+document.querySelector('#tab-view input').addEventListener('keydown', function(e) {
+  console.log(typeof this.value)
+  console.log(this.value)
+})
