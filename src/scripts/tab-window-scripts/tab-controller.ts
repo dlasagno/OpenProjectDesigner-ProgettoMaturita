@@ -1,6 +1,9 @@
 export class TabController {
+  //Attributi
+  private currentTab: number = 0
+  private selectedTask?: Task = null
   
-  constructor(private tasks: Task) { }
+  constructor(private tabs: Tab[], private tasks?: Task) { }
 
 }
 
@@ -27,6 +30,19 @@ interface Task {
   progress: number,
   cost: number,
   appointee: string,
-  extra_info: string,
+  extra_info?: {},
   children?: Task[]
 }
+
+//Debug
+interface Tab {
+  menuItems: MenuItem[],
+  view
+}
+
+new TabController([
+  {
+    menuItems: [],
+    view: 1
+  }
+])

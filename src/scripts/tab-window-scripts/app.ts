@@ -182,7 +182,7 @@ class TabWindowRenderer {
 
   static updatePropertiesPanel(properties: Property<string>[]): void {
     //Select the tabs navigation
-    const propertiesPanelElement = this.windowElement.querySelector('#tab-view #properties-panel .list')
+    const propertiesPanelElement = this.windowElement.querySelector('#properties-panel .list')
 
     //Empty the tab's menu
     while (propertiesPanelElement.firstChild) {
@@ -281,7 +281,20 @@ TabWindowRenderer.updatePropertiesPanel([
   }
 ])
 
-document.querySelector('#tab-view input').addEventListener('keydown', function(e) {
-  console.log(typeof this.value)
-  console.log(this.value)
-})
+TabWindowRenderer.updatePropertiesPanel([
+  {
+    name: 'prop 1',
+    description: 'testo prop 1',
+    value: 'Mario Rossi'
+  },
+  {
+    name: 'prop 2',
+    description: 'testo prop 2',
+    value: 'Roma'
+  },
+  {
+    name: 'prop 3',
+    description: 'testo prop 3',
+    value: 'insegnante'
+  }
+])

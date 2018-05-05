@@ -3,8 +3,11 @@
   height: 100vh
   display: grid
   grid-template-rows: tab-window.nav.height tab-window.menu.height
+  grid-template-columns: auto tab-window.properties-panel.width
+  grid-template-areas: 'nav nav' 'menu menu' 'view properties-panel'
 
   #tab-nav
+    grid-area: nav
     display: flex
     background: dark-grey[0]
     .button
@@ -33,7 +36,7 @@
           font-weight: 400
       > span
         color: white
-        font-size: 2.5em
+        font-size: tab-window.nav.height * 0.5
         transition: 0.3s
 
       &:not(.active):hover
@@ -49,23 +52,22 @@
       .button:nth-child(1)
         margin-left: side-menu.width - tab-window.nav.height
 
-
   #tab-menu
+    grid-area: menu
     background: dark-grey[1]
     color: white
     .menu
       height: 100%
 
-
   #tab-view
-    display: flex
-    flex-direction: row-reverse
-    #properties-panel
-      width: properties-panel.width
-      box-sizing: border-box
-      padding: properties-panel.padding
-      background: dark-grey[0]
-      color: white
-      .list .property
-        padding: 10px
-        separator(horizontal, 1px solid white)
+    grid-area: view
+
+  #properties-panel
+    grid-area: properties-panel
+    box-sizing: border-box
+    padding: tab-window.properties-panel.padding
+    background: dark-grey[0]
+    color: white
+    .list .property
+      padding: 10px
+      separator(horizontal, 1px solid white)

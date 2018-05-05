@@ -51,7 +51,7 @@ export class TabWindowRenderer {
 
   static updatePropertiesPanel(properties: Property<string>[]): void {
     //Select the tabs navigation
-    const propertiesPanelElement = this.windowElement.querySelector('#tab-view #properties-panel .list')
+    const propertiesPanelElement = this.windowElement.querySelector('#properties-panel .list')
 
     //Empty the tab's menu
     while (propertiesPanelElement.firstChild) {

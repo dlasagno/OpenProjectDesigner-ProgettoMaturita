@@ -32,11 +32,11 @@ html(lang="en")
         #tab-window
             #tab-nav
                 .button#side-menu-toggler
-                    span.fas.fa-bars.fa-fw
+                    span.fas.fa-bars
                 .button
                     div
                         span wbs
-                    span.fas.fa-sitemap.fa-fw
+                    span.fas.fa-sitemap
                 .button.active
                     div
                         span gantt
@@ -53,32 +53,30 @@ html(lang="en")
                         span visualizza
                     li.button
                         span esegui
+            #properties-panel
+                .list
+                    .property
+                        .property-head
+                            span proprietà 1
+                        .property-body
+                    .property
+                        .property-head
+                            span proprietà 2
+                        .property-body
+                            span body della proprietà
+                    .property
+                        .property-head
+                            span proprietà 3
+                        .property-body
+                    .property
+                        .property-head
+                            span proprietà 4
+                        .property-body
+                    .property
+                        .property-head
+                            span proprietà 5
+                        .property-body
             #tab-view
-                input(type="range", min=0, max=100 name="test")
-
-                #properties-panel
-                    .list
-                        .property
-                            .property-head
-                                span proprietà 1
-                            .property-body
-                        .property
-                            .property-head
-                                span proprietà 2
-                            .property-body
-                                span body della proprietà
-                        .property
-                            .property-head
-                                span proprietà 3
-                            .property-body
-                        .property
-                            .property-head
-                                span proprietà 4
-                            .property-body
-                        .property
-                            .property-head
-                                span proprietà 5
-                            .property-body
 
         script(src="../src/scripts/style-scripts/style-script.ts")
         script(src="../src/scripts/tab-window-scripts/app.ts")

@@ -66,7 +66,7 @@ ul.menu li.button:hover span {
   width: 200px;
   box-sizing: border-box;
   padding: 0 10px;
-  padding-top: 60px;
+  padding-top: 55px;
   background: #151515;
   color: #fff;
   transform: translateX(-200px);
@@ -96,15 +96,18 @@ ul.menu li.button:hover span {
 #tab-window {
   height: 100vh;
   display: grid;
-  grid-template-rows: 60px 30px;
+  grid-template-rows: 55px 30px;
+  grid-template-columns: auto 300px;
+  grid-template-areas: 'nav nav' 'menu menu' 'view properties-panel';
 }
 #tab-window #tab-nav {
+  grid-area: nav;
   display: flex;
   background: #464646;
 }
 #tab-window #tab-nav .button {
   position: relative;
-  flex-basis: 60px;
+  flex-basis: 55px;
   box-sizing: border-box;
   padding: 10px;
   transition: 0.5s 0.08s;
@@ -131,7 +134,7 @@ ul.menu li.button:hover span {
 }
 #tab-window #tab-nav .button > span {
   color: #fff;
-  font-size: 2.5em;
+  font-size: 27.5px;
   transition: 0.3s;
 }
 #tab-window #tab-nav .button:not(.active):hover div {
@@ -144,9 +147,10 @@ ul.menu li.button:hover span {
   background: #303030;
 }
 #tab-window #tab-nav.move-left .button:nth-child(1) {
-  margin-left: 140px;
+  margin-left: 145px;
 }
 #tab-window #tab-menu {
+  grid-area: menu;
   background: #303030;
   color: #fff;
 }
@@ -154,20 +158,19 @@ ul.menu li.button:hover span {
   height: 100%;
 }
 #tab-window #tab-view {
-  display: flex;
-  flex-direction: row-reverse;
+  grid-area: view;
 }
-#tab-window #tab-view #properties-panel {
-  width: 300px;
+#tab-window #properties-panel {
+  grid-area: properties-panel;
   box-sizing: border-box;
   padding: 10px;
   background: #464646;
   color: #fff;
 }
-#tab-window #tab-view #properties-panel .list .property {
+#tab-window #properties-panel .list .property {
   padding: 10px;
   border-bottom: 1px solid #fff;
 }
-#tab-window #tab-view #properties-panel .list .property:last-child {
+#tab-window #properties-panel .list .property:last-child {
   border-bottom: none;
 }
