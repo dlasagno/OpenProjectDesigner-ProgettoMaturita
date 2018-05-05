@@ -73,14 +73,27 @@ export class TabWindowRenderer {
       const propertyBodyElement = document.createElement('div')
       propertyBodyElement.classList.add('property-body')
       propertyBodyElement.innerHTML = `
-      <span>${property.description}:</span>
-      <input type="text" value="${property.value}">
+        <span>${property.description}:</span>
+        <input type="text" value="${property.value}">
       `
       propertyElement.appendChild(propertyBodyElement)
 
       //Append all to the tabs navigation
       propertiesPanelElement.appendChild(propertyElement)
     }
+  }
+
+  static updateView(view: Element): void {
+    //Select the tab view
+    const viewElement = this.windowElement.querySelector('#tab-view')
+
+    //Empty the tab view
+    while (viewElement.firstChild) {
+      viewElement.removeChild(viewElement.firstChild)
+    }
+
+    //Append the new rendered view to the tab view
+    viewElement.appendChild(view)
   }
 
 }

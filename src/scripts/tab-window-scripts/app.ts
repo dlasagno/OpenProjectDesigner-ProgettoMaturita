@@ -129,6 +129,34 @@ interface Property<T> {
   value: T;
 }
 
+interface Tab {
+  name: string,
+  icon: string,
+  menuItems: MenuItem[],
+  view
+}
+
+interface Task {
+  title: string,
+  description: string,
+  wbs_graphics?: {
+    color: string,
+    alignment: string
+  },
+  gantt_graphics?:{
+    
+  },
+  collapsed: boolean,
+  format: string[],
+  start_date: string,
+  end_date: string,
+  progress: number,
+  cost: number,
+  appointee: string,
+  extra_info?: {},
+  children?: Task[]
+}
+
 
 
 class TabWindowRenderer {
@@ -163,7 +191,7 @@ class TabWindowRenderer {
       //create a tab button to append to the tabs navigation
       const tabElement = document.createElement('div')
       tabElement.classList.add('button')
-      tabElement.addEventListener('click', tab.action)
+      tabElement.addEventListener('cilck', tab.action)
 
       //Create the text for the tab button
       const tabElementText = document.createElement('div')
@@ -211,6 +239,40 @@ class TabWindowRenderer {
 
       //Append all to the tabs navigation
       propertiesPanelElement.appendChild(propertyElement)
+    }
+  }
+
+  static updateView(view: Element): void {
+    //Select the tab view
+    const viewElement = this.windowElement.querySelector('#tab-view')
+
+    //Empty the tab view
+    while (viewElement.firstChild) {
+      viewElement.removeChild(viewElement.firstChild)
+    }
+
+    //Append the new rendered view to the tab view
+    viewElement.appendChild(view)
+  }
+  
+}
+
+class TabController {
+  //Attributi
+  private _currentTab: number = 0
+  //private selectedTask: Task
+  
+  constructor(private tabs: Tab[], private tasks?: Task) {
+    this.currentTab = 0
+  }
+
+  get currentTab () {return this._currentTab}
+  set currentTab (tabNumber: number) {
+    if(tabNumber >= 0 || tabNumber < this.tabs.length){
+      this._currentTab = tabNumber
+  
+      TabWindowRenderer.updateMenu(this.tabs[this._currentTab].menuItems)
+      TabWindowRenderer.updateView(document.createElement('div'))
     }
   }
 
@@ -296,5 +358,33 @@ TabWindowRenderer.updatePropertiesPanel([
     name: 'prop 3',
     description: 'testo prop 3',
     value: 'insegnante'
+  }
+])
+
+const tabController = new TabController([
+  {
+    name: 'test',
+    icon: 'user',
+    menuItems: [
+      {
+        name: "m-test - 1",
+        action() {
+          console.log("Menu1 - Funziona!!!")
+        }
+      },
+      {
+        name: "m-test - 2",
+        action() {
+          console.log("Menu2 - Funziona!!!")
+        }
+      },
+      {
+        name: "m-test - 3",
+        action() {
+          console.log("Menu3 - Funziona!!!")
+        }
+      }
+    ],
+    view: 1
   }
 ])

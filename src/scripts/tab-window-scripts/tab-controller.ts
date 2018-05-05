@@ -1,9 +1,23 @@
+import { TabWindowRenderer } from "./tab-window-renderer";
+
 export class TabController {
   //Attributi
-  private currentTab: number = 0
-  private selectedTask?: Task = null
+  private _currentTab: number = 0
+  //private selectedTask: Task
   
-  constructor(private tabs: Tab[], private tasks?: Task) { }
+  constructor(private tabs: Tab[], private tasks?: Task) {
+    this.currentTab = 0
+  }
+
+  get currentTab () {return this._currentTab}
+  set currentTab (tabNumber: number) {
+    if(tabNumber >= 0 || tabNumber < this.tabs.length){
+      this._currentTab = tabNumber
+  
+      TabWindowRenderer.updateMenu(this.tabs[this._currentTab].menuItems)
+      TabWindowRenderer.updateView(document.createElement('div'))
+    }
+  }
 
 }
 
@@ -36,13 +50,8 @@ interface Task {
 
 //Debug
 interface Tab {
+  name: string,
+  icon: string,
   menuItems: MenuItem[],
   view
 }
-
-new TabController([
-  {
-    menuItems: [],
-    view: 1
-  }
-])
