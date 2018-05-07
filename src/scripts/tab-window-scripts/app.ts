@@ -133,7 +133,7 @@ interface Tab {
   name: string,
   icon: string,
   menuItems: MenuItem[],
-  view
+  view(): Element
 }
 
 interface Task {
@@ -268,11 +268,11 @@ class TabController {
 
   get currentTab () {return this._currentTab}
   set currentTab (tabNumber: number) {
-    if(tabNumber >= 0 || tabNumber < this.tabs.length){
+    if(tabNumber >= 0 && tabNumber < this.tabs.length){
       this._currentTab = tabNumber
   
       TabWindowRenderer.updateMenu(this.tabs[this._currentTab].menuItems)
-      TabWindowRenderer.updateView(document.createElement('div'))
+      TabWindowRenderer.updateView(this.tabs[this._currentTab].view())
     }
   }
 
@@ -385,6 +385,29 @@ const tabController = new TabController([
         }
       }
     ],
-    view: 1
+    view() {
+      return document.createElement('div')
+    }
+  },
+  {
+    name: 'test2',
+    icon: 'adjust',
+    menuItems: [
+      {
+        name: "m-test-2 - 1",
+        action() {
+          console.log("Menu1 - Funziona!!!")
+        }
+      },
+      {
+        name: "m-test-2 - 2",
+        action() {
+          console.log("Menu2 - Funziona!!!")
+        }
+      }
+    ],
+    view() {
+      return document.createElement('h1')
+    }
   }
 ])

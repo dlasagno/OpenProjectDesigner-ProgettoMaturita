@@ -11,11 +11,11 @@ export class TabController {
 
   get currentTab () {return this._currentTab}
   set currentTab (tabNumber: number) {
-    if(tabNumber >= 0 || tabNumber < this.tabs.length){
+    if(tabNumber >= 0 && tabNumber < this.tabs.length){
       this._currentTab = tabNumber
   
       TabWindowRenderer.updateMenu(this.tabs[this._currentTab].menuItems)
-      TabWindowRenderer.updateView(document.createElement('div'))
+      TabWindowRenderer.updateView(this.tabs[this._currentTab].view())
     }
   }
 
@@ -53,5 +53,5 @@ interface Tab {
   name: string,
   icon: string,
   menuItems: MenuItem[],
-  view
+  view(): Element
 }
