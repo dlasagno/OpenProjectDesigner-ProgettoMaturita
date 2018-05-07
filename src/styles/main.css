@@ -103,7 +103,7 @@ ul.menu li.button:hover span {
 #tab-window #tab-nav {
   grid-area: nav;
   display: flex;
-  background: #464646;
+  background: #454545;
 }
 #tab-window #tab-nav .button {
   position: relative;
@@ -164,7 +164,7 @@ ul.menu li.button:hover span {
   grid-area: properties-panel;
   box-sizing: border-box;
   padding: 10px;
-  background: #464646;
+  background: #454545;
   color: #fff;
 }
 #tab-window #properties-panel .list .property {
