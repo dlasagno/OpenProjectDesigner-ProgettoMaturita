@@ -3,7 +3,7 @@ import { TabWindowRenderer } from "./tab-window-renderer";
 export class TabController {
   //Attributi
   private _currentTab: number = 0
-  //private selectedTask: Task
+  private _selectedTask: Task
   
   constructor(private tabs: Tab[], private tasks?: Task) {
     this.currentTab = 0
@@ -19,6 +19,36 @@ export class TabController {
     }
   }
 
+  get selectedTask () {return this._selectedTask}
+  set selectedTask (task: Task) {
+    if(task != null) {
+      this._selectedTask = task
+
+      const properties: Property<string>[] = []
+      properties.push({
+        name: 'title',
+        description: 'title text',
+        value: task.title
+      })
+      properties.push({
+        name: 'description',
+        description: 'description text',
+        value: task.description
+      })
+      properties.push({
+        name: 'start date',
+        description: 'project\'s start date' ,
+        value: task.start_date
+      })
+      properties.push({
+        name: 'end date',
+        description: 'project\'s end date' ,
+        value: task.end_date
+      })
+      TabWindowRenderer.updatePropertiesPanel(properties)
+    }
+  }
+
 }
 
 
@@ -28,30 +58,40 @@ export class TabController {
 
 
 interface Task {
-  title: string,
-  description: string,
+  title: string
+  description: string
+
   wbs_graphics?: {
-    color: string,
+    color: string
     alignment: string
-  },
+  }
+
   gantt_graphics?:{
     
-  },
-  collapsed: boolean,
-  format: string[],
-  start_date: string,
-  end_date: string,
-  progress: number,
-  cost: number,
-  appointee: string,
-  extra_info?: {},
+  }
+
+  collapsed: boolean
+
+  format: string[]
+
+  start_date: string
+  end_date: string
+
+  progress: number
+  cost: number
+  appointee: string
+
+  extra_info?: {}
+
   children?: Task[]
 }
 
 //Debug
 interface Tab {
-  name: string,
-  icon: string,
-  menuItems: MenuItem[],
+  name: string
+  icon: string
+  menuItems: MenuItem[]
   view(): Element
 }
+
+let tabController: TabController = new TabController(null)
