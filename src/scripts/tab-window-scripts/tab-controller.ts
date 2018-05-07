@@ -3,7 +3,8 @@ import { TabWindowRenderer } from "./tab-window-renderer";
 export class TabController {
   //Attributi
   private _currentTab: number = 0
-  private _selectedTask: Task
+  private _selectedTaskId: string = ''
+  private selectedTask: Task
   
   constructor(private tabs: Tab[], private tasks?: Task) {
     this.currentTab = 0
@@ -19,10 +20,10 @@ export class TabController {
     }
   }
 
-  get selectedTask () {return this._selectedTask}
-  set selectedTask (task: Task) {
-    if(task != null) {
-      this._selectedTask = task
+  get selectedTaskId () {return this._selectedTaskId}
+  set selectedTaskId (taskId: string) {
+    /*if(task != null) {
+      this.selectedTask = task
 
       const properties: Property<string>[] = []
       properties.push({
@@ -45,7 +46,7 @@ export class TabController {
         description: 'project\'s end date' ,
         value: task.end_date
       })
-      TabWindowRenderer.updatePropertiesPanel(properties)
+      TabWindowRenderer.updatePropertiesPanel(properties)*/
     }
   }
 
