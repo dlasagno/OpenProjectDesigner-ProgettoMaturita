@@ -1,4 +1,4 @@
-import { TabWindowRenderer } from "./tab-window-renderer";
+import { TabWindowRenderer } from './tab-window-renderer';
 
 export class TabController {
   //Attributi
@@ -15,6 +15,9 @@ export class TabController {
     if(tabNumber >= 0 && tabNumber < this.tabs.length){
       this._currentTab = tabNumber
   
+      TabWindowRenderer.updateNav(this.tabs.reduce((tab) => {
+
+      }), this._currentTab)
       TabWindowRenderer.updateMenu(this.tabs[this._currentTab].menuItems)
       TabWindowRenderer.updateView(this.tabs[this._currentTab].view())
     }
@@ -94,5 +97,3 @@ interface Tab {
   menuItems: MenuItem[]
   view(): Element
 }
-
-let tabController: TabController = new TabController(null)

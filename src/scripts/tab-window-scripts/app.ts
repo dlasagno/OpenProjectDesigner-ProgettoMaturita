@@ -168,7 +168,7 @@ interface Task {
 
 
 class TabWindowRenderer {
-
+  
   private static windowElement = document.querySelector('#tab-window')
 
   static updateMenu(menuItems: MenuItem[]): void {
@@ -190,8 +190,8 @@ class TabWindowRenderer {
       menuElement.appendChild(menuItemElement)
     }
   }
-
-  static updateNav(tabs: TabButton[]): void {
+  
+  static updateNav(tabs: TabButton[], activeTabIndex: number): void {
     //Select the tabs navigation
     const menuElement = this.windowElement.querySelector('#tab-nav')
 
@@ -199,6 +199,8 @@ class TabWindowRenderer {
       //create a tab button to append to the tabs navigation
       const tabElement = document.createElement('div')
       tabElement.classList.add('button')
+      if(tab === tabs[activeTabIndex])
+        tabElement.classList.add('active')
       tabElement.addEventListener('cilck', tab.action)
 
       //Create the text for the tab button
@@ -215,7 +217,7 @@ class TabWindowRenderer {
       menuElement.appendChild(tabElement)
     }
   }
-
+  
   static updatePropertiesPanel(properties: Property<string>[]): void {
     //Select the tabs navigation
     const propertiesPanelElement = this.windowElement.querySelector('#properties-panel .list')
@@ -240,8 +242,8 @@ class TabWindowRenderer {
       const propertyBodyElement = document.createElement('div')
       propertyBodyElement.classList.add('property-body')
       propertyBodyElement.innerHTML = `
-      <span>${property.description}:</span>
-      <input type="text" value="${property.value}">
+        <span>${property.description}:</span>
+        <input type="text" value="${property.value}">
       `
       propertyElement.appendChild(propertyBodyElement)
 
@@ -249,7 +251,7 @@ class TabWindowRenderer {
       propertiesPanelElement.appendChild(propertyElement)
     }
   }
-
+  
   static updateView(view: Element): void {
     //Select the tab view
     const viewElement = this.windowElement.querySelector('#tab-view')
@@ -316,6 +318,7 @@ class TabController {
 
 }
 
+
 TabWindowRenderer.updateNav([
   {
     name: "info",
@@ -338,7 +341,7 @@ TabWindowRenderer.updateNav([
       console.log("Bolt - Funziona!!!")
     }
   }
-])
+], 1)
 
 TabWindowRenderer.updatePropertiesPanel([
   {
