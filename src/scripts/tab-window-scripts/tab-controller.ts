@@ -15,9 +15,17 @@ export class TabController {
     if(tabNumber >= 0 && tabNumber < this.tabs.length){
       this._currentTab = tabNumber
   
-      TabWindowRenderer.updateNav(this.tabs.reduce((tab) => {
-
-      }), this._currentTab)
+      TabWindowRenderer.updateNav(this.tabs.reduce((tabButtons, tab, tabId) => {
+        tabButtons.push({
+          name: tab.name,
+          icon: tab.icon,
+          action(){
+            console.log('Funziona')
+            this.currentTab = tabId
+          }
+        })
+        return tabButtons
+      }, []), this._currentTab)
       TabWindowRenderer.updateMenu(this.tabs[this._currentTab].menuItems)
       TabWindowRenderer.updateView(this.tabs[this._currentTab].view())
     }

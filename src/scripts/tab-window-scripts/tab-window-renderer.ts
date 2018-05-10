@@ -32,8 +32,9 @@ export class TabWindowRenderer {
       //create a tab button to append to the tabs navigation
       const tabElement = document.createElement('div')
       tabElement.classList.add('button')
-      if(tab === tabs[activeTabIndex])
+      if(tab === tabs[activeTabIndex]){
         tabElement.classList.add('active')
+      }
       tabElement.addEventListener('cilck', tab.action)
 
       //Create the text for the tab button

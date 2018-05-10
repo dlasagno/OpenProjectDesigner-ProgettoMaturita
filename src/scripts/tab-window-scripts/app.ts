@@ -361,7 +361,7 @@ TabWindowRenderer.updatePropertiesPanel([
   }
 ])
 
-const tabController = new TabController([
+/*const tabController = new TabController([
   {
     name: 'test',
     icon: 'user',
@@ -422,4 +422,4 @@ tabController.selectedTask = {
   progress: 0,
   cost: 2000000,
   appointee: 'Daniele'
-}
+}*/
