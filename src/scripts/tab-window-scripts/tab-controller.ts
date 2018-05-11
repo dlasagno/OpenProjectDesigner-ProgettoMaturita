@@ -57,8 +57,8 @@ export class TabController {
         description: 'project\'s end date' ,
         value: task.end_date
       })
-      TabWindowRenderer.updatePropertiesPanel(properties)*/
-    }
+      TabWindowRenderer.updatePropertiesPanel(properties)
+    }*/
   }
 
 }
