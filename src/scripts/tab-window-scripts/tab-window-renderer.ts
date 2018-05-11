@@ -9,9 +9,8 @@ export class TabWindowRenderer {
     const menuElement = this.windowElement.querySelector('#tab-menu .menu')
 
     //Empty the tab's menu
-    while (menuElement.firstChild) {
+    while (menuElement.firstChild)
       menuElement.removeChild(menuElement.firstChild)
-    }
 
     //Populate the tab's menu
     for (const menuItem of menuItems) {
@@ -26,16 +25,24 @@ export class TabWindowRenderer {
 
   static updateNav(tabs: TabButton[], activeTabIndex: number): void {
     //Select the tabs navigation
-    const menuElement = this.windowElement.querySelector('#tab-nav')
+    const navElement = this.windowElement.querySelector('#tab-nav')
 
+    //Empty the tabs navigation
+    Array.from(navElement.children).forEach(tabElement => {
+      if (tabElement.id.endsWith('tab-button'))
+        tabElement.remove()
+    })
+
+    //Populate the tabs navigation
     for (const tab of tabs) {
       //create a tab button to append to the tabs navigation
       const tabElement = document.createElement('div')
+      tabElement.id = `${tab.name}-tab-button`
       tabElement.classList.add('button')
-      if(tab === tabs[activeTabIndex]){
+      if(tab === tabs[activeTabIndex])
         tabElement.classList.add('active')
-      }
-      tabElement.addEventListener('cilck', tab.action)
+      else
+        tabElement.addEventListener('click', tab.action)
 
       //Create the text for the tab button
       const tabElementText = document.createElement('div')
@@ -48,7 +55,7 @@ export class TabWindowRenderer {
       tabElement.appendChild(tabElementIcon)
 
       //Append all to the tabs navigation
-      menuElement.appendChild(tabElement)
+      navElement.appendChild(tabElement)
     }
   }
 
@@ -57,9 +64,8 @@ export class TabWindowRenderer {
     const propertiesPanelElement = this.windowElement.querySelector('#properties-panel .list')
 
     //Empty the tab's menu
-    while (propertiesPanelElement.firstChild) {
+    while (propertiesPanelElement.firstChild)
       propertiesPanelElement.removeChild(propertiesPanelElement.firstChild)
-    }
 
     for (const property of properties) {
       //create a tab button to append to the tabs navigation
@@ -91,9 +97,8 @@ export class TabWindowRenderer {
     const viewElement = this.windowElement.querySelector('#tab-view')
 
     //Empty the tab view
-    while (viewElement.firstChild) {
+    while (viewElement.firstChild)
       viewElement.removeChild(viewElement.firstChild)
-    }
 
     //Append the new rendered view to the tab view
     viewElement.appendChild(view)

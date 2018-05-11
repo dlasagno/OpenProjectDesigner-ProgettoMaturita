@@ -4,7 +4,7 @@ export class TabController {
   //Attributi
   private _currentTab: number = 0
   private _selectedTaskId: string = ''
-  private selectedTask: Task
+  private _selectedTask: Task
   
   constructor(private tabs: Tab[], private tasks?: Task) {
     this.currentTab = 0
@@ -19,8 +19,7 @@ export class TabController {
         tabButtons.push({
           name: tab.name,
           icon: tab.icon,
-          action(){
-            console.log('Funziona')
+          action: () => {
             this.currentTab = tabId
           }
         })
@@ -31,10 +30,10 @@ export class TabController {
     }
   }
 
-  get selectedTaskId () {return this._selectedTaskId}
-  set selectedTaskId (taskId: string) {
-    /*if(task != null) {
-      this.selectedTask = task
+  get selectedTask () {return this._selectedTask}
+  set selectedTask (task: Task) {
+    if(task != null) {
+      this._selectedTask = task
 
       const properties: Property<string>[] = []
       properties.push({
@@ -58,7 +57,7 @@ export class TabController {
         value: task.end_date
       })
       TabWindowRenderer.updatePropertiesPanel(properties)
-    }*/
+    }
   }
 
 }

@@ -166,9 +166,8 @@ interface Task {
 }
 
 
-
 class TabWindowRenderer {
-  
+
   private static windowElement = document.querySelector('#tab-window')
 
   static updateMenu(menuItems: MenuItem[]): void {
@@ -176,9 +175,8 @@ class TabWindowRenderer {
     const menuElement = this.windowElement.querySelector('#tab-menu .menu')
 
     //Empty the tab's menu
-    while (menuElement.firstChild) {
+    while (menuElement.firstChild)
       menuElement.removeChild(menuElement.firstChild)
-    }
 
     //Populate the tab's menu
     for (const menuItem of menuItems) {
@@ -190,18 +188,27 @@ class TabWindowRenderer {
       menuElement.appendChild(menuItemElement)
     }
   }
-  
+
   static updateNav(tabs: TabButton[], activeTabIndex: number): void {
     //Select the tabs navigation
-    const menuElement = this.windowElement.querySelector('#tab-nav')
+    const navElement = this.windowElement.querySelector('#tab-nav')
 
+    //Empty the tabs navigation
+    Array.from(navElement.children).forEach(tabElement => {
+      if (tabElement.id.endsWith('tab-button'))
+        tabElement.remove()
+    })
+
+    //Populate the tabs navigation
     for (const tab of tabs) {
       //create a tab button to append to the tabs navigation
       const tabElement = document.createElement('div')
+      tabElement.id = `${tab.name}-tab-button`
       tabElement.classList.add('button')
       if(tab === tabs[activeTabIndex])
         tabElement.classList.add('active')
-      tabElement.addEventListener('cilck', tab.action)
+      else
+        tabElement.addEventListener('click', tab.action)
 
       //Create the text for the tab button
       const tabElementText = document.createElement('div')
@@ -214,18 +221,17 @@ class TabWindowRenderer {
       tabElement.appendChild(tabElementIcon)
 
       //Append all to the tabs navigation
-      menuElement.appendChild(tabElement)
+      navElement.appendChild(tabElement)
     }
   }
-  
+
   static updatePropertiesPanel(properties: Property<string>[]): void {
     //Select the tabs navigation
     const propertiesPanelElement = this.windowElement.querySelector('#properties-panel .list')
 
     //Empty the tab's menu
-    while (propertiesPanelElement.firstChild) {
+    while (propertiesPanelElement.firstChild)
       propertiesPanelElement.removeChild(propertiesPanelElement.firstChild)
-    }
 
     for (const property of properties) {
       //create a tab button to append to the tabs navigation
@@ -251,27 +257,26 @@ class TabWindowRenderer {
       propertiesPanelElement.appendChild(propertyElement)
     }
   }
-  
+
   static updateView(view: Element): void {
     //Select the tab view
     const viewElement = this.windowElement.querySelector('#tab-view')
 
     //Empty the tab view
-    while (viewElement.firstChild) {
+    while (viewElement.firstChild)
       viewElement.removeChild(viewElement.firstChild)
-    }
 
     //Append the new rendered view to the tab view
     viewElement.appendChild(view)
   }
-  
+
 }
 
 class TabController {
   //Attributi
   private _currentTab: number = 0
   private _selectedTaskId: string = ''
-  private selectedTask: Task
+  private _selectedTask: Task
   
   constructor(private tabs: Tab[], private tasks?: Task) {
     this.currentTab = 0
@@ -286,8 +291,7 @@ class TabController {
         tabButtons.push({
           name: tab.name,
           icon: tab.icon,
-          action(){
-            console.log('Funziona')
+          action: () => {
             this.currentTab = tabId
           }
         })
@@ -298,10 +302,10 @@ class TabController {
     }
   }
 
-  get selectedTaskId () {return this._selectedTaskId}
-  set selectedTaskId (taskId: string) {
-    /*if(task != null) {
-      this.selectedTask = task
+  get selectedTask () {return this._selectedTask}
+  set selectedTask (task: Task) {
+    if(task != null) {
+      this._selectedTask = task
 
       const properties: Property<string>[] = []
       properties.push({
@@ -325,13 +329,13 @@ class TabController {
         value: task.end_date
       })
       TabWindowRenderer.updatePropertiesPanel(properties)
-    }*/
+    }
   }
 
 }
 
 
-TabWindowRenderer.updateNav([
+/*TabWindowRenderer.updateNav([
   {
     name: "info",
     icon: 'fa-info',
@@ -353,7 +357,7 @@ TabWindowRenderer.updateNav([
       console.log("Bolt - Funziona!!!")
     }
   }
-], 0)
+], 1)*/
 
 TabWindowRenderer.updatePropertiesPanel([
   {
@@ -373,10 +377,10 @@ TabWindowRenderer.updatePropertiesPanel([
   }
 ])
 
-/*const tabController = new TabController([
+const tabController = new TabController([
   {
     name: 'test',
-    icon: 'user',
+    icon: 'fa-user',
     menuItems: [
       {
         name: "m-test - 1",
@@ -403,7 +407,7 @@ TabWindowRenderer.updatePropertiesPanel([
   },
   {
     name: 'test2',
-    icon: 'adjust',
+    icon: 'fa-adjust',
     menuItems: [
       {
         name: "m-test-2 - 1",
@@ -424,7 +428,7 @@ TabWindowRenderer.updatePropertiesPanel([
   }
 ])
 
-tabController.selectedTask = {
+/*tabController.selectedTask = {
   title: 'titolo',
   description: 'descrizione',
   collapsed: false,

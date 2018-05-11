@@ -67,6 +67,7 @@ ul.menu li.button:hover span {
   box-sizing: border-box;
   padding: 0 10px;
   padding-top: 55px;
+  z-index: 1;
   background: #151515;
   color: #fff;
   transform: translateX(-200px);
@@ -104,6 +105,9 @@ ul.menu li.button:hover span {
   grid-area: nav;
   display: flex;
   background: #454545;
+}
+#tab-window #tab-nav #side-menu-toggler {
+  z-index: 2;
 }
 #tab-window #tab-nav .button {
   position: relative;
