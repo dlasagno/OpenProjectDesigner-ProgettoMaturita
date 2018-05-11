@@ -46,6 +46,58 @@ html(lang="en")
             #properties-panel
                 .list
             #tab-view
+                #gantt-view
+                    table.gantt
+                        tr
+                            th #
+                            th activity
+                            th start date
+                            th end date
+                            th
+                                progress(max="100" value="50")
+                            th 01-01-2018
+                            th 02-01-2018
+                            th 03-01-2018
+                        tr
+                            td 1
+                            td pianificazione
+                            td 01-01-2018
+                            td 03-01-2018
+                            td
+                                progress(max="100" value="50")
+                            td.full
+                            td.full
+                            td.full
+                        tr
+                            td 1.1
+                            td pianificazione
+                            td 01-01-2018
+                            td 01-01-2018
+                            td
+                                progress(max="100" value="100")
+                            td.full
+                            td
+                            td
+                        tr
+                            td 1.2
+                            td pianificazione
+                            td 02-01-2018
+                            td 03-01-2018
+                            td
+                                progress(max="100" value="50")
+                            td
+                            td.full
+                            td.full
+                        tr
+                            td 1.3
+                            td pianificazione
+                            td 03-01-2018
+                            td 03-01-2018
+                            td
+                                progress(max="100" value="0")
+                            td
+                            td
+                            td.full
 
         script(src="../src/scripts/style-scripts/style-script.ts")
         script(src="../src/scripts/tab-window-scripts/app.ts")

@@ -402,7 +402,7 @@ const tabController = new TabController([
       }
     ],
     view() {
-      return document.createElement('div')
+      return document.querySelector('#gantt-view')
     }
   },
   {
