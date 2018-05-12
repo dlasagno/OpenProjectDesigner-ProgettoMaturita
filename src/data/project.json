@@ -8,10 +8,11 @@
   "format": ["bold", "italic"],
   "start_date": "11/04/2018",
   "end_date": "11/06/2018",
-  "progress": "0%",
+  "progress": "30",
   "cost": "100",
   "appointee": "Razvan",
-  "extra_info": "Info"
+  "extra_info": "Info",
+  "children": []
 },
 {
   "number": "2",
@@ -23,10 +24,26 @@
   "format": ["bold", "italic"],
   "start_date": "11/04/2018",
   "end_date": "11/06/2018",
-  "progress": "0%",
+  "progress": "20",
   "cost": "100",
   "appointee": "Daniele",
-  "extra_info": "Info"
+  "extra_info": "Info",
+  "children": [{
+    "number": "2.1",
+    "title": "task2.1",
+    "description": "descrizione task2.1",
+    "wbs_graphics": "",
+    "gantt_graphics": "",
+    "collapsed": "true",
+    "format": [],
+    "start_date": "12/05/2018",
+    "end_date": "12/05/2018",
+    "progress": "1",
+    "cost": "50",
+    "appointee": "Lasa",
+    "extra_info": "nulla",
+    "children": []
+    }]
 
 }
 ]
