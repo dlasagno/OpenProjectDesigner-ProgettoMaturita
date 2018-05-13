@@ -7,6 +7,36 @@ var fs = require('fs');
 var data = fs.readFileSync('../../data/project.json', 'utf-8');
 var projects = JSON.parse(data);
 
+
+
+function createRow(project){
+  const tr = document.createElement('tr')
+  const td1 = document.createElement('td')
+  td1.innerHTML = project.number
+  const td2 = document.createElement('td')
+  td2.innerHTML = project.title
+  const td3 = document.createElement('td')
+  td3.innerHTML = project.start_date
+  const td4 = document.createElement('td')
+  td4.innerHTML = project.end_date
+  const td5 = document.createElement('td')
+  td5.innerHTML = `<progress max="100" value="${project.progress}">`
+  const td6 = document.createElement('td')
+  const td7 = document.createElement('td')
+  const td8 = document.createElement('td')
+  tr.appendChild(td1)
+  tr.appendChild(td2)
+  tr.appendChild(td3)
+  tr.appendChild(td4)
+  tr.appendChild(td5)
+  tr.appendChild(td6)
+  tr.appendChild(td7)
+  tr.appendChild(td8)
+  return tr
+}
+
+
+
 const ganttTab: Tab = {
   name: 'GANTT',
   icon: 'th-list',
@@ -50,56 +80,12 @@ const ganttTab: Tab = {
     for (const project of projects){
 
       //Inserimento dei dati nelle celle
-      const tr = document.createElement('tr')
-      const td1 = document.createElement('td')
-      td1.innerHTML = project.number
-      const td2 = document.createElement('td')
-      td2.innerHTML = project.title
-      const td3 = document.createElement('td')
-      td3.innerHTML = project.start_date
-      const td4 = document.createElement('td')
-      td4.innerHTML = project.end_date
-      const td5 = document.createElement('td')
-      td5.innerHTML = `progress(max="100" value=${project.progress})`
-      const td6 = document.createElement('td')
-      const td7 = document.createElement('td')
-      const td8 = document.createElement('td')
-      tr.appendChild(td1)
-      tr.appendChild(td2)
-      tr.appendChild(td3)
-      tr.appendChild(td4)
-      tr.appendChild(td5)
-      tr.appendChild(td6)
-      tr.appendChild(td7)
-      tr.appendChild(td8)
-      table.appendChild(tr)
+      table.appendChild(createRow(project))
 
       //Se la task ha delle task come children, vengono inserite nella tabella
       if(project.children[0]){
         for(const children of project.children){
-          const tr = document.createElement('tr')
-          const td1 = document.createElement('td')
-          td1.innerHTML = children.number
-          const td2 = document.createElement('td')
-          td2.innerHTML = children.title
-          const td3 = document.createElement('td')
-          td3.innerHTML = children.start_date
-          const td4 = document.createElement('td')
-          td4.innerHTML = children.end_date
-          const td5 = document.createElement('td')
-          td5.innerHTML = `progress(max="100" value=${children.progress})`
-          const td6 = document.createElement('td')
-          const td7 = document.createElement('td')
-          const td8 = document.createElement('td')
-          tr.appendChild(td1)
-          tr.appendChild(td2)
-          tr.appendChild(td3)
-          tr.appendChild(td4)
-          tr.appendChild(td5)
-          tr.appendChild(td6)
-          tr.appendChild(td7)
-          tr.appendChild(td8)
-          table.appendChild(tr)
+          table.appendChild(createRow(children))
         }
       }
     }

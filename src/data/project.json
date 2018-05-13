@@ -12,7 +12,22 @@
   "cost": "100",
   "appointee": "Razvan",
   "extra_info": "Info",
-  "children": []
+  "children": [{
+    "number": "1.1",
+    "title": "task1.1",
+    "description": "descrizione task1.1",
+    "wbs_graphics": "",
+    "gantt_graphics": "",
+    "collapsed": "true",
+    "format": [],
+    "start_date": "12/05/2018",
+    "end_date": "12/05/2018",
+    "progress": "1",
+    "cost": "50",
+    "appointee": "Raz",
+    "extra_info": "nulla",
+    "children": []
+    }]
 },
 {
   "number": "2",
