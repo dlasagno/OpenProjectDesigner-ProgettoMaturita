@@ -19,7 +19,7 @@ interface Task {
   }
 
   gantt_graphics?:{
-    
+
   }
 
   collapsed: boolean
@@ -36,7 +36,7 @@ interface Task {
   extra_info?: {}
 
   children?: Task[]
-  
+
 }
 
 //Class with static methods to work on tasks
@@ -182,7 +182,7 @@ class TabController {
   private _currentTab: number = 0
   private _selectedTaskId: string = ''
   private _selectedTask: Task
-  
+
   constructor(private tabs: Tab[], public tasks?: Task) {
     this.currentTab = 0
   }
@@ -333,7 +333,57 @@ const tabController = new TabController([
       return document.createElement('h1')
     }
   }
-])
+],
+{
+  title: 'Progetto',
+  description: 'desrizione progetto',
+  collapsed: false,
+  start_date: '01-01-2018',
+  end_date: '03-01-2018',
+  progress: 50,
+  cost: 3000,
+  children: [
+    {
+      title: 'Pianificazione',
+      description: 'descrizione pianificazione',
+      collapsed: false,
+      start_date: '01-01-2018',
+      end_date: '03-01-2018',
+      progress: 50,
+      cost: 500,
+      children: [
+        {
+          title: 'Raccolta dati',
+          descrition: 'descrizione raccolta dati',
+          collapsed: false,
+          start_date: '01-01-2018',
+          end_date: '01-01-2018',
+          progress: 50,
+          cost: 100
+        },
+        {
+          title: 'Esaminazione',
+          descrition: 'descrizione esaminazione',
+          collapsed: false,
+          start_date: '02-01-2018',
+          end_date: '03-01-2018',
+          progress: 50,
+          cost: 400
+        }
+      ]
+    },
+    {
+      title: 'Preparazione',
+      descrition: 'descrizione preparazione',
+      collapsed: false,
+      start_date: '03-01-2018',
+      end_date: '03-01-2018',
+      progress: 50,
+      cost: 2000
+    }
+  ]
+}
+)
 
 /*tabController.selectedTask = {
   title: 'titolo',
