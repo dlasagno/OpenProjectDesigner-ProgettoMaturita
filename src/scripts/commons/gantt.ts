@@ -44,7 +44,7 @@ const ganttTab: Tab = {
       table.appendChild(tr)
       if(task.children)
         for(const childTask of task.children){
-          idChild++
+          idChild = (parseInt(idChild) + 1).toString()
           createRow(childTask, id, idChild)
         }
     }
@@ -99,7 +99,7 @@ const ganttTab: Tab = {
 
     let id = '0'
     for(const task of tabController.tasks.children){
-      id++
+      id = (parseInt(id) + 1).toString()
       createRow(task, id, '0')
     }
     return table

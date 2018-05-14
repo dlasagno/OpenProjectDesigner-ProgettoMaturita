@@ -19,7 +19,7 @@ interface Task {
   }
 
   gantt_graphics?:{
-    
+
   }
 
   collapsed: boolean
@@ -36,7 +36,7 @@ interface Task {
   extra_info?: {}
 
   children?: Task[]
-  
+
 }
 
 //Class with static methods to work on tasks
@@ -189,7 +189,7 @@ class TabController {
   //Attributi
   private _currentTab: number = 0
   private _selectedTaskId: string = ''
-  
+
   constructor(private tabs: Tab[], public tasks?: Task) {
     this.currentTab = 0
   }
@@ -355,8 +355,7 @@ const tabController = new TabController([
     icon: 'fa-th-list',
     menuItems: [],
     view(tabController: TabController): Element {
-      
-      
+
       function createRow(task: Task, id: string, idChild: string){
         const tr = document.createElement('tr')
         const td1 = document.createElement('td')
@@ -395,7 +394,7 @@ const tabController = new TabController([
         table.appendChild(tr)
         if(task.children)
           for(const childTask of task.children){
-            idChild++
+            idChild = (parseInt(idChild) + 1).toString()
             createRow(childTask, id, idChild)
           }
       }
@@ -450,7 +449,7 @@ const tabController = new TabController([
 
       let id = '0'
       for(const task of tabController.tasks.children){
-        id++
+        id = (parseInt(id) + 1).toString()
         createRow(task, id, '0')
       }
       return table
@@ -459,4 +458,3 @@ const tabController = new TabController([
 ], task)
 
 tabController.selectedTaskId = '1'
-
