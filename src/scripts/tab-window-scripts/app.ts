@@ -42,19 +42,18 @@ interface Task {
 //Class with static methods to work on tasks
 class Task {
 
-  static getTaskById(task: Task, id: string): Task {
+  static findTaskById(task: Task, id: string): Task {
     if(id.length < 1)
       return task
     else {
-      const ids: number[] = id.split('.').map(num => parseInt(num))
-      task = task.children[ids[0]-1]
+      const ids: number[] = id.split('.').map(parseInt)
+      task = task.children[ids[0]+1]
       ids.shift()
-      return this.getTaskById(task, ids.join('.'))
+      return this.findTaskById(task, ids.join('.'))
     }
   }
 
 }
-
 
 //Interface for tabs
 interface Tab {
@@ -188,7 +187,8 @@ class TabController {
   //Attributi
   private _currentTab: number = 0
   private _selectedTaskId: string = ''
-  
+  private _selectedTask: Task
+
   constructor(private tabs: Tab[], public tasks?: Task) {
     this.currentTab = 0
   }
@@ -213,33 +213,31 @@ class TabController {
     }
   }
 
-  get selectedTaskId () {return this._selectedTaskId}
-  set selectedTaskId (task: string) {
-    if(task) {
-      this._selectedTaskId = task
-
-      const currentTask = Task.getTaskById(this.tasks, task)
+  get selectedTask () {return this._selectedTask}
+  set selectedTask (task: Task) {
+    if(task != null) {
+      this._selectedTask = task
 
       const properties: Property<string>[] = []
       properties.push({
         name: 'title',
         description: 'title text',
-        value: currentTask.title
+        value: task.title
       })
       properties.push({
         name: 'description',
         description: 'description text',
-        value: currentTask.description
+        value: task.description
       })
       properties.push({
         name: 'start date',
         description: 'project\'s start date' ,
-        value: currentTask.start_date
+        value: task.start_date
       })
       properties.push({
         name: 'end date',
         description: 'project\'s end date' ,
-        value: currentTask.end_date
+        value: task.end_date
       })
       TabWindowRenderer.updatePropertiesPanel(properties)
     }
@@ -347,11 +345,10 @@ const tabController = new TabController([
     menuItems: [],
     view(tabController: TabController): Element {
 
-
       function createRow(task: Task, id: string, idChild: string){
         const tr = document.createElement('tr')
         const td1 = document.createElement('td')
-              if(idChild == 0)
+              if(idChild == '0')
                 td1.innerHTML = `${id}`
               else
                 td1.innerHTML = `${id}.${idChild}`
@@ -390,6 +387,9 @@ const tabController = new TabController([
             createRow(childTask, id, idChild)
           }
       }
+
+
+
 
 
       const table = document.createElement('table')
@@ -436,7 +436,7 @@ const tabController = new TabController([
       }
       table.appendChild(trA)
 
-      const id = '0'
+      let id = '0'
       for(const task of tabController.tasks.children){
         id++
         createRow(task, id, '0')
