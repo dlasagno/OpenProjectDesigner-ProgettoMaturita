@@ -19,7 +19,7 @@ interface Task {
   }
 
   gantt_graphics?:{
-
+    
   }
 
   collapsed: boolean
@@ -36,7 +36,7 @@ interface Task {
   extra_info?: {}
 
   children?: Task[]
-
+  
 }
 
 //Class with static methods to work on tasks
@@ -47,7 +47,7 @@ class Task {
       return task
     else {
       const ids: number[] = id.split('.').map(num => parseInt(num))
-      task = task.children[ids[0]-1]
+      task = task.children[ids[0] - 1]
       ids.shift()
       return this.getTaskById(task, ids.join('.'))
     }
@@ -75,6 +75,7 @@ interface MenuItem {
 interface TabButton extends MenuItem {
   icon: string
 }
+
 
 //---------------------------------------------------------------------------------------------------------------
 
@@ -250,48 +251,6 @@ class TabController {
 
 //---------------------------------------------------------------------------------------------------------------
 
-/*TabWindowRenderer.updateNav([
-  {
-    name: "info",
-    icon: 'fa-info',
-    action() {
-      console.log("Info - Funziona!!!")
-    }
-  },
-  {
-    name: "bell",
-    icon: 'fa-bell',
-    action() {
-      console.log("Bell - Funziona!!!")
-    }
-  },
-  {
-    name: "bolt",
-    icon: 'fa-bolt',
-    action() {
-      console.log("Bolt - Funziona!!!")
-    }
-  }
-], 1)*/
-
-TabWindowRenderer.updatePropertiesPanel([
-  {
-    name: 'prop 1',
-    description: 'testo prop 1',
-    value: 'Mario Rossi'
-  },
-  {
-    name: 'prop 2',
-    description: 'testo prop 2',
-    value: 'Roma'
-  },
-  {
-    name: 'prop 3',
-    description: 'testo prop 3',
-    value: 'insegnante'
-  }
-])
-
 const task: Task = {
   title: 'Progetto',
   description: 'desrizione progetto',
@@ -401,7 +360,7 @@ const tabController = new TabController([
       function createRow(task: Task, id: string, idChild: string){
         const tr = document.createElement('tr')
         const td1 = document.createElement('td')
-              if(idChild == 0)
+              if(idChild == '0')
                 td1.innerHTML = `${id}`
               else
                 td1.innerHTML = `${id}.${idChild}`
@@ -440,6 +399,9 @@ const tabController = new TabController([
             createRow(childTask, id, idChild)
           }
       }
+
+
+
 
 
       const table = document.createElement('table')
@@ -486,7 +448,7 @@ const tabController = new TabController([
       }
       table.appendChild(trA)
 
-      const id = '0'
+      let id = '0'
       for(const task of tabController.tasks.children){
         id++
         createRow(task, id, '0')
