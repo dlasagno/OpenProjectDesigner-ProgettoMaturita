@@ -19,22 +19,25 @@ const ganttTab: Tab = {
   view(tabController: TabController): Element {
 
 
-    function createRow(task: Task){
+    function createRow(task: Task, id: string, idChild: string){
       const tr = document.createElement('tr')
       const td1 = document.createElement('td')
-            td1.innerHTML = `1`
+            if(idChild == 0)
+              td1.innerHTML = `${id}`
+            else
+              td1.innerHTML = `${id}.${idChild}`
       const td2 = document.createElement('td')
-            td2.innerHTML = task.title
+            td2.innerHTML = `${task.title}`
       const td3 = document.createElement('td')
-            td3.innerHTML = task.start_date
+            td3.innerHTML = `${task.start_date}`
       const td4 = document.createElement('td')
-            td4.innerHTML = task.end_date
+            td4.innerHTML = `${task.end_date}`
       const td5 = document.createElement('td')
             td5.innerHTML = `<progress max="100" value="${task.progress}">`
       const td6 = document.createElement('td')
 
       if(task.cost != null)
-        td6.innerHTML = task.cost.toString()
+        td6.innerHTML = `${task.cost}€`
       else
         td6.innerHTML = `0`
 
@@ -53,8 +56,10 @@ const ganttTab: Tab = {
 
       table.appendChild(tr)
       if(task.children)
-        for(const childTask of task.children)
-          createRow(childTask)
+        for(const childTask of task.children){
+          idChild++
+          createRow(childTask, id, idChild)
+        }
     }
 
 
@@ -102,9 +107,11 @@ const ganttTab: Tab = {
     }
     table.appendChild(trA)
 
-    for(const task of tabController.tasks.children)
-      createRow(task)
-
+    const id = '0'
+    for(const task of tabController.tasks.children){
+      id++
+      createRow(task, id, '0')
+    }
     return table
   }
-  }
+}
