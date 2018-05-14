@@ -59,7 +59,7 @@ export class TabWindowRenderer {
     }
   }
 
-  static updatePropertiesPanel(properties: Property<string>[]): void {
+  static updatePropertiesPanel(properties: Property<string>[], tabController: tabController): void {
     //Select the tabs navigation
     const propertiesPanelElement = this.windowElement.querySelector('#properties-panel .list')
 
@@ -81,10 +81,17 @@ export class TabWindowRenderer {
       //Create the text for the tab button
       const propertyBodyElement = document.createElement('div')
       propertyBodyElement.classList.add('property-body')
-      propertyBodyElement.innerHTML = `
-        <span>${property.description}:</span>
-        <input type="text" value="${property.value}">
-      `
+      const descriptionProperty = document.createElement('span')
+      descriptionProperty.innerHTML = `<span>${property.description}:</span>`
+      const inputProperty = document.createElement('input')
+      inputProperty.setAttribute('type', 'text')
+      inputProperty.setAttribute('value', property.value)
+      inputProperty.addEventListener('keydown', (event) => {
+        if(event.key === "Enter")
+          tabController.update()
+      })
+      propertyBodyElement.appendChild(descriptionProperty)
+      propertyBodyElement.appendChild(inputProperty)
       propertyElement.appendChild(propertyBodyElement)
 
       //Append all to the tabs navigation

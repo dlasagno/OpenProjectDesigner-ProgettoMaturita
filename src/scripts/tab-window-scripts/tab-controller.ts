@@ -58,8 +58,12 @@ export class TabController {
         description: 'project\'s end date' ,
         value: currentTask.end_date
       })
-      TabWindowRenderer.updatePropertiesPanel(properties)
+      TabWindowRenderer.updatePropertiesPanel(properties, this)
     }
+  }
+
+  update() {
+    TabWindowRenderer.updateView(this.tabs[this._currentTab].view(this))
   }
 
 }
