@@ -46,10 +46,34 @@ export class Task {
 
 }
 
-//Class for tabs
+
+//Interface for tabs
 interface Tab {
   name: string
   icon: string
   menuItems: MenuItem[]
-  view(): Element
+  view(tabController: TabController): Element
+}
+
+
+//Interface for tab menus
+export interface MenuItem {
+  name: string,
+  action()
+}
+
+//Interface for tab buttons
+export interface TabButton extends MenuItem {
+  icon: string
+}
+
+
+
+const ganttTab: Tab = {
+  name: 'GANTT',
+  icon: 'fa-th-list',
+  menuItems: [],
+  view(tabController: TabController): Element {
+    return document.createElement('div')
+  }
 }

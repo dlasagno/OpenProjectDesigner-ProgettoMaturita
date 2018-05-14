@@ -1,7 +1,7 @@
-import { TabController } from "../tab-window-scripts/tab.controller"
-import { Tab } from "./tab";
-import { MenuItem } from './tab-menu';
-import { TabController } from "../tab-window-scripts/tab-controller";
+import { TabController } from "../tab-window-scripts/tab-controller"
+import { Tab } from "./tab"
+import { MenuItem } from './tab-menu'
+
 
 var fs = require('fs');
 var data = fs.readFileSync('../../data/project.json', 'utf-8');
@@ -13,12 +13,8 @@ var projects = JSON.parse(data);
 
 const ganttTab: Tab = {
   name: 'GANTT',
-  icon: 'th-list',
-  menuItems: [
-    {
-
-    }
-  ],
+  icon: 'fa-th-list',
+  menuItems: [],
   view(tabController: TabController): Element {
 
 
