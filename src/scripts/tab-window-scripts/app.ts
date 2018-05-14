@@ -292,6 +292,56 @@ TabWindowRenderer.updatePropertiesPanel([
   }
 ])
 
+const task: Task = {
+  title: 'Progetto',
+  description: 'desrizione progetto',
+  collapsed: false,
+  start_date: '01-01-2018',
+  end_date: '03-01-2018',
+  progress: 50,
+  cost: 3000,
+  children: [
+    {
+      title: 'Pianificazione',
+      description: 'descrizione pianificazione',
+      collapsed: false,
+      start_date: '01-01-2018',
+      end_date: '03-01-2018',
+      progress: 50,
+      cost: 500,
+      children: [
+        {
+          title: 'Raccolta dati',
+          description: 'descrizione raccolta dati',
+          collapsed: false,
+          start_date: '01-01-2018',
+          end_date: '01-01-2018',
+          progress: 50,
+          cost: 100
+        },
+        {
+          title: 'Esaminazione',
+          description: 'descrizione esaminazione',
+          collapsed: false,
+          start_date: '02-01-2018',
+          end_date: '03-01-2018',
+          progress: 50,
+          cost: 400
+        }
+      ]
+    },
+    {
+      title: 'Preparazione',
+      description: 'descrizione preparazione',
+      collapsed: false,
+      start_date: '03-01-2018',
+      end_date: '03-01-2018',
+      progress: 50,
+      cost: 2000
+    }
+  ]
+}
+
 const tabController = new TabController([
   {
     name: 'test',
@@ -346,8 +396,8 @@ const tabController = new TabController([
     icon: 'fa-th-list',
     menuItems: [],
     view(tabController: TabController): Element {
-
-
+      
+      
       function createRow(task: Task, id: string, idChild: string){
         const tr = document.createElement('tr')
         const td1 = document.createElement('td')
@@ -444,118 +494,7 @@ const tabController = new TabController([
       return table
     }
   }
-],
-{
-  title: 'Progetto',
-  description: 'desrizione progetto',
-  collapsed: false,
-  start_date: '01-01-2018',
-  end_date: '03-01-2018',
-  progress: 50,
-  cost: 3000,
-  children: [
-    {
-      title: 'Pianificazione',
-      description: 'descrizione pianificazione',
-      collapsed: false,
-      start_date: '01-01-2018',
-      end_date: '03-01-2018',
-      progress: 50,
-      cost: 500,
-      children: [
-        {
-          title: 'Raccolta dati',
-          description: 'descrizione raccolta dati',
-          collapsed: false,
-          start_date: '01-01-2018',
-          end_date: '01-01-2018',
-          progress: 50,
-          cost: 100
-        },
-        {
-          title: 'Esaminazione',
-          description: 'descrizione esaminazione',
-          collapsed: false,
-          start_date: '02-01-2018',
-          end_date: '03-01-2018',
-          progress: 50,
-          cost: 400
-        }
-      ]
-    },
-    {
-      title: 'Preparazione',
-      description: 'descrizione preparazione',
-      collapsed: false,
-      start_date: '03-01-2018',
-      end_date: '03-01-2018',
-      progress: 50,
-      cost: 2000
-    }
-  ]
-}
-)
+], task)
 
-/*tabController.selectedTask = {
-  title: 'titolo',
-  description: 'descrizione',
-  collapsed: false,
-  format: [],
-  start_date: '10/5/2019',
-  end_date: '10/5/2020',
-  progress: 0,
-  cost: 2000000,
-  appointee: 'Daniele'
-}*/
+tabController.selectedTaskId = '1'
 
-const task: Task = {
-  title: 'Progetto',
-  description: 'desrizione progetto',
-  collapsed: false,
-  start_date: '01-01-2018',
-  end_date: '03-01-2018',
-  progress: 50,
-  cost: 3000,
-  children: [
-    {
-      title: 'Pianificazione',
-      description: 'descrizione pianificazione',
-      collapsed: false,
-      start_date: '01-01-2018',
-      end_date: '03-01-2018',
-      progress: 50,
-      cost: 500,
-      children: [
-        {
-          title: 'Raccolta dati',
-          description: 'descrizione raccolta dati',
-          collapsed: false,
-          start_date: '01-01-2018',
-          end_date: '01-01-2018',
-          progress: 50,
-          cost: 100
-        },
-        {
-          title: 'Esaminazione',
-          description: 'descrizione esaminazione',
-          collapsed: false,
-          start_date: '02-01-2018',
-          end_date: '03-01-2018',
-          progress: 50,
-          cost: 400
-        }
-      ]
-    },
-    {
-      title: 'Preparazione',
-      description: 'descrizione preparazione',
-      collapsed: false,
-      start_date: '03-01-2018',
-      end_date: '03-01-2018',
-      progress: 50,
-      cost: 2000
-    }
-  ]
-}
-
-//console.log(Task.findTaskById(task, ''))
