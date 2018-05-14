@@ -5,7 +5,6 @@ export class TabController {
   //Attributi
   private _currentTab: number = 0
   private _selectedTaskId: string = ''
-  private _selectedTask: Task
   
   constructor(private tabs: Tab[], public tasks?: Task) {
     this.currentTab = 0
@@ -31,31 +30,33 @@ export class TabController {
     }
   }
 
-  get selectedTask () {return this._selectedTask}
-  set selectedTask (task: Task) {
-    if(task != null) {
-      this._selectedTask = task
+  get selectedTaskId () {return this._selectedTaskId}
+  set selectedTaskId (task: string) {
+    if(task) {
+      this._selectedTaskId = task
+
+      const currentTask = Task.getTaskById(this.tasks, task)
 
       const properties: Property<string>[] = []
       properties.push({
         name: 'title',
         description: 'title text',
-        value: task.title
+        value: currentTask.title
       })
       properties.push({
         name: 'description',
         description: 'description text',
-        value: task.description
+        value: currentTask.description
       })
       properties.push({
         name: 'start date',
         description: 'project\'s start date' ,
-        value: task.start_date
+        value: currentTask.start_date
       })
       properties.push({
         name: 'end date',
         description: 'project\'s end date' ,
-        value: task.end_date
+        value: currentTask.end_date
       })
       TabWindowRenderer.updatePropertiesPanel(properties)
     }

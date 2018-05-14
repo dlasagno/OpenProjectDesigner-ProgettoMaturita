@@ -40,14 +40,14 @@ export interface Task {
 //Class with static methods to work on tasks
 export class Task {
 
-  static findTaskById(task: Task, id: string): Task {
+  static getTaskById(task: Task, id: string): Task {
     if(id.length < 1)
       return task
     else {
-      const ids: number[] = id.split('.').map(parseInt)
+      const ids: number[] = id.split('.').map(num => parseInt(num))
       task = task.children[ids[0]-1]
       ids.shift()
-      return this.findTaskById(task, ids.join('.'))
+      return this.getTaskById(task, ids.join('.'))
     }
   }
 
