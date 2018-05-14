@@ -41,8 +41,14 @@ export interface Task {
 export class Task {
 
   static findTaskById(task: Task, id: string): Task {
-    id.split('.')
-    return task.children[0]
+    if(id.length < 1)
+      return task
+    else {
+      const ids: number[] = id.split('.').map(parseInt)
+      task = task.children[ids[0]+1]
+      ids.shift()
+      return this.findTaskById(task, ids.join('.'))
+    }
   }
 
 }

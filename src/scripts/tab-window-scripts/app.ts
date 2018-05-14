@@ -43,8 +43,14 @@ interface Task {
 class Task {
 
   static findTaskById(task: Task, id: string): Task {
-
-    return task.children[0]
+    if(id.length < 1)
+      return task
+    else {
+      const ids: number[] = id.split('.').map(parseInt)
+      task = task.children[ids[0]+1]
+      ids.shift()
+      return this.findTaskById(task, ids.join('.'))
+    }
   }
 
 }
@@ -461,7 +467,7 @@ const tabController = new TabController([
       children: [
         {
           title: 'Raccolta dati',
-          descrition: 'descrizione raccolta dati',
+          description: 'descrizione raccolta dati',
           collapsed: false,
           start_date: '01-01-2018',
           end_date: '01-01-2018',
@@ -470,7 +476,7 @@ const tabController = new TabController([
         },
         {
           title: 'Esaminazione',
-          descrition: 'descrizione esaminazione',
+          description: 'descrizione esaminazione',
           collapsed: false,
           start_date: '02-01-2018',
           end_date: '03-01-2018',
@@ -481,7 +487,7 @@ const tabController = new TabController([
     },
     {
       title: 'Preparazione',
-      descrition: 'descrizione preparazione',
+      description: 'descrizione preparazione',
       collapsed: false,
       start_date: '03-01-2018',
       end_date: '03-01-2018',
@@ -505,12 +511,53 @@ const tabController = new TabController([
 }*/
 
 const task: Task = {
-  title: '',
-  description: '',
+  title: 'Progetto',
+  description: 'desrizione progetto',
   collapsed: false,
-  start_date: '',
-  end_date: '',
-  progress: 0
+  start_date: '01-01-2018',
+  end_date: '03-01-2018',
+  progress: 50,
+  cost: 3000,
+  children: [
+    {
+      title: 'Pianificazione',
+      description: 'descrizione pianificazione',
+      collapsed: false,
+      start_date: '01-01-2018',
+      end_date: '03-01-2018',
+      progress: 50,
+      cost: 500,
+      children: [
+        {
+          title: 'Raccolta dati',
+          description: 'descrizione raccolta dati',
+          collapsed: false,
+          start_date: '01-01-2018',
+          end_date: '01-01-2018',
+          progress: 50,
+          cost: 100
+        },
+        {
+          title: 'Esaminazione',
+          description: 'descrizione esaminazione',
+          collapsed: false,
+          start_date: '02-01-2018',
+          end_date: '03-01-2018',
+          progress: 50,
+          cost: 400
+        }
+      ]
+    },
+    {
+      title: 'Preparazione',
+      description: 'descrizione preparazione',
+      collapsed: false,
+      start_date: '03-01-2018',
+      end_date: '03-01-2018',
+      progress: 50,
+      cost: 2000
+    }
+  ]
 }
 
 //console.log(Task.findTaskById(task, ''))
