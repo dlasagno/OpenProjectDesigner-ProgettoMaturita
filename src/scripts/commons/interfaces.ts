@@ -1,3 +1,5 @@
+import { TabController } from '../tab-window-scripts/tab-controller'
+
 //Interface for properties
 export interface Property<T> {
   name: string;
@@ -45,7 +47,7 @@ export class Task {
       return task
     else {
       const ids: number[] = id.split('.').map(num => parseInt(num))
-      task = task.children[ids[0]-1]
+      task = task.children[ids[0] - 1]
       ids.shift()
       return this.getTaskById(task, ids.join('.'))
     }

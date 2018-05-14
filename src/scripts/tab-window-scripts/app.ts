@@ -19,7 +19,7 @@ interface Task {
   }
 
   gantt_graphics?:{
-
+    
   }
 
   collapsed: boolean
@@ -36,24 +36,25 @@ interface Task {
   extra_info?: {}
 
   children?: Task[]
-
+  
 }
 
 //Class with static methods to work on tasks
 class Task {
 
-  static findTaskById(task: Task, id: string): Task {
+  static getTaskById(task: Task, id: string): Task {
     if(id.length < 1)
       return task
     else {
-      const ids: number[] = id.split('.').map(parseInt)
-      task = task.children[ids[0]+1]
+      const ids: number[] = id.split('.').map(num => parseInt(num))
+      task = task.children[ids[0] - 1]
       ids.shift()
-      return this.findTaskById(task, ids.join('.'))
+      return this.getTaskById(task, ids.join('.'))
     }
   }
 
 }
+
 
 //Interface for tabs
 interface Tab {
@@ -74,6 +75,7 @@ interface MenuItem {
 interface TabButton extends MenuItem {
   icon: string
 }
+
 
 //---------------------------------------------------------------------------------------------------------------
 
@@ -187,8 +189,7 @@ class TabController {
   //Attributi
   private _currentTab: number = 0
   private _selectedTaskId: string = ''
-  private _selectedTask: Task
-
+  
   constructor(private tabs: Tab[], public tasks?: Task) {
     this.currentTab = 0
   }
@@ -213,31 +214,33 @@ class TabController {
     }
   }
 
-  get selectedTask () {return this._selectedTask}
-  set selectedTask (task: Task) {
-    if(task != null) {
-      this._selectedTask = task
+  get selectedTaskId () {return this._selectedTaskId}
+  set selectedTaskId (task: string) {
+    if(task) {
+      this._selectedTaskId = task
+
+      const currentTask = Task.getTaskById(this.tasks, task)
 
       const properties: Property<string>[] = []
       properties.push({
         name: 'title',
         description: 'title text',
-        value: task.title
+        value: currentTask.title
       })
       properties.push({
         name: 'description',
         description: 'description text',
-        value: task.description
+        value: currentTask.description
       })
       properties.push({
         name: 'start date',
         description: 'project\'s start date' ,
-        value: task.start_date
+        value: currentTask.start_date
       })
       properties.push({
         name: 'end date',
         description: 'project\'s end date' ,
-        value: task.end_date
+        value: currentTask.end_date
       })
       TabWindowRenderer.updatePropertiesPanel(properties)
     }
@@ -248,47 +251,55 @@ class TabController {
 
 //---------------------------------------------------------------------------------------------------------------
 
-/*TabWindowRenderer.updateNav([
-  {
-    name: "info",
-    icon: 'fa-info',
-    action() {
-      console.log("Info - Funziona!!!")
+const task: Task = {
+  title: 'Progetto',
+  description: 'desrizione progetto',
+  collapsed: false,
+  start_date: '01-01-2018',
+  end_date: '03-01-2018',
+  progress: 50,
+  cost: 3000,
+  children: [
+    {
+      title: 'Pianificazione',
+      description: 'descrizione pianificazione',
+      collapsed: false,
+      start_date: '01-01-2018',
+      end_date: '03-01-2018',
+      progress: 50,
+      cost: 500,
+      children: [
+        {
+          title: 'Raccolta dati',
+          description: 'descrizione raccolta dati',
+          collapsed: false,
+          start_date: '01-01-2018',
+          end_date: '01-01-2018',
+          progress: 50,
+          cost: 100
+        },
+        {
+          title: 'Esaminazione',
+          description: 'descrizione esaminazione',
+          collapsed: false,
+          start_date: '02-01-2018',
+          end_date: '03-01-2018',
+          progress: 50,
+          cost: 400
+        }
+      ]
+    },
+    {
+      title: 'Preparazione',
+      description: 'descrizione preparazione',
+      collapsed: false,
+      start_date: '03-01-2018',
+      end_date: '03-01-2018',
+      progress: 50,
+      cost: 2000
     }
-  },
-  {
-    name: "bell",
-    icon: 'fa-bell',
-    action() {
-      console.log("Bell - Funziona!!!")
-    }
-  },
-  {
-    name: "bolt",
-    icon: 'fa-bolt',
-    action() {
-      console.log("Bolt - Funziona!!!")
-    }
-  }
-], 1)*/
-
-TabWindowRenderer.updatePropertiesPanel([
-  {
-    name: 'prop 1',
-    description: 'testo prop 1',
-    value: 'Mario Rossi'
-  },
-  {
-    name: 'prop 2',
-    description: 'testo prop 2',
-    value: 'Roma'
-  },
-  {
-    name: 'prop 3',
-    description: 'testo prop 3',
-    value: 'insegnante'
-  }
-])
+  ]
+}
 
 const tabController = new TabController([
   {
@@ -344,7 +355,8 @@ const tabController = new TabController([
     icon: 'fa-th-list',
     menuItems: [],
     view(tabController: TabController): Element {
-
+      
+      
       function createRow(task: Task, id: string, idChild: string){
         const tr = document.createElement('tr')
         const td1 = document.createElement('td')
@@ -444,118 +456,7 @@ const tabController = new TabController([
       return table
     }
   }
-],
-{
-  title: 'Progetto',
-  description: 'desrizione progetto',
-  collapsed: false,
-  start_date: '01-01-2018',
-  end_date: '03-01-2018',
-  progress: 50,
-  cost: 3000,
-  children: [
-    {
-      title: 'Pianificazione',
-      description: 'descrizione pianificazione',
-      collapsed: false,
-      start_date: '01-01-2018',
-      end_date: '03-01-2018',
-      progress: 50,
-      cost: 500,
-      children: [
-        {
-          title: 'Raccolta dati',
-          description: 'descrizione raccolta dati',
-          collapsed: false,
-          start_date: '01-01-2018',
-          end_date: '01-01-2018',
-          progress: 50,
-          cost: 100
-        },
-        {
-          title: 'Esaminazione',
-          description: 'descrizione esaminazione',
-          collapsed: false,
-          start_date: '02-01-2018',
-          end_date: '03-01-2018',
-          progress: 50,
-          cost: 400
-        }
-      ]
-    },
-    {
-      title: 'Preparazione',
-      description: 'descrizione preparazione',
-      collapsed: false,
-      start_date: '03-01-2018',
-      end_date: '03-01-2018',
-      progress: 50,
-      cost: 2000
-    }
-  ]
-}
-)
+], task)
 
-/*tabController.selectedTask = {
-  title: 'titolo',
-  description: 'descrizione',
-  collapsed: false,
-  format: [],
-  start_date: '10/5/2019',
-  end_date: '10/5/2020',
-  progress: 0,
-  cost: 2000000,
-  appointee: 'Daniele'
-}*/
+tabController.selectedTaskId = '1'
 
-const task: Task = {
-  title: 'Progetto',
-  description: 'desrizione progetto',
-  collapsed: false,
-  start_date: '01-01-2018',
-  end_date: '03-01-2018',
-  progress: 50,
-  cost: 3000,
-  children: [
-    {
-      title: 'Pianificazione',
-      description: 'descrizione pianificazione',
-      collapsed: false,
-      start_date: '01-01-2018',
-      end_date: '03-01-2018',
-      progress: 50,
-      cost: 500,
-      children: [
-        {
-          title: 'Raccolta dati',
-          description: 'descrizione raccolta dati',
-          collapsed: false,
-          start_date: '01-01-2018',
-          end_date: '01-01-2018',
-          progress: 50,
-          cost: 100
-        },
-        {
-          title: 'Esaminazione',
-          description: 'descrizione esaminazione',
-          collapsed: false,
-          start_date: '02-01-2018',
-          end_date: '03-01-2018',
-          progress: 50,
-          cost: 400
-        }
-      ]
-    },
-    {
-      title: 'Preparazione',
-      description: 'descrizione preparazione',
-      collapsed: false,
-      start_date: '03-01-2018',
-      end_date: '03-01-2018',
-      progress: 50,
-      cost: 2000
-    }
-  ]
-}
-
-//console.log(Task.findTaskById(task, ''))
