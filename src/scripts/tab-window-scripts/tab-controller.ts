@@ -1,4 +1,5 @@
-import { TabWindowRenderer } from './tab-window-renderer';
+import { TabWindowRenderer } from './tab-window-renderer'
+import { Task } from '../commons/interfaces'
 
 export class TabController {
   //Attributi
@@ -6,7 +7,7 @@ export class TabController {
   private _selectedTaskId: string = ''
   private _selectedTask: Task
   
-  constructor(private tabs: Tab[], private tasks?: Task) {
+  constructor(private tabs: Tab[], public tasks?: Task) {
     this.currentTab = 0
   }
 
@@ -60,46 +61,4 @@ export class TabController {
     }
   }
 
-}
-
-
-
-
-
-
-
-interface Task {
-  title: string
-  description: string
-
-  wbs_graphics?: {
-    color: string
-  }
-
-  gantt_graphics?:{
-    
-  }
-
-  collapsed: boolean
-
-  format?: string[]
-
-  start_date: string
-  end_date: string
-
-  progress: number
-  cost?: number
-  appointee?: string
-
-  extra_info?: {}
-
-  children?: Task[]
-}
-
-//Debug
-interface Tab {
-  name: string
-  icon: string
-  menuItems: MenuItem[]
-  view(): Element
 }

@@ -137,12 +137,12 @@ interface Tab {
 }
 
 interface Task {
+
   title: string
   description: string
 
   wbs_graphics?: {
     color: string
-    alignment: string
   }
 
   gantt_graphics?:{
@@ -151,18 +151,19 @@ interface Task {
 
   collapsed: boolean
 
-  format: string[]
+  format?: string[]
 
   start_date: string
   end_date: string
 
   progress: number
-  cost: number
-  appointee: string
+  cost?: number
+  appointee?: string
 
   extra_info?: {}
 
   children?: Task[]
+  
 }
 
 
