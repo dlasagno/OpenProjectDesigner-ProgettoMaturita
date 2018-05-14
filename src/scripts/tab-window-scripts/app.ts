@@ -138,7 +138,7 @@ class TabWindowRenderer {
     }
   }
 
-  static updatePropertiesPanel(properties: Property<string>[], tabController: tabController): void {
+  static updatePropertiesPanel(properties: Property<string>[]): void {
     //Select the tabs navigation
     const propertiesPanelElement = this.windowElement.querySelector('#properties-panel .list')
 
@@ -160,17 +160,10 @@ class TabWindowRenderer {
       //Create the text for the tab button
       const propertyBodyElement = document.createElement('div')
       propertyBodyElement.classList.add('property-body')
-      const descriptionProperty = document.createElement('span')
-      descriptionProperty.innerHTML = `<span>${property.description}:</span>`
-      const inputProperty = document.createElement('input')
-      inputProperty.setAttribute('type', 'text')
-      inputProperty.setAttribute('value', property.value)
-      inputProperty.addEventListener('keydown', (event) => {
-        if(event.key === "Enter")
-          tabController.update()
-      })
-      propertyBodyElement.appendChild(descriptionProperty)
-      propertyBodyElement.appendChild(inputProperty)
+      propertyBodyElement.innerHTML = `
+        <span>${property.description}:</span>
+        <input type="text" value="${property.value}">
+      `
       propertyElement.appendChild(propertyBodyElement)
 
       //Append all to the tabs navigation
@@ -196,7 +189,7 @@ class TabController {
   //Attributi
   private _currentTab: number = 0
   private _selectedTaskId: string = ''
-  
+
   constructor(private tabs: Tab[], public tasks?: Task) {
     this.currentTab = 0
   }
@@ -249,12 +242,8 @@ class TabController {
         description: 'project\'s end date' ,
         value: currentTask.end_date
       })
-      TabWindowRenderer.updatePropertiesPanel(properties, this)
+      TabWindowRenderer.updatePropertiesPanel(properties)
     }
-  }
-
-  update() {
-    this.currentTab = this._currentTab
   }
 
 }
@@ -368,26 +357,35 @@ const tabController = new TabController([
     view(tabController: TabController): Element {
 
       function createRow(task: Task, id: string, idChild: string){
+
+
+        if(idChild == '0')
+          const idd = `${id}`
+        else
+          const idd = `${id}.${idChild}`
+
         const tr = document.createElement('tr')
         const td1 = document.createElement('td')
-              if(idChild == '0')
-                td1.innerHTML = `${id}`
-              else
-                td1.innerHTML = `${id}.${idChild}`
+              td1.innerHTML = `${idd}`
+              td1.addEventListener('click', tabController.selectedTaskId = idd)
         const td2 = document.createElement('td')
               td2.innerHTML = `${task.title}`
+              td2.addEventListener('click', tabController.selectedTaskId = idd)
         const td3 = document.createElement('td')
               td3.innerHTML = `${task.start_date}`
+              td3.addEventListener('click', tabController.selectedTaskId = idd)
         const td4 = document.createElement('td')
               td4.innerHTML = `${task.end_date}`
+              td4.addEventListener('click', tabController.selectedTaskId = idd)
         const td5 = document.createElement('td')
               td5.innerHTML = `<progress max="100" value="${task.progress}">`
+              td5.addEventListener('click', tabController.selectedTaskId)
         const td6 = document.createElement('td')
-
-        if(task.cost != null)
-          td6.innerHTML = `${task.cost}€`
-        else
-          td6.innerHTML = `0`
+              if(task.cost != null)
+                td6.innerHTML = `${task.cost}€`
+              else
+                td6.innerHTML = `0`
+              td6.addEventListener('click', tabController.selectedTaskId = idd)
 
         tr.appendChild(td1)
         tr.appendChild(td2)
@@ -409,9 +407,6 @@ const tabController = new TabController([
             createRow(childTask, id, idChild)
           }
       }
-
-
-
 
 
       const table = document.createElement('table')

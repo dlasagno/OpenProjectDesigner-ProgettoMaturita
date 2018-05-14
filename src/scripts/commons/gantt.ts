@@ -7,26 +7,35 @@ const ganttTab: Tab = {
   view(tabController: TabController): Element {
 
     function createRow(task: Task, id: string, idChild: string){
+
+
+      if(idChild == '0')
+        const idd = `${id}`
+      else
+        const idd = `${id}.${idChild}`
+
       const tr = document.createElement('tr')
       const td1 = document.createElement('td')
-            if(idChild == '0')
-              td1.innerHTML = `${id}`
-            else
-              td1.innerHTML = `${id}.${idChild}`
+            td1.innerHTML = `${idd}`
+            td1.addEventListener('click', tabController.selectedTaskId = idd)
       const td2 = document.createElement('td')
             td2.innerHTML = `${task.title}`
+            td2.addEventListener('click', tabController.selectedTaskId = idd)
       const td3 = document.createElement('td')
             td3.innerHTML = `${task.start_date}`
+            td3.addEventListener('click', tabController.selectedTaskId = idd)
       const td4 = document.createElement('td')
             td4.innerHTML = `${task.end_date}`
+            td4.addEventListener('click', tabController.selectedTaskId = idd)
       const td5 = document.createElement('td')
             td5.innerHTML = `<progress max="100" value="${task.progress}">`
+            td5.addEventListener('click', tabController.selectedTaskId)
       const td6 = document.createElement('td')
-
-      if(task.cost != null)
-        td6.innerHTML = `${task.cost}€`
-      else
-        td6.innerHTML = `0`
+            if(task.cost != null)
+              td6.innerHTML = `${task.cost}€`
+            else
+              td6.innerHTML = `0`
+            td6.addEventListener('click', tabController.selectedTaskId = idd)
 
       tr.appendChild(td1)
       tr.appendChild(td2)
@@ -48,9 +57,6 @@ const ganttTab: Tab = {
           createRow(childTask, id, idChild)
         }
     }
-
-
-
 
 
     const table = document.createElement('table')
