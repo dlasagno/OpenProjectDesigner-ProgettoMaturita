@@ -15,7 +15,7 @@ export class TabController {
   set currentTab (tabNumber: number) {
     if(tabNumber >= 0 && tabNumber < this.tabs.length){
       this._currentTab = tabNumber
-  
+
       TabWindowRenderer.updateNav(this.tabs.reduce((tabButtons, tab, tabId) => {
         tabButtons.push({
           name: tab.name,
