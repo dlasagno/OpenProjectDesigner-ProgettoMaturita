@@ -1,5 +1,5 @@
 import { TabWindowRenderer } from './tab-window-renderer'
-import { Task } from '../commons/interfaces'
+import { Tab, Task } from '../commons/interfaces'
 
 export class TabController {
   //Attributi
@@ -27,7 +27,7 @@ export class TabController {
         return tabButtons
       }, []), this._currentTab)
       TabWindowRenderer.updateMenu(this.tabs[this._currentTab].menuItems)
-      TabWindowRenderer.updateView(this.tabs[this._currentTab].view())
+      TabWindowRenderer.updateView(this.tabs[this._currentTab].view(this))
     }
   }
 

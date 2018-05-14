@@ -1,4 +1,4 @@
-import { TabButton } from "../commons/tab";
+import { TabButton } from "../commons/interfaces";
 
 export class TabWindowRenderer {
 

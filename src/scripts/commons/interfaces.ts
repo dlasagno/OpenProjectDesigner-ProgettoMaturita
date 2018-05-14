@@ -48,7 +48,7 @@ export class Task {
 
 
 //Interface for tabs
-interface Tab {
+export interface Tab {
   name: string
   icon: string
   menuItems: MenuItem[]
@@ -68,6 +68,8 @@ export interface TabButton extends MenuItem {
 }
 
 
+
+import { TabController } from '../tab-window-scripts/tab-controller'
 
 const ganttTab: Tab = {
   name: 'GANTT',

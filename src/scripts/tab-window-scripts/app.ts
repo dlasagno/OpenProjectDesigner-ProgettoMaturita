@@ -1,7 +1,7 @@
 //File per il raggruppamento dei file sparsi, DEBUG per problemi ad import/export
 
 //Interface for properties
-export interface Property<T> {
+interface Property<T> {
   name: string;
   description: string;
   value: T;
@@ -9,7 +9,7 @@ export interface Property<T> {
 
 
 //Interface for tasks
-export interface Task {
+interface Task {
 
   title: string
   description: string
@@ -40,7 +40,7 @@ export interface Task {
 }
 
 //Class with static methods to work on tasks
-export class Task {
+class Task {
 
   static ciao(){
     console.log("ciao")
@@ -59,13 +59,13 @@ interface Tab {
 
 
 //Interface for tab menus
-export interface MenuItem {
+interface MenuItem {
   name: string,
   action()
 }
 
 //Interface for tab buttons
-export interface TabButton extends MenuItem {
+interface TabButton extends MenuItem {
   icon: string
 }
 
@@ -183,7 +183,7 @@ class TabController {
   private _selectedTaskId: string = ''
   private _selectedTask: Task
   
-  constructor(private tabs: Tab[], private tasks?: Task) {
+  constructor(private tabs: Tab[], public tasks?: Task) {
     this.currentTab = 0
   }
 
@@ -191,7 +191,7 @@ class TabController {
   set currentTab (tabNumber: number) {
     if(tabNumber >= 0 && tabNumber < this.tabs.length){
       this._currentTab = tabNumber
-  
+
       TabWindowRenderer.updateNav(this.tabs.reduce((tabButtons, tab, tabId) => {
         tabButtons.push({
           name: tab.name,
@@ -203,7 +203,7 @@ class TabController {
         return tabButtons
       }, []), this._currentTab)
       TabWindowRenderer.updateMenu(this.tabs[this._currentTab].menuItems)
-      TabWindowRenderer.updateView(this.tabs[this._currentTab].view())
+      TabWindowRenderer.updateView(this.tabs[this._currentTab].view(this))
     }
   }
 
@@ -238,6 +238,7 @@ class TabController {
   }
 
 }
+
 
 //---------------------------------------------------------------------------------------------------------------
 
