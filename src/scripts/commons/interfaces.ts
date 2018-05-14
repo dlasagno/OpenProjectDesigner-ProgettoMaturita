@@ -40,8 +40,9 @@ export interface Task {
 //Class with static methods to work on tasks
 export class Task {
 
-  static ciao(){
-    console.log("ciao")
+  static findTaskById(task: Task, id: string): Task {
+    id.split('.')
+    return task.children[0]
   }
 
 }
@@ -68,14 +69,11 @@ export interface TabButton extends MenuItem {
 }
 
 
-
-import { TabController } from '../tab-window-scripts/tab-controller'
-
-const ganttTab: Tab = {
-  name: 'GANTT',
-  icon: 'fa-th-list',
-  menuItems: [],
-  view(tabController: TabController): Element {
-    return document.createElement('div')
-  }
+const task: Task = {
+  title: '',
+  description: '',
+  collapsed: false,
+  start_date: '',
+  end_date: '',
+  progress: 0
 }

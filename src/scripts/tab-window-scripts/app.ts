@@ -42,12 +42,12 @@ interface Task {
 //Class with static methods to work on tasks
 class Task {
 
-  static ciao(){
-    console.log("ciao")
+  static findTaskById(task: Task, id: string): Task {
+
+    return task.children[0]
   }
 
 }
-
 
 //Interface for tabs
 interface Tab {
@@ -346,3 +346,14 @@ const tabController = new TabController([
   cost: 2000000,
   appointee: 'Daniele'
 }*/
+
+const task: Task = {
+  title: '',
+  description: '',
+  collapsed: false,
+  start_date: '',
+  end_date: '',
+  progress: 0
+}
+
+console.log(Task.findTaskById(task, ''))
