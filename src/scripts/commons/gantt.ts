@@ -10,8 +10,12 @@ var projects = JSON.parse(data);
 
 const ganttTab: Tab = {
   name: 'GANTT',
-  icon: 'fa-th-list',
-  menuItems: [],
+  icon: 'th-list',
+  menuItems: [
+    {
+
+    }
+  ],
   view(tabController: TabController): Element {
 
 
@@ -48,7 +52,7 @@ const ganttTab: Tab = {
       }
 
       table.appendChild(tr)
-      if(task.children[0])
+      if(task.children)
         for(const childTask of task.children)
           createRow(childTask)
     }
@@ -62,13 +66,13 @@ const ganttTab: Tab = {
     th1.setAttribute("rowspan", "2")
     const th2 = document.createElement('th')
     th2.innerHTML = `Task`
-    th2.setAttribute("rowpan", "2")
+    th2.setAttribute("rowspan", "2")
     const th3 = document.createElement('th')
     th3.innerHTML = `Start date`
     th3.setAttribute("rowspan", "2")
     const th4 = document.createElement('th')
     th4.innerHTML = `End date`
-    th4.setAttribute("rowpan", "2")
+    th4.setAttribute("rowspan", "2")
     const th5 = document.createElement('th')
     th5.innerHTML = `<progress max="100" value="50">`
     th5.setAttribute("rowspan", "2")
@@ -85,26 +89,15 @@ const ganttTab: Tab = {
     tr.appendChild(th4)
     tr.appendChild(th5)
     tr.appendChild(th6)
+    tr.appendChild(th7)
     table.appendChild(tr)
 
     const trA = document.createElement('tr')
-    const th1A = document.createElement('th')
-    const th2A = document.createElement('th')
-    const th3A = document.createElement('th')
-    const th4A = document.createElement('th')
-    const th5A = document.createElement('th')
-    const th6A = document.createElement('th')
-    trA.appendChild(th1A)
-    trA.appendChild(th2A)
-    trA.appendChild(th3A)
-    trA.appendChild(th4A)
-    trA.appendChild(th5A)
-    trA.appendChild(th6A)
 
     //le celle con i giorni
     for(let i = 0; i < 8; i++){
         const th7A = document.createElement('th')
-        th7A.innerHTML = i.toString()
+        th7A.innerHTML = (i + 1).toString()
         trA.appendChild(th7A)
     }
     table.appendChild(trA)
@@ -114,4 +107,4 @@ const ganttTab: Tab = {
 
     return table
   }
-}
+  }
