@@ -6,7 +6,7 @@ export class TabController {
   private _selectedTaskId: string = ''
   private _selectedTask: Task
   
-  constructor(private tabs: Tab[], private tasks?: Task) {
+  constructor(private tabs: Tab[], public tasks?: Task) {
     this.currentTab = 0
   }
 
@@ -14,7 +14,7 @@ export class TabController {
   set currentTab (tabNumber: number) {
     if(tabNumber >= 0 && tabNumber < this.tabs.length){
       this._currentTab = tabNumber
-  
+
       TabWindowRenderer.updateNav(this.tabs.reduce((tabButtons, tab, tabId) => {
         tabButtons.push({
           name: tab.name,
@@ -77,7 +77,7 @@ interface Task {
   }
 
   gantt_graphics?:{
-    
+
   }
 
   collapsed: boolean
