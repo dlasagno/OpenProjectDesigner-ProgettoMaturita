@@ -18,11 +18,10 @@ const ganttTab: Tab = {
   ],
   view(tabController: TabController): Element {
 
-
     function createRow(task: Task, id: string, idChild: string){
       const tr = document.createElement('tr')
       const td1 = document.createElement('td')
-            if(idChild == 0)
+            if(idChild == '0')
               td1.innerHTML = `${id}`
             else
               td1.innerHTML = `${id}.${idChild}`
@@ -61,6 +60,9 @@ const ganttTab: Tab = {
           createRow(childTask, id, idChild)
         }
     }
+
+
+
 
 
     const table = document.createElement('table')
@@ -107,7 +109,7 @@ const ganttTab: Tab = {
     }
     table.appendChild(trA)
 
-    const id = '0'
+    let id = '0'
     for(const task of tabController.tasks.children){
       id++
       createRow(task, id, '0')
