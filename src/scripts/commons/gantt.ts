@@ -10,33 +10,29 @@ var projects = JSON.parse(data);
 
 const ganttTab: Tab = {
   name: 'GANTT',
-  icon: 'th-list',
-  menuItems: [
-    {
-
-    }
-  ],
+  icon: 'fa-th-list',
+  menuItems: [],
   view(tabController: TabController): Element {
 
 
     function createRow(task: Task){
       const tr = document.createElement('tr')
       const td1 = document.createElement('td')
-      th1.innerHTML = `1`
+            td1.innerHTML = `1`
       const td2 = document.createElement('td')
-      th2.innerHTML = task.title
+            td2.innerHTML = task.title
       const td3 = document.createElement('td')
-      th3.innerHTML = task.start_date
+            td3.innerHTML = task.start_date
       const td4 = document.createElement('td')
-      th4.innerHTML = task.end_date
+            td4.innerHTML = task.end_date
       const td5 = document.createElement('td')
-      th5.innerHTML = `<progress max="100" value="${task.progress}">`
+            td5.innerHTML = `<progress max="100" value="${task.progress}">`
       const td6 = document.createElement('td')
 
       if(task.cost != null)
-        th6.innerHTML = task.cost
+        td6.innerHTML = task.cost.toString()
       else
-        th6.innerHTML = `0`
+        td6.innerHTML = `0`
 
       tr.appendChild(td1)
       tr.appendChild(td2)
@@ -52,13 +48,9 @@ const ganttTab: Tab = {
       }
 
       table.appendChild(tr)
-      if(task.children[0]){
-        for(const task of task.children){
-          createRow(task)
-        }
-      }
-
-
+      if(task.children[0])
+        for(const childTask of task.children)
+          createRow(childTask)
     }
 
 
@@ -68,19 +60,19 @@ const ganttTab: Tab = {
     const th1 = document.createElement('th')
     th1.innerHTML = `#`
     th1.setAttribute("rowspan", "2")
-    const th2 = document.createELement('th')
+    const th2 = document.createElement('th')
     th2.innerHTML = `Task`
     th2.setAttribute("rowpan", "2")
     const th3 = document.createElement('th')
     th3.innerHTML = `Start date`
     th3.setAttribute("rowspan", "2")
-    const th4 = document.createELement('th')
+    const th4 = document.createElement('th')
     th4.innerHTML = `End date`
     th4.setAttribute("rowpan", "2")
     const th5 = document.createElement('th')
     th5.innerHTML = `<progress max="100" value="50">`
     th5.setAttribute("rowspan", "2")
-    const th6 = document.createELement('th')
+    const th6 = document.createElement('th')
     th6.innerHTML = `Costo`
     th6.setAttribute("rowspan", "2")
     const th7 = document.createElement('th')
@@ -112,16 +104,14 @@ const ganttTab: Tab = {
     //le celle con i giorni
     for(let i = 0; i < 8; i++){
         const th7A = document.createElement('th')
-        th7A.innerHTML = i
+        th7A.innerHTML = i.toString()
         trA.appendChild(th7A)
     }
     table.appendChild(trA)
 
-    for(const task of TabController.tasks.children){
+    for(const task of tabController.tasks.children)
       createRow(task)
-    }
 
     return table
-    }
   }
 }
