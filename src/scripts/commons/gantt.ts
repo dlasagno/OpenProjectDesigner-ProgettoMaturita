@@ -1,9 +1,21 @@
-import { TabController } from '../tab-window-scripts/tab-controller'
+import { TabController } from "../tab-window-scripts/tab.controller"
+import { Tab } from "./tab";
+import { MenuItem } from './tab-menu';
+import { TabController } from "../tab-window-scripts/tab-controller";
+
+var fs = require('fs');
+var data = fs.readFileSync('../../data/project.json', 'utf-8');
+
+
 
 const ganttTab: Tab = {
   name: 'GANTT',
   icon: 'th-list',
-  menuItems: [],
+  menuItems: [
+    {
+
+    }
+  ],
   view(tabController: TabController): Element {
 
     function createRow(task: Task, id: string, idChild: string){
