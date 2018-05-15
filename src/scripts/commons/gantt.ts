@@ -1,4 +1,6 @@
 import { TabController } from '../tab-window-scripts/tab-controller'
+import { Tab } from './interfaces'
+
 
 const ganttTab: Tab = {
   name: 'GANTT',

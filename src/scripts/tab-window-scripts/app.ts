@@ -302,7 +302,7 @@ const task: Task = {
 }
 
 const tabController = new TabController([
-  {
+  /*{
     name: 'test',
     icon: 'fa-user',
     menuItems: [
@@ -328,10 +328,10 @@ const tabController = new TabController([
     view() {
       return document.querySelector('#gantt-view')
     }
-  },
+  },*/
   {
-    name: 'test2',
-    icon: 'fa-adjust',
+    name: 'WBS',
+    icon: 'fa-sitemap',
     menuItems: [
       {
         name: "m-test-2 - 1",
@@ -358,28 +358,28 @@ const tabController = new TabController([
 
       function createRow(task: Task, id: string, idChild: string){
 
-
+        let idd
         if(idChild == '0')
-          const idd = `${id}`
+          idd = `${id}`
         else
-          const idd = `${id}.${idChild}`
+          idd = `${id}.${idChild}`
 
         const tr = document.createElement('tr')
         const td1 = document.createElement('td')
               td1.innerHTML = `${idd}`
-              td1.addEventListener('click', tabController.selectedTaskId = idd)
+              td1.addEventListener('click', () => tabController.selectedTaskId = idd)
         const td2 = document.createElement('td')
               td2.innerHTML = `${task.title}`
-              td2.addEventListener('click', tabController.selectedTaskId = idd)
+              td2.addEventListener('click', () => tabController.selectedTaskId = idd)
         const td3 = document.createElement('td')
               td3.innerHTML = `${task.start_date}`
-              td3.addEventListener('click', tabController.selectedTaskId = idd)
+              td3.addEventListener('click', () => tabController.selectedTaskId = idd)
         const td4 = document.createElement('td')
               td4.innerHTML = `${task.end_date}`
-              td4.addEventListener('click', tabController.selectedTaskId = idd)
+              td4.addEventListener('click', () => tabController.selectedTaskId = idd)
         const td5 = document.createElement('td')
               td5.innerHTML = `<progress max="100" value="${task.progress}">`
-              td5.addEventListener('click', tabController.selectedTaskId)
+              td5.addEventListener('click', () => tabController.selectedTaskId = idd)
         const td6 = document.createElement('td')
               if(task.cost != null)
                 td6.innerHTML = `${task.cost}€`
@@ -462,5 +462,3 @@ const tabController = new TabController([
     }
   }
 ], task)
-
-tabController.selectedTaskId = '1'
