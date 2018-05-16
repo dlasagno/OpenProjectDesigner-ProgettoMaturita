@@ -1,10 +1,13 @@
 import { TabController } from '../tab-window-scripts/tab-controller'
 
 //Interface for properties
-export interface Property<T> {
+export interface Property {
   name: string
   description: string
-  value: T
+  value: {
+    task: Task
+    key: string
+  }
 }
 
 
@@ -18,8 +21,8 @@ export interface Task {
     color: string
   }
 
-  gantt_graphics?:{
-    
+  gantt_graphics?: {
+
   }
 
   collapsed: boolean
@@ -36,14 +39,14 @@ export interface Task {
   extra_info?: {}
 
   children?: Task[]
-  
+
 }
 
 //Class with static methods to work on tasks
 export class Task {
 
   static getTaskById(task: Task, id: string): Task {
-    if(id.length < 1)
+    if (id.length < 1)
       return task
     else {
       const ids: number[] = id.split('.').map(num => parseInt(num))
