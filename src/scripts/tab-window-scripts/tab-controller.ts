@@ -5,14 +5,14 @@ export class TabController {
   //Attributi
   private _currentTab: number = 0
   private _selectedTaskId: string = ''
-  
+
   constructor(private tabs: Tab[], public tasks?: Task) {
     this.currentTab = 0
   }
 
-  get currentTab () {return this._currentTab}
-  set currentTab (tabNumber: number) {
-    if(tabNumber >= 0 && tabNumber < this.tabs.length){
+  get currentTab() { return this._currentTab }
+  set currentTab(tabNumber: number) {
+    if (tabNumber >= 0 && tabNumber < this.tabs.length) {
       this._currentTab = tabNumber
 
       TabWindowRenderer.updateNav(this.tabs.reduce((tabButtons, tab, tabId) => {
@@ -30,34 +30,47 @@ export class TabController {
     }
   }
 
-  get selectedTaskId () {return this._selectedTaskId}
-  set selectedTaskId (task: string) {
-    if(task) {
+  get selectedTaskId() { return this._selectedTaskId }
+  set selectedTaskId(task: string) {
+    if (task || task === '') {
       this._selectedTaskId = task
 
       const currentTask = Task.getTaskById(this.tasks, task)
 
-      const properties: Property<string>[] = []
+      const properties: Property[] = []
       properties.push({
         name: 'title',
         description: 'title text',
-        value: currentTask.title
+        value: {
+          task: Task.getTaskById(this.tasks, this._selectedTaskId),
+          key: 'title'
+        }
       })
       properties.push({
         name: 'description',
         description: 'description text',
-        value: currentTask.description
+        value: {
+          task: Task.getTaskById(this.tasks, this._selectedTaskId),
+          key: 'description'
+        }
       })
       properties.push({
         name: 'start date',
-        description: 'project\'s start date' ,
-        value: currentTask.start_date
+        description: 'project\'s start date',
+        value: {
+          task: Task.getTaskById(this.tasks, this._selectedTaskId),
+          key: 'start_date'
+        }
       })
       properties.push({
         name: 'end date',
-        description: 'project\'s end date' ,
-        value: currentTask.end_date
+        description: 'project\'s end date',
+        value: {
+          task: Task.getTaskById(this.tasks, this._selectedTaskId),
+          key: 'end_date'
+        }
       })
+
       TabWindowRenderer.updatePropertiesPanel(properties, this)
     }
   }

@@ -1,10 +1,10 @@
-import { TabButton } from "../commons/interfaces";
+import { Property, TabButton } from "../commons/interfaces"
 
 export class TabWindowRenderer {
 
   private static windowElement = document.querySelector('#tab-window')
 
-  
+
   static updateMenu(menuItems: MenuItem[]): void {
     //Select the tab's menu
     const menuElement = this.windowElement.querySelector('#tab-menu .menu')
@@ -40,7 +40,7 @@ export class TabWindowRenderer {
       const tabElement = document.createElement('div')
       tabElement.id = `${tab.name}-tab-button`
       tabElement.classList.add('button')
-      if(tab === tabs[activeTabIndex])
+      if (tab === tabs[activeTabIndex])
         tabElement.classList.add('active')
       else
         tabElement.addEventListener('click', tab.action)
@@ -55,42 +55,44 @@ export class TabWindowRenderer {
     }
   }
 
-  static updatePropertiesPanel(properties: Property<string>[], tabController: TabController): void {
-    //Select the tabs navigation
+  static updatePropertiesPanel(properties: Property[], tabController: TabController): void {
+    //Select the properties panel
     const propertiesPanelElement = this.windowElement.querySelector('#properties-panel .list')
 
-    //Empty the tab's menu
+    //Empty the properties panel
     while (propertiesPanelElement.firstChild)
       propertiesPanelElement.removeChild(propertiesPanelElement.firstChild)
 
     for (const property of properties) {
-      //create a tab button to append to the tabs navigation
+      //create a property to append to the properties panel
       const propertyElement = document.createElement('div')
       propertyElement.classList.add('property')
 
-      //Create the text for the tab button
+      //Create the head of the property
       const propertyHeadElement = document.createElement('div')
       propertyHeadElement.classList.add('property-head')
       propertyHeadElement.innerHTML = `<span>${property.name}</span>`
       propertyElement.appendChild(propertyHeadElement)
 
-      //Create the text for the tab button
+      //Create the body of the property
       const propertyBodyElement = document.createElement('div')
       propertyBodyElement.classList.add('property-body')
       const descriptionProperty = document.createElement('span')
-      descriptionProperty.innerHTML = `<span>${property.description}:</span>`
+      descriptionProperty.innerHTML = property.description
       const inputProperty = document.createElement('input')
       inputProperty.setAttribute('type', 'text')
-      inputProperty.setAttribute('value', property.value)
+      inputProperty.setAttribute('value', property.value.task[property.value.key])
       inputProperty.addEventListener('keydown', (event) => {
-        if(event.key === "Enter")
+        if (event.key === "Enter") {
+          property.value.task[property.value.key] = event.target.value
           tabController.update()
+        }
       })
       propertyBodyElement.appendChild(descriptionProperty)
       propertyBodyElement.appendChild(inputProperty)
       propertyElement.appendChild(propertyBodyElement)
 
-      //Append all to the tabs navigation
+      //Append all to the properties panel
       propertiesPanelElement.appendChild(propertyElement)
     }
   }

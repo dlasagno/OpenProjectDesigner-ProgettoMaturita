@@ -1,10 +1,13 @@
 //File per il raggruppamento dei file sparsi, DEBUG per problemi ad import/export
 
 //Interface for properties
-interface Property<T> {
-  name: string;
-  description: string;
-  value: T;
+interface Property {
+  name: string
+  description: string
+  value: {
+    task: Task
+    key: string
+  }
 }
 
 
@@ -18,7 +21,7 @@ interface Task {
     color: string
   }
 
-  gantt_graphics?:{
+  gantt_graphics?: {
 
   }
 
@@ -43,7 +46,7 @@ interface Task {
 class Task {
 
   static getTaskById(task: Task, id: string): Task {
-    if(id.length < 1)
+    if (id.length < 1)
       return task
     else {
       const ids: number[] = id.split('.').map(num => parseInt(num))
@@ -67,7 +70,7 @@ interface Tab {
 
 //Interface for tab menus
 interface MenuItem {
-  name: string,
+  name: string
   action()
 }
 
@@ -76,14 +79,13 @@ interface TabButton extends MenuItem {
   icon: string
 }
 
-
 //---------------------------------------------------------------------------------------------------------------
 
 class TabWindowRenderer {
 
   private static windowElement = document.querySelector('#tab-window')
 
-  
+
   static updateMenu(menuItems: MenuItem[]): void {
     //Select the tab's menu
     const menuElement = this.windowElement.querySelector('#tab-menu .menu')
@@ -119,7 +121,7 @@ class TabWindowRenderer {
       const tabElement = document.createElement('div')
       tabElement.id = `${tab.name}-tab-button`
       tabElement.classList.add('button')
-      if(tab === tabs[activeTabIndex])
+      if (tab === tabs[activeTabIndex])
         tabElement.classList.add('active')
       else
         tabElement.addEventListener('click', tab.action)
@@ -134,42 +136,44 @@ class TabWindowRenderer {
     }
   }
 
-  static updatePropertiesPanel(properties: Property<string>[], tabController: TabController): void {
-    //Select the tabs navigation
+  static updatePropertiesPanel(properties: Property[], tabController: TabController): void {
+    //Select the properties panel
     const propertiesPanelElement = this.windowElement.querySelector('#properties-panel .list')
 
-    //Empty the tab's menu
+    //Empty the properties panel
     while (propertiesPanelElement.firstChild)
       propertiesPanelElement.removeChild(propertiesPanelElement.firstChild)
 
     for (const property of properties) {
-      //create a tab button to append to the tabs navigation
+      //create a property to append to the properties panel
       const propertyElement = document.createElement('div')
       propertyElement.classList.add('property')
 
-      //Create the text for the tab button
+      //Create the head of the property
       const propertyHeadElement = document.createElement('div')
       propertyHeadElement.classList.add('property-head')
       propertyHeadElement.innerHTML = `<span>${property.name}</span>`
       propertyElement.appendChild(propertyHeadElement)
 
-      //Create the text for the tab button
+      //Create the body of the property
       const propertyBodyElement = document.createElement('div')
       propertyBodyElement.classList.add('property-body')
       const descriptionProperty = document.createElement('span')
-      descriptionProperty.innerHTML = `<span>${property.description}:</span>`
+      descriptionProperty.innerHTML = property.description
       const inputProperty = document.createElement('input')
       inputProperty.setAttribute('type', 'text')
-      inputProperty.setAttribute('value', property.value)
+      inputProperty.setAttribute('value', property.value.task[property.value.key])
       inputProperty.addEventListener('keydown', (event) => {
-        if(event.key === "Enter")
+        if (event.key === "Enter") {
+          property.value.task[property.value.key] = event.target.value
           tabController.update()
+        }
       })
       propertyBodyElement.appendChild(descriptionProperty)
       propertyBodyElement.appendChild(inputProperty)
       propertyElement.appendChild(propertyBodyElement)
 
-      //Append all to the tabs navigation
+      //Append all to the properties panel
       propertiesPanelElement.appendChild(propertyElement)
     }
   }
@@ -197,9 +201,9 @@ class TabController {
     this.currentTab = 0
   }
 
-  get currentTab () {return this._currentTab}
-  set currentTab (tabNumber: number) {
-    if(tabNumber >= 0 && tabNumber < this.tabs.length){
+  get currentTab() { return this._currentTab }
+  set currentTab(tabNumber: number) {
+    if (tabNumber >= 0 && tabNumber < this.tabs.length) {
       this._currentTab = tabNumber
 
       TabWindowRenderer.updateNav(this.tabs.reduce((tabButtons, tab, tabId) => {
@@ -217,40 +221,56 @@ class TabController {
     }
   }
 
-  get selectedTaskId () {return this._selectedTaskId}
-  set selectedTaskId (task: string) {
-    if(task) {
+  get selectedTaskId() { return this._selectedTaskId }
+  set selectedTaskId(task: string) {
+    if (task || task === '') {
       this._selectedTaskId = task
 
       const currentTask = Task.getTaskById(this.tasks, task)
 
-      const properties: Property<string>[] = []
+      const properties: Property[] = []
       properties.push({
         name: 'title',
         description: 'title text',
-        value: currentTask.title
+        value: {
+          task: Task.getTaskById(this.tasks, this._selectedTaskId),
+          key: 'title'
+        }
       })
       properties.push({
         name: 'description',
         description: 'description text',
-        value: currentTask.description
+        value: {
+          task: Task.getTaskById(this.tasks, this._selectedTaskId),
+          key: 'description'
+        }
       })
       properties.push({
         name: 'start date',
-        description: 'project\'s start date' ,
-        value: currentTask.start_date
+        description: 'project\'s start date',
+        value: {
+          task: Task.getTaskById(this.tasks, this._selectedTaskId),
+          key: 'start_date'
+        }
       })
       properties.push({
         name: 'end date',
-        description: 'project\'s end date' ,
-        value: currentTask.end_date
+        description: 'project\'s end date',
+        value: {
+          task: Task.getTaskById(this.tasks, this._selectedTaskId),
+          key: 'end_date'
+        }
       })
-      TabWindowRenderer.updatePropertiesPanel(properties)
+
+      TabWindowRenderer.updatePropertiesPanel(properties, this)
     }
   }
 
-}
+  update() {
+    TabWindowRenderer.updateView(this.tabs[this._currentTab].view(this))
+  }
 
+}
 
 //---------------------------------------------------------------------------------------------------------------
 
@@ -332,36 +352,36 @@ const tabController = new TabController([
     menuItems: [],
     view(tabController: TabController): Element {
 
-      function createRow(task: Task, id: string, idChild: string){
+      function createRow(task: Task, id: string, idChild: string) {
 
         let idd
-        if(idChild == '0')
+        if (idChild == '0')
           idd = `${id}`
         else
           idd = `${id}.${idChild}`
 
         const tr = document.createElement('tr')
         const td1 = document.createElement('td')
-              td1.innerHTML = `${idd}`
-              td1.addEventListener('click', () => tabController.selectedTaskId = idd)
+        td1.innerHTML = `${idd}`
+        td1.addEventListener('click', () => tabController.selectedTaskId = idd)
         const td2 = document.createElement('td')
-              td2.innerHTML = `${task.title}`
-              td2.addEventListener('click', () => tabController.selectedTaskId = idd)
+        td2.innerHTML = `${task.title}`
+        td2.addEventListener('click', () => tabController.selectedTaskId = idd)
         const td3 = document.createElement('td')
-              td3.innerHTML = `${task.start_date}`
-              td3.addEventListener('click', () => tabController.selectedTaskId = idd)
+        td3.innerHTML = `${task.start_date}`
+        td3.addEventListener('click', () => tabController.selectedTaskId = idd)
         const td4 = document.createElement('td')
-              td4.innerHTML = `${task.end_date}`
-              td4.addEventListener('click', () => tabController.selectedTaskId = idd)
+        td4.innerHTML = `${task.end_date}`
+        td4.addEventListener('click', () => tabController.selectedTaskId = idd)
         const td5 = document.createElement('td')
-              td5.innerHTML = `<progress max="100" value="${task.progress}">`
-              td5.addEventListener('click', () => tabController.selectedTaskId = idd)
+        td5.innerHTML = `<progress max="100" value="${task.progress}">`
+        td5.addEventListener('click', () => tabController.selectedTaskId = idd)
         const td6 = document.createElement('td')
-              if(task.cost != null)
-                td6.innerHTML = `${task.cost}€`
-              else
-                td6.innerHTML = `0`
-              td6.addEventListener('click', tabController.selectedTaskId = idd)
+        if (task.cost != null)
+          td6.innerHTML = `${task.cost}€`
+        else
+          td6.innerHTML = `0`
+        td6.addEventListener('click', tabController.selectedTaskId = idd)
 
         tr.appendChild(td1)
         tr.appendChild(td2)
@@ -370,15 +390,15 @@ const tabController = new TabController([
         tr.appendChild(td5)
         tr.appendChild(td6)
 
-        for(let i = 0; i < 8; i++){
+        for (let i = 0; i < 8; i++) {
           const td7 = document.createElement('td')
           td7.innerHTML = ` `
           tr.appendChild(td7)
         }
 
         table.appendChild(tr)
-        if(task.children)
-          for(const childTask of task.children){
+        if (task.children)
+          for (const childTask of task.children) {
             idChild = (parseInt(idChild) + 1).toString()
             createRow(childTask, id, idChild)
           }
@@ -422,15 +442,15 @@ const tabController = new TabController([
       const trA = document.createElement('tr')
 
       //le celle con i giorni
-      for(let i = 0; i < 8; i++){
-          const th7A = document.createElement('th')
-          th7A.innerHTML = (i + 1).toString()
-          trA.appendChild(th7A)
+      for (let i = 0; i < 8; i++) {
+        const th7A = document.createElement('th')
+        th7A.innerHTML = (i + 1).toString()
+        trA.appendChild(th7A)
       }
       table.appendChild(trA)
 
       let id = '0'
-      for(const task of tabController.tasks.children){
+      for (const task of tabController.tasks.children) {
         id = (parseInt(id) + 1).toString()
         createRow(task, id, '0')
       }
