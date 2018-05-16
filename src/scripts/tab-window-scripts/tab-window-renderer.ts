@@ -1,3 +1,4 @@
+import { TabController } from './tab-controller'
 import { Property, TabButton } from "../commons/interfaces"
 
 export class TabWindowRenderer {
@@ -84,7 +85,7 @@ export class TabWindowRenderer {
       inputProperty.setAttribute('value', property.value.task[property.value.key])
       inputProperty.addEventListener('keydown', (event) => {
         if (event.key === "Enter") {
-          property.value.task[property.value.key] = event.target.value
+          property.value.task[property.value.key] = (event.target as HTMLInputElement).value
           tabController.update()
         }
       })
