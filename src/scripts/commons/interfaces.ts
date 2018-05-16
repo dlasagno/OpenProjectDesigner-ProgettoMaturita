@@ -2,9 +2,9 @@ import { TabController } from '../tab-window-scripts/tab-controller'
 
 //Interface for properties
 export interface Property<T> {
-  name: string;
-  description: string;
-  value: T;
+  name: string
+  description: string
+  value: T
 }
 
 
@@ -67,21 +67,11 @@ export interface Tab {
 
 //Interface for tab menus
 export interface MenuItem {
-  name: string,
+  name: string
   action()
 }
 
 //Interface for tab buttons
 export interface TabButton extends MenuItem {
   icon: string
-}
-
-
-const task: Task = {
-  title: '',
-  description: '',
-  collapsed: false,
-  start_date: '',
-  end_date: '',
-  progress: 0
 }
