@@ -4,6 +4,7 @@ export class TabWindowRenderer {
 
   private static windowElement = document.querySelector('#tab-window')
 
+  
   static updateMenu(menuItems: MenuItem[]): void {
     //Select the tab's menu
     const menuElement = this.windowElement.querySelector('#tab-menu .menu')
@@ -35,7 +36,7 @@ export class TabWindowRenderer {
 
     //Populate the tabs navigation
     for (const tab of tabs) {
-      //create a tab button to append to the tabs navigation
+      //create a tab button
       const tabElement = document.createElement('div')
       tabElement.id = `${tab.name}-tab-button`
       tabElement.classList.add('button')
@@ -43,23 +44,18 @@ export class TabWindowRenderer {
         tabElement.classList.add('active')
       else
         tabElement.addEventListener('click', tab.action)
-
-      //Create the text for the tab button
-      const tabElementText = document.createElement('div')
-      tabElementText.innerHTML = `<span>${tab.name}</span>`
-      tabElement.appendChild(tabElementText)
-
-      //Create an icon for the tab button
-      const tabElementIcon = document.createElement('span')
-      tabElementIcon.classList.add('fas', tab.icon)
-      tabElement.appendChild(tabElementIcon)
-
-      //Append all to the tabs navigation
+      tabElement.innerHTML = `
+        <div>
+          <span>${tab.name}</name>
+        </div>
+        <span class="fas ${tab.icon}"></span>
+      `
+      //Append the new tab button to the tabs navigation
       navElement.appendChild(tabElement)
     }
   }
 
-  static updatePropertiesPanel(properties: Property<string>[], tabController: tabController): void {
+  static updatePropertiesPanel(properties: Property<string>[], tabController: TabController): void {
     //Select the tabs navigation
     const propertiesPanelElement = this.windowElement.querySelector('#properties-panel .list')
 
