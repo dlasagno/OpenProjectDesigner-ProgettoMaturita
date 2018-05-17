@@ -1,5 +1,5 @@
 import { TabController } from './tab-controller'
-import { Property, TabButton } from "../commons/interfaces"
+import { Property, TabButton, MenuItem } from "../commons/interfaces"
 
 export class TabWindowRenderer {
 
