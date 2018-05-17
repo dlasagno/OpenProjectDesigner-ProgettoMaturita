@@ -56,6 +56,20 @@ export class Task {
     }
   }
 
+  static getParentTask(task: Task, id: string): Task {
+    return this.getTaskById(task, id.slice(0, -1))
+  }
+
+  static removeTask(task: Task, id: string): boolean {
+    const parent: Task = this.getParentTask(task, id)
+    const taskId: number = Number(id.split('.').pop())
+    if(parent.children[taskId] != undefined) {
+      parent.children.splice(taskId, 1)
+      return true
+    }
+    return false
+  }
+
 }
 
 

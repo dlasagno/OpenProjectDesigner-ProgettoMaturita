@@ -25,6 +25,12 @@ body {
 .button *::first-letter {
   text-transform: uppercase;
 }
+.button .fas {
+  font-size: 2em;
+}
+.delete-button:hover {
+  background: #dc143c;
+}
 table {
   width: 100%;
   height: 100%;
@@ -200,6 +206,12 @@ progress::-webkit-progress-value {
   padding: 10px;
   background: #454545;
   color: #fff;
+}
+#tab-window #properties-panel .button {
+  width: 2em;
+}
+#tab-window #properties-panel .button:not(:hover) {
+  background: #303030;
 }
 #tab-window #properties-panel .list .property {
   padding: 10px;

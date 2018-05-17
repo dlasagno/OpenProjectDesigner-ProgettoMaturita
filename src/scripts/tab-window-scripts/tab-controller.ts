@@ -32,21 +32,14 @@ export class TabController {
   set selectedTaskId(taskId: string) {
     if (taskId || taskId === '') {
       this._selectedTaskId = taskId
-      const currentTask = Task.getTaskById(this.tasks, taskId)
 
-      const properties: Property[] = []
-      for(const prop in currentTask)
-        properties.push({
-          name: prop,
-          description: '',
-          value: {
-            task: currentTask,
-            key: prop
-          }
-        })
-
-      TabWindowRenderer.updatePropertiesPanel(properties, this)
+      TabWindowRenderer.updatePropertiesPanel(taskId, this)
     }
+  }
+
+  removeTask(taskId: string) {
+    Task.removeTask(this.tasks, taskId)
+    this.update()
   }
 
   update() {

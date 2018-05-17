@@ -56,6 +56,21 @@ class Task {
     }
   }
 
+  static getParentTask(task: Task, id: string): Task {
+    const parentId: string = id.split('.').slice(0, -1).join('.')
+    return this.getTaskById(task, parentId)
+  }
+
+  static removeTask(task: Task, id: string): boolean {
+    const parent: Task = this.getParentTask(task, id)
+    const taskId: number = Number(id.split('.').pop()) - 1
+    if(parent.children[taskId] != undefined) {
+      parent.children.splice(taskId, 1)
+      return true
+    }
+    return false
+  }
+
 }
 
 
@@ -82,7 +97,7 @@ interface TabButton extends MenuItem {
 //---------------------------------------------------------------------------------------------------------------
 
 class TabWindowRenderer {
-  
+
   private static windowElement = document.querySelector('#tab-window')
 
 
@@ -136,46 +151,81 @@ class TabWindowRenderer {
     }
   }
 
-  static updatePropertiesPanel(properties: Property[], tabController: TabController): void {
-    //Select the properties panel
-    const propertiesPanelElement = this.windowElement.querySelector('#properties-panel .list')
+  static updatePropertiesPanel(taskId: string, tabController: TabController): void {
+    //Create a list of properties of the task
+    const task: Task = Task.getTaskById(tabController.tasks, taskId)
+    const properties: Property[] = []
+    for(const prop in task)
+      properties.push({
+        name: prop,
+        description: '',
+        value: {
+          task: task,
+          key: prop
+        }
+      })
 
-    //Empty the properties panel
-    while (propertiesPanelElement.firstChild)
-      propertiesPanelElement.removeChild(propertiesPanelElement.firstChild)
+    //Select the properties list
+    const propertiesPanelElement = this.windowElement.querySelector('#properties-panel')
+
+
+    //Select the action buttons
+    const actionButtonsElement = propertiesPanelElement.querySelector('#action-buttons')
+
+    //Empty the action buttons
+    while (actionButtonsElement.firstChild)
+      actionButtonsElement.removeChild(actionButtonsElement.firstChild)
+
+    //Append buttons to the action buttons
+    const deleteButtonElement = document.createElement('div')
+      deleteButtonElement.classList.add('button', 'delete-button')
+      deleteButtonElement.innerHTML = '<span class="fas fa-trash-alt"></span>'
+      deleteButtonElement.addEventListener('click', () => tabController.removeTask(taskId) ) 
+    actionButtonsElement.appendChild(deleteButtonElement)
+
+
+    //Select the properties list
+    const propertiesListElement = propertiesPanelElement.querySelector('#properties-list')
+
+    //Empty the properties list
+    while (propertiesListElement.firstChild)
+      propertiesListElement.removeChild(propertiesListElement.firstChild)
 
     for (const property of properties) {
-      //create a property to append to the properties panel
+      //create a property to append to the properties list
       const propertyElement = document.createElement('div')
       propertyElement.classList.add('property')
 
       //Create the head of the property
       const propertyHeadElement = document.createElement('div')
-      propertyHeadElement.classList.add('property-head')
-      propertyHeadElement.innerHTML = `<span>${property.name}</span>`
+        propertyHeadElement.classList.add('property-head')
+        propertyHeadElement.innerHTML = `<span>${property.name}</span>`
       propertyElement.appendChild(propertyHeadElement)
 
       //Create the body of the property
       const propertyBodyElement = document.createElement('div')
-      propertyBodyElement.classList.add('property-body')
-      const descriptionProperty = document.createElement('span')
-      descriptionProperty.innerHTML = property.description
-      const inputProperty = document.createElement('input')
-      inputProperty.setAttribute('type', 'text')
-      inputProperty.setAttribute('value', property.value.task[property.value.key])
-      inputProperty.addEventListener('keydown', (event) => {
-        if (event.key === "Enter") {
-          property.value.task[property.value.key] = (event.target as HTMLInputElement).value
-          tabController.update()
-        }
-      })
-      propertyBodyElement.appendChild(descriptionProperty)
-      propertyBodyElement.appendChild(inputProperty)
+        propertyBodyElement.classList.add('property-body')
+        const descriptionProperty = document.createElement('span')
+          descriptionProperty.innerHTML = property.description
+        const inputProperty = document.createElement('input')
+          inputProperty.setAttribute('type', 'text')
+          inputProperty.setAttribute('value', property.value.task[property.value.key])
+          inputProperty.addEventListener('keydown', event => {
+            if (event.key === "Enter") {
+              property.value.task[property.value.key] = (event.target as HTMLInputElement).value
+              tabController.update()
+            }
+          })
+        propertyBodyElement.appendChild(descriptionProperty)
+        propertyBodyElement.appendChild(inputProperty)
       propertyElement.appendChild(propertyBodyElement)
 
-      //Append all to the properties panel
-      propertiesPanelElement.appendChild(propertyElement)
+      //Append all to the properties list
+      propertiesListElement.appendChild(propertyElement)
     }
+
+    propertiesPanelElement.appendChild(actionButtonsElement)
+    propertiesPanelElement.appendChild(propertiesListElement)
   }
 
   static updateView(view: Element): void {
@@ -189,7 +239,7 @@ class TabWindowRenderer {
     //Append the new rendered view to the tab view
     viewElement.appendChild(view)
   }
-  
+
 }
 
 class TabController {
@@ -223,21 +273,14 @@ class TabController {
   set selectedTaskId(taskId: string) {
     if (taskId || taskId === '') {
       this._selectedTaskId = taskId
-      const currentTask = Task.getTaskById(this.tasks, taskId)
 
-      const properties: Property[] = []
-      for(const prop in currentTask)
-        properties.push({
-          name: prop,
-          description: '',
-          value: {
-            task: currentTask,
-            key: prop
-          }
-        })
-
-      TabWindowRenderer.updatePropertiesPanel(properties, this)
+      TabWindowRenderer.updatePropertiesPanel(taskId, this)
     }
+  }
+
+  removeTask(taskId: string) {
+    Task.removeTask(this.tasks, taskId)
+    this.update()
   }
 
   update() {
