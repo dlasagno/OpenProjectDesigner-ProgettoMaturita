@@ -19,9 +19,7 @@ export class TabController {
         tabButtons.push({
           name: tab.name,
           icon: tab.icon,
-          action: () => {
-            this.currentTab = tabId
-          }
+          action: () => this.currentTab = tabId
         })
         return tabButtons
       }, []), this._currentTab)
@@ -31,45 +29,21 @@ export class TabController {
   }
 
   get selectedTaskId() { return this._selectedTaskId }
-  set selectedTaskId(task: string) {
-    if (task || task === '') {
-      this._selectedTaskId = task
-
-      const currentTask = Task.getTaskById(this.tasks, task)
+  set selectedTaskId(taskId: string) {
+    if (taskId || taskId === '') {
+      this._selectedTaskId = taskId
+      const currentTask = Task.getTaskById(this.tasks, taskId)
 
       const properties: Property[] = []
-      properties.push({
-        name: 'title',
-        description: 'title text',
-        value: {
-          task: Task.getTaskById(this.tasks, this._selectedTaskId),
-          key: 'title'
-        }
-      })
-      properties.push({
-        name: 'description',
-        description: 'description text',
-        value: {
-          task: Task.getTaskById(this.tasks, this._selectedTaskId),
-          key: 'description'
-        }
-      })
-      properties.push({
-        name: 'start date',
-        description: 'project\'s start date',
-        value: {
-          task: Task.getTaskById(this.tasks, this._selectedTaskId),
-          key: 'start_date'
-        }
-      })
-      properties.push({
-        name: 'end date',
-        description: 'project\'s end date',
-        value: {
-          task: Task.getTaskById(this.tasks, this._selectedTaskId),
-          key: 'end_date'
-        }
-      })
+      for(const prop in currentTask)
+        properties.push({
+          name: prop,
+          description: '',
+          value: {
+            task: currentTask,
+            key: prop
+          }
+        })
 
       TabWindowRenderer.updatePropertiesPanel(properties, this)
     }
