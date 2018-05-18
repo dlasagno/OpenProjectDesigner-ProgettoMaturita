@@ -316,7 +316,27 @@ const task: Task = {
           start_date: '01-01-2018',
           end_date: '01-01-2018',
           progress: 50,
-          cost: 100
+          cost: 100,
+          children: [
+            {
+              title: 'Raccolta richieste clienti',
+              description: 'descrizione raccolta dati',
+              collapsed: false,
+              start_date: '01-01-2018',
+              end_date: '01-01-2018',
+              progress: 80,
+              cost: 30
+            },
+            {
+              title: 'Raccolta esigenze utenti',
+              description: 'descrizione esaminazione',
+              collapsed: false,
+              start_date: '01-01-2018',
+              end_date: '01-01-2018',
+              progress: 20,
+              cost: 70
+            }
+          ]
         },
         {
           title: 'Esaminazione',
@@ -335,8 +355,17 @@ const task: Task = {
       collapsed: false,
       start_date: '03-01-2018',
       end_date: '03-01-2018',
-      progress: 50,
+      progress: 30,
       cost: 2000
+    },
+    {
+      title: 'Realizzazione',
+      description: 'descrizione realizzazione',
+      collapsed: false,
+      start_date: '03-01-2018',
+      end_date: '03-01-2018',
+      progress: 70,
+      cost: 5000
     }
   ]
 }
@@ -369,37 +398,36 @@ const tabController = new TabController([
     menuItems: [],
     view(tabController: TabController): Element {
 
-      function createRow(task: Task, id: string, idChild: string) {
+      function createRow(task: Task, taskId: string, taskChildId: string) {
 
         let idd
-        if (idChild == '0')
-          idd = `${id}`
+        if (taskChildId == '0')
+          idd = `${taskId}`
         else
-          idd = `${id}.${idChild}`
+          idd = `${taskId}.${taskChildId}`
 
         const tr = document.createElement('tr')
-        const td1 = document.createElement('td')
-        td1.innerHTML = `${idd}`
-        td1.addEventListener('click', () => tabController.selectedTaskId = idd)
-        const td2 = document.createElement('td')
-        td2.innerHTML = `${task.title}`
-        td2.addEventListener('click', () => tabController.selectedTaskId = idd)
-        const td3 = document.createElement('td')
-        td3.innerHTML = `${task.start_date}`
-        td3.addEventListener('click', () => tabController.selectedTaskId = idd)
-        const td4 = document.createElement('td')
-        td4.innerHTML = `${task.end_date}`
-        td4.addEventListener('click', () => tabController.selectedTaskId = idd)
-        const td5 = document.createElement('td')
-        td5.innerHTML = `<progress max="100" value="${task.progress}">`
-        td5.addEventListener('click', () => tabController.selectedTaskId = idd)
-        const td6 = document.createElement('td')
-        if (task.cost != null)
-          td6.innerHTML = `${task.cost}€`
-        else
-          td6.innerHTML = `0`
-        td6.addEventListener('click', tabController.selectedTaskId = idd)
-
+          const td1 = document.createElement('td')
+                td1.innerHTML = `${idd}`
+                td1.addEventListener('click', () => tabController.selectedTaskId = idd)
+          const td2 = document.createElement('td')
+                td2.innerHTML = `${task.title}`
+                td2.addEventListener('click', () => tabController.selectedTaskId = idd)
+          const td3 = document.createElement('td')
+                td3.innerHTML = `${task.start_date}`
+                td3.addEventListener('click', () => tabController.selectedTaskId = idd)
+          const td4 = document.createElement('td')
+                td4.innerHTML = `${task.end_date}`
+                td4.addEventListener('click', () => tabController.selectedTaskId = idd)
+          const td5 = document.createElement('td')
+                td5.innerHTML = `<progress max="100" value="${task.progress}">`
+                td5.addEventListener('click', () => tabController.selectedTaskId = idd)
+          const td6 = document.createElement('td')
+                if (task.cost != null)
+                  td6.innerHTML = `${task.cost}€`
+                else
+                  td6.innerHTML = `0€`
+                td6.addEventListener('click', tabController.selectedTaskId = idd)
         tr.appendChild(td1)
         tr.appendChild(td2)
         tr.appendChild(td3)
@@ -409,69 +437,51 @@ const tabController = new TabController([
 
         for (let i = 0; i < 8; i++) {
           const td7 = document.createElement('td')
-          td7.innerHTML = ` `
-          tr.appendChild(td7)
+                td7.innerHTML = ` `
+                tr.appendChild(td7)
         }
 
-        table.appendChild(tr)
+        ganttTable.appendChild(tr)
         if (task.children)
           for (const childTask of task.children) {
-            idChild = (parseInt(idChild) + 1).toString()
-            createRow(childTask, id, idChild)
+            taskChildId = (parseInt(taskChildId) + 1).toString()
+            createRow(childTask, taskId, taskChildId)
           }
+  
       }
 
+      //Create the gantt's table
+      const ganttTable = document.createElement('table')
 
-      const table = document.createElement('table')
-
-      const tr = document.createElement('tr')
-      const th1 = document.createElement('th')
-      th1.innerHTML = `#`
-      th1.setAttribute("rowspan", "2")
-      const th2 = document.createElement('th')
-      th2.innerHTML = `Task`
-      th2.setAttribute("rowspan", "2")
-      const th3 = document.createElement('th')
-      th3.innerHTML = `Start date`
-      th3.setAttribute("rowspan", "2")
-      const th4 = document.createElement('th')
-      th4.innerHTML = `End date`
-      th4.setAttribute("rowspan", "2")
-      const th5 = document.createElement('th')
-      th5.innerHTML = `<progress max="100" value="50">`
-      th5.setAttribute("rowspan", "2")
-      const th6 = document.createElement('th')
-      th6.innerHTML = `Costo`
-      th6.setAttribute("rowspan", "2")
-      const th7 = document.createElement('th')
-      th7.innerHTML = `Gennaio 2018`
-      th7.setAttribute("colspan", "8")
-
-      tr.appendChild(th1)
-      tr.appendChild(th2)
-      tr.appendChild(th3)
-      tr.appendChild(th4)
-      tr.appendChild(th5)
-      tr.appendChild(th6)
-      tr.appendChild(th7)
-      table.appendChild(tr)
-
-      const trA = document.createElement('tr')
-
-      //le celle con i giorni
+      //Craete the gantt's header row
+      const ganttHeader = document.createElement('tr')
+      ganttHeader.innerHTML = `
+        <th rowspan="2">#</th>
+        <th rowspan="2">Task</th>
+        <th rowspan="2">Start date</th>
+        <th rowspan="2">End date</th>
+        <th rowspan="2"><progress max="100" value="50"></th>
+        <th rowspan="2">Costo</th>
+        <th colspan="8">Gennaio 2018</th>
+      `
+      ganttTable.appendChild(ganttHeader)
+      
+      //Add days to the gantt's header row
+      const ganttDaysRow = document.createElement('tr')
       for (let i = 0; i < 8; i++) {
-        const th7A = document.createElement('th')
-        th7A.innerHTML = (i + 1).toString()
-        trA.appendChild(th7A)
+        const dayCell = document.createElement('th')
+              dayCell.innerHTML = (i + 1).toString()
+        ganttDaysRow.appendChild(dayCell)
       }
-      table.appendChild(trA)
+      ganttTable.appendChild(ganttDaysRow)
 
-      let id = '0'
+      //Add tasks rows to the gantt's table
+      let taskId = '0'
       for (const task of tabController.tasks.children) {
-        id = (parseInt(id) + 1).toString()
-        createRow(task, id, '0')
+        taskId = (parseInt(taskId) + 1).toString()
+        createRow(task, taskId, '0')
       }
-      return table
+      return ganttTable
     }
   }
 ], task)
