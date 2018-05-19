@@ -43,8 +43,8 @@ export class Tree<T> {
 
   removeNodeById(id: string): void {
     const parent: TreeNode<T> = this.getNodeById(id.split('.').slice(0, -1).join('.'))
-    const taskId: number = Number(id.split('.').pop())
-    if(parent.children[taskId] != undefined)
+    const taskId: number = Number(id.split('.').pop()) - 1
+    if(parent && parent.children[taskId])
       parent.removeChild(taskId)
   }
 
