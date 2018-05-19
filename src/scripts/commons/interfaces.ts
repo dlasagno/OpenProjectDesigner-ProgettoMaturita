@@ -1,7 +1,8 @@
 import { TabController } from '../tab-window-scripts/tab-controller'
 
 //Class for the management of a Tree Node
-class TreeNode<T> {
+export class TreeNode<T> {
+
   private _children: TreeNode<T>[]
 
   constructor(public data: T) {
@@ -17,7 +18,7 @@ class TreeNode<T> {
 }
 
 //Class for the management of a Tree
-class Tree<T> {
+export class Tree<T> {
 
   private _root: TreeNode<T>
 
@@ -27,8 +28,8 @@ class Tree<T> {
 
   get root() { return this._root }
 
-  getNodeById(id: string) {
-    function getNodeById(root: TreeNode<T>, id: string) {
+  getNodeById(id: string): TreeNode<T> {
+    function getNodeById(root: TreeNode<T>, id: string): TreeNode<T> {
       if (id.length < 1)
         return root
       else {
@@ -38,6 +39,13 @@ class Tree<T> {
     }
 
     return getNodeById(this._root, id)
+  }
+
+  removeNodeById(id: string): void {
+    const parent: TreeNode<T> = this.getNodeById(id.split('.').slice(0, -1).join('.'))
+    const taskId: number = Number(id.split('.').pop())
+    if(parent.children[taskId] != undefined)
+      parent.removeChild(taskId)
   }
 
   forEach(callback: (node?: TreeNode<T>,index?: string, tree?: Tree<T>) => void): void {

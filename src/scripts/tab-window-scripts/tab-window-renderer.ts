@@ -1,5 +1,5 @@
 import { TabController } from './tab-controller'
-import { Property, TabButton, MenuItem, Task } from "../commons/interfaces"
+import { Property, TabButton, MenuItem, TaskNoChildren } from "../commons/interfaces"
 
 export class TabWindowRenderer {
 
@@ -58,7 +58,7 @@ export class TabWindowRenderer {
 
   static updatePropertiesPanel(taskId: string, tabController: TabController): void {
     //Create a list of properties of the task
-    const task: Task = Task.getTaskById(tabController.tasks, taskId)
+    const task: TaskNoChildren = tabController.tasks.getNodeById(taskId).data
     const properties: Property[] = []
     for(const prop in task)
       properties.push({

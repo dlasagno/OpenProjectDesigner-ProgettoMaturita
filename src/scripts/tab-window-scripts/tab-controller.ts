@@ -1,12 +1,12 @@
 import { TabWindowRenderer } from './tab-window-renderer'
-import { Tab, Task } from '../commons/interfaces'
+import { Tab, TaskNoChildren, Tree } from '../commons/interfaces'
 
 export class TabController {
   //Attributi
   private _currentTab: number = 0
   private _selectedTaskId: string = ''
 
-  constructor(private tabs: Tab[], public tasks?: Task) {
+  constructor(private tabs: Tab[], public tasks?: Tree<TaskNoChildren>) {
     this.currentTab = 0
   }
 
@@ -38,7 +38,7 @@ export class TabController {
   }
 
   removeTask(taskId: string) {
-    Task.removeTask(this.tasks, taskId)
+    this.tasks.removeNodeById(taskId)
     this.update()
   }
 
