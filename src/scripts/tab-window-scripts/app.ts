@@ -180,7 +180,7 @@ class TabWindowRenderer {
     const deleteButtonElement = document.createElement('div')
       deleteButtonElement.classList.add('button', 'delete-button')
       deleteButtonElement.innerHTML = '<span class="fas fa-trash-alt"></span>'
-      deleteButtonElement.addEventListener('click', () => tabController.removeTask(taskId) ) 
+      deleteButtonElement.addEventListener('click', () => tabController.removeTask(taskId) )
     actionButtonsElement.appendChild(deleteButtonElement)
 
 
@@ -398,6 +398,47 @@ const tabController = new TabController([
     menuItems: [],
     view(tabController: TabController): Element {
 
+      const months = [
+        'Gennaio',
+        'Febbraio',
+        'Marzo',
+        'Aprile',
+        'Maggio',
+        'Giugno',
+        'Luglio',
+        'Agosto',
+        'Settembre',
+        'Ottobre',
+        'Novembre',
+        'Dicembre'
+      ]
+
+      //giorni di ogni mese...
+      const days = [
+        ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31' ],
+        ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28'],
+        ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31' ],
+        ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'],
+        ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31' ],
+        ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'],
+        ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31' ],
+        ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31' ],
+        ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'],
+        ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31' ],
+        ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'],
+        ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31' ],
+      ]
+
+
+      function getStartMonthTask(task: Task){
+        return parseInt(task.start_date.split('-')[1])
+      }
+
+
+      function getYearTask(task: Task){
+        return parseInt(task.start_date.split('-')[2])
+      }
+
       function createRow(task: Task, taskId: string, taskChildId: string) {
 
         let idd
@@ -447,7 +488,7 @@ const tabController = new TabController([
             taskChildId = (parseInt(taskChildId) + 1).toString()
             createRow(childTask, taskId, taskChildId)
           }
-  
+
       }
 
       //Create the gantt's table
@@ -462,13 +503,17 @@ const tabController = new TabController([
         <th rowspan="2">End date</th>
         <th rowspan="2"><progress max="100" value="50"></th>
         <th rowspan="2">Costo</th>
-        <th colspan="8">Gennaio 2018</th>
+        <th colspan="${days[getStartMonthTask(tabController.tasks) - 1].length}">${months[getStartMonthTask(tabController.tasks) - 1]} ${getYearTask(tabController.tasks)}</th>
       `
+
+
       ganttTable.appendChild(ganttHeader)
-      
+
       //Add days to the gantt's header row
       const ganttDaysRow = document.createElement('tr')
-      for (let i = 0; i < 8; i++) {
+
+      //controlla in che mese è il progetto e dopodiché crea i giorni
+      for (let i = 0; i < days[getStartMonthTask(tabController.tasks) - 1].length; i++) {
         const dayCell = document.createElement('th')
               dayCell.innerHTML = (i + 1).toString()
         ganttDaysRow.appendChild(dayCell)
