@@ -1,4 +1,133 @@
-//File per il raggruppamento dei file sparsi, DEBUG per problemi ad import/export
+import { TaskNoChildren } from '../commons/interfaces';
+//File per il raggruppamento dei file sparsi, DEBUG per problemi ad import/
+//Class for the management of a Tree Node
+class TreeNode<T> {
+
+  private _children: TreeNode<T>[]
+
+  constructor(public data: T) {
+    this._children = []
+  }
+
+  get children() { return this._children as ReadonlyArray<TreeNode<T>> }
+  appendChild(childData: T): TreeNode<T>;
+  appendChild(childNode: TreeNode<T>): TreeNode<T>;
+  appendChild(child: T | TreeNode<T>): TreeNode<T> {
+    return this.children[this._children.push(child instanceof TreeNode ? child : new TreeNode<T>(child as T)) - 1]
+  }
+  appendChildren(childrenData: T[]): ReadonlyArray<TreeNode<T>>;
+  appendChildren(childrenNodes: TreeNode<T>[]): ReadonlyArray<TreeNode<T>>;
+  appendChildren(children: T[] | TreeNode<T>[]): ReadonlyArray<TreeNode<T>> {
+    for (const child of children)
+      this._children.push(child instanceof TreeNode ? child : new TreeNode<T>(child as T))
+    return this.children
+  }
+  
+  removeChild(childIndex: number): void { this._children.splice(childIndex, 1) }
+  removeChildren(): void { this._children = [] }
+
+}
+
+//Class for the management of a Tree
+class Tree<T> {
+
+  private _root: TreeNode<T>
+
+  constructor(data: T) {
+    this._root = new TreeNode<T>(data)
+  }
+
+  get root() { return this._root }
+
+  getNodeById(id: string): TreeNode<T> {
+    function getNodeById(root: TreeNode<T>, id: string): TreeNode<T> {
+      if (id.length < 1)
+        return root
+      else {
+        const ids: string[] = id.split('.')
+        return getNodeById(root.children[parseInt(ids[0]) - 1], ids.slice(1).join('.'))
+      }
+    }
+
+    return getNodeById(this._root, id)
+  }
+
+  removeNodeById(id: string): void {
+    const parent: TreeNode<T> = this.getNodeById(id.split('.').slice(0, -1).join('.'))
+    const taskId: number = Number(id.split('.').pop()) - 1
+    if(parent && parent.children[taskId])
+      parent.removeChild(taskId)
+  }
+
+  forEach(callback: (node?: TreeNode<T>,index?: string, tree?: Tree<T>) => void): void {
+    function forEach(node: TreeNode<T>, index: string): void {
+      callback(node, index, this)
+      if (node.children)
+        for (const childId in node.children)
+          forEach(node.children[childId], `${index}.${childId + 1}`)
+    }
+
+    forEach(this._root, '')
+  }
+  
+  reduce<K>(callback: (accumulator?: K, node?: TreeNode<T>,index?: string, tree?: Tree<T>) => K, initialValue: K): K {
+    function reduce(accumulator: K, node: TreeNode<T>, index: string): K {
+      accumulator = callback(accumulator, node, index, this)
+      if (node.children)
+        for (const childId in node.children)
+          accumulator = reduce(accumulator, node.children[childId], `${index}.${childId + 1}`)
+      return accumulator
+    }
+
+    let accumulator = initialValue
+    return reduce(accumulator, this._root, '')
+  }
+
+  map<K>(callback: (node?: TreeNode<T>,index?: string, tree?: Tree<T>) => TreeNode<K>): Tree<K> {
+    function map(node: TreeNode<T>, index: string): TreeNode<K> {
+      const mappedNode: TreeNode<K> = callback(node, index, this)
+      if (node.children)
+        for (const childId in node.children)
+          mappedNode.appendChild(map(node.children[childId], `${index}.${childId + 1}`))
+      return mappedNode
+    }
+
+    const mappedTree: Tree<K> = new Tree<K>(null)
+    mappedTree._root = map(this._root, '')
+    return mappedTree
+  }
+
+}
+
+//Debug interface for task without children reference
+interface TaskNoChildren {
+
+  title: string
+  description: string
+
+  wbs_graphics?: {
+    color: string
+  }
+
+  gantt_graphics?: {
+
+  }
+
+  collapsed: boolean
+
+  format?: string[]
+
+  start_date: string
+  end_date: string
+
+  progress: number
+  cost?: number
+  appointee?: string
+
+  extra_info?: {}
+
+}
+
 
 //Interface for properties
 interface Property {
@@ -57,13 +186,12 @@ class Task {
   }
 
   static getParentTask(task: Task, id: string): Task {
-    const parentId: string = id.split('.').slice(0, -1).join('.')
-    return this.getTaskById(task, parentId)
+    return this.getTaskById(task, id.slice(0, -1))
   }
 
   static removeTask(task: Task, id: string): boolean {
     const parent: Task = this.getParentTask(task, id)
-    const taskId: number = Number(id.split('.').pop()) - 1
+    const taskId: number = Number(id.split('.').pop())
     if(parent.children[taskId] != undefined) {
       parent.children.splice(taskId, 1)
       return true
@@ -94,10 +222,12 @@ interface TabButton extends MenuItem {
   icon: string
 }
 
+
+
 //---------------------------------------------------------------------------------------------------------------
 
 class TabWindowRenderer {
-
+  
   private static windowElement = document.querySelector('#tab-window')
 
 
@@ -153,7 +283,7 @@ class TabWindowRenderer {
 
   static updatePropertiesPanel(taskId: string, tabController: TabController): void {
     //Create a list of properties of the task
-    const task: Task = Task.getTaskById(tabController.tasks, taskId)
+    const task: TaskNoChildren = tabController.tasks.getNodeById(taskId).data
     const properties: Property[] = []
     for(const prop in task)
       properties.push({
@@ -180,7 +310,7 @@ class TabWindowRenderer {
     const deleteButtonElement = document.createElement('div')
       deleteButtonElement.classList.add('button', 'delete-button')
       deleteButtonElement.innerHTML = '<span class="fas fa-trash-alt"></span>'
-      deleteButtonElement.addEventListener('click', () => tabController.removeTask(taskId) )
+      deleteButtonElement.addEventListener('click', () => tabController.removeTask(taskId) ) 
     actionButtonsElement.appendChild(deleteButtonElement)
 
 
@@ -247,7 +377,7 @@ class TabController {
   private _currentTab: number = 0
   private _selectedTaskId: string = ''
 
-  constructor(private tabs: Tab[], public tasks?: Task) {
+  constructor(private tabs: Tab[], public tasks?: Tree<TaskNoChildren>) {
     this.currentTab = 0
   }
 
@@ -279,7 +409,7 @@ class TabController {
   }
 
   removeTask(taskId: string) {
-    Task.removeTask(this.tasks, taskId)
+    this.tasks.removeNodeById(taskId)
     this.update()
   }
 
@@ -430,64 +560,32 @@ const tabController = new TabController([
       ]
 
 
-      function getStartMonthTask(task: Task){
+      function getStartMonthTask(task: TaskNoChildren){
         return parseInt(task.start_date.split('-')[1])
       }
 
 
-      function getYearTask(task: Task){
+      function getYearTask(task: TaskNoChildren){
         return parseInt(task.start_date.split('-')[2])
       }
 
-      function createRow(task: Task, taskId: string, taskChildId: string) {
-
-        let idd
-        if (taskChildId == '0')
-          idd = `${taskId}`
-        else
-          idd = `${taskId}.${taskChildId}`
-
+      function createRow(task: TaskNoChildren, taskId: string, taskChildId: string) {
         const tr = document.createElement('tr')
-          const td1 = document.createElement('td')
-                td1.innerHTML = `${idd}`
-                td1.addEventListener('click', () => tabController.selectedTaskId = idd)
-          const td2 = document.createElement('td')
-                td2.innerHTML = `${task.title}`
-                td2.addEventListener('click', () => tabController.selectedTaskId = idd)
-          const td3 = document.createElement('td')
-                td3.innerHTML = `${task.start_date}`
-                td3.addEventListener('click', () => tabController.selectedTaskId = idd)
-          const td4 = document.createElement('td')
-                td4.innerHTML = `${task.end_date}`
-                td4.addEventListener('click', () => tabController.selectedTaskId = idd)
-          const td5 = document.createElement('td')
-                td5.innerHTML = `<progress max="100" value="${task.progress}">`
-                td5.addEventListener('click', () => tabController.selectedTaskId = idd)
-          const td6 = document.createElement('td')
-                if (task.cost != null)
-                  td6.innerHTML = `${task.cost}€`
-                else
-                  td6.innerHTML = `0€`
-                td6.addEventListener('click', tabController.selectedTaskId = idd)
-        tr.appendChild(td1)
-        tr.appendChild(td2)
-        tr.appendChild(td3)
-        tr.appendChild(td4)
-        tr.appendChild(td5)
-        tr.appendChild(td6)
+        tr.innerHTML = `
+          <td>${taskId}</td>
+          <td>${task.title}</td>
+          <td>${task.start_date}</td>
+          <td>${task.end_date}</td>
+          <td><progress max="100" value="${task.progress}"></td>
+          <td>${task.cost ? '' : task.cost}</td>
+        `
+        tr.addEventListener('click', () => tabController.selectedTaskId = taskId)
 
         for (let i = 0; i < 8; i++) {
           const td7 = document.createElement('td')
                 td7.innerHTML = ` `
                 tr.appendChild(td7)
         }
-
-        ganttTable.appendChild(tr)
-        if (task.children)
-          for (const childTask of task.children) {
-            taskChildId = (parseInt(taskChildId) + 1).toString()
-            createRow(childTask, taskId, taskChildId)
-          }
 
       }
 
