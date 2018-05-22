@@ -10,10 +10,21 @@ export class TreeNode<T> {
   }
 
   get children() { return this._children as ReadonlyArray<TreeNode<T>> }
-  appendChild(childData: T): void;
-  appendChild(childNode: TreeNode<T>): void;
-  appendChild(child: T | TreeNode<T>) { this._children.push(child instanceof TreeNode ? child : new TreeNode<T>(child as T)) }
+  appendChild(childData: T): TreeNode<T>;
+  appendChild(childNode: TreeNode<T>): TreeNode<T>;
+  appendChild(child: T | TreeNode<T>): TreeNode<T> {
+    return this.children[this._children.push(child instanceof TreeNode ? child : new TreeNode<T>(child as T)) - 1]
+  }
+  appendChildren(childrenData: T[]): ReadonlyArray<TreeNode<T>>;
+  appendChildren(childrenNodes: TreeNode<T>[]): ReadonlyArray<TreeNode<T>>;
+  appendChildren(children: T[] | TreeNode<T>[]): ReadonlyArray<TreeNode<T>> {
+    for (const child of children)
+      this._children.push(child instanceof TreeNode ? child : new TreeNode<T>(child as T))
+    return this.children
+  }
+  
   removeChild(childIndex: number): void { this._children.splice(childIndex, 1) }
+  removeChildren(): void { this._children = [] }
 
 }
 
