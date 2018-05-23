@@ -1,17 +1,136 @@
-//File per il raggruppamento dei file sparsi, DEBUG per problemi ad import/export
+//File per il raggruppamento dei file sparsi, DEBUG per problemi ad import/
 
-//Interface for properties
-interface Property {
-  name: string
-  description: string
-  value: {
-    task: Task
-    key: string
+//Class for the management of a Tree Node
+class TreeNode<T> {
+
+  private _children: TreeNode<T>[]
+
+  constructor(public data: T) {
+    this._children = []
   }
+
+  get children() { return this._children as ReadonlyArray<TreeNode<T>> }
+  appendChild(childData: T): TreeNode<T>;
+  appendChild(childNode: TreeNode<T>): TreeNode<T>;
+  appendChild(child: T | TreeNode<T>): TreeNode<T> {
+    return this.children[this._children.push(child instanceof TreeNode ? child : new TreeNode<T>(child as T)) - 1]
+  }
+  appendChildren(childrenData: T[]): ReadonlyArray<TreeNode<T>>;
+  appendChildren(childrenNodes: TreeNode<T>[]): ReadonlyArray<TreeNode<T>>;
+  appendChildren(children: T[] | TreeNode<T>[]): ReadonlyArray<TreeNode<T>> {
+    for (const child of children)
+      this._children.push(child instanceof TreeNode ? child : new TreeNode<T>(child as T))
+    return this.children
+  }
+  
+  removeChild(childIndex: number): void { this._children.splice(childIndex, 1) }
+  removeChildren(): void { this._children = [] }
+
+}
+
+//Class for the management of a Tree
+class Tree<T> {
+
+  private _root: TreeNode<T>
+
+  constructor(data: T) {
+    this._root = new TreeNode<T>(data)
+  }
+
+  get root() { return this._root }
+
+  getNodeById(id: string): TreeNode<T> {
+    function getNodeById(root: TreeNode<T>, id: string): TreeNode<T> {
+      if (id.length < 1)
+        return root
+      else {
+        const ids: string[] = id.split('.')
+        return getNodeById(root.children[parseInt(ids[0]) - 1], ids.slice(1).join('.'))
+      }
+    }
+
+    return getNodeById(this._root, id)
+  }
+
+  removeNodeById(id: string): void {
+    const parent: TreeNode<T> = this.getNodeById(id.split('.').slice(0, -1).join('.'))
+    const taskId: number = Number(id.split('.').pop()) - 1
+    if(parent && parent.children[taskId])
+      parent.removeChild(taskId)
+  }
+
+  forEach(callback: (node?: TreeNode<T>,index?: string, tree?: Tree<T>) => void): void {
+    function forEach(node: TreeNode<T>, index: string): void {
+      callback(node, index, this)
+      if (node.children)
+        for (const childId in node.children)
+          forEach(node.children[childId], (index ? `${index}.` : '') + (Number(childId) + 1))
+    }
+
+    forEach(this._root, '')
+  }
+  
+  reduce<K>(callback: (accumulator?: K, node?: TreeNode<T>,index?: string, tree?: Tree<T>) => K, initialValue: K): K {
+    function reduce(accumulator: K, node: TreeNode<T>, index: string): K {
+      accumulator = callback(accumulator, node, index, this)
+      if (node.children)
+        for (const childId in node.children)
+          accumulator = reduce(accumulator, node.children[childId], (index ? `${index}.` : '') + (Number(childId) + 1))
+      return accumulator
+    }
+
+    let accumulator = initialValue
+    return reduce(accumulator, this._root, '')
+  }
+
+  map<K>(callback: (node?: TreeNode<T>,index?: string, tree?: Tree<T>) => TreeNode<K>): Tree<K> {
+    function map(node: TreeNode<T>, index: string): TreeNode<K> {
+      const mappedNode: TreeNode<K> = callback(node, index, this)
+      if (node.children)
+        for (const childId in node.children)
+          mappedNode.appendChild(map(node.children[childId], (index ? `${index}.` : '') + (Number(childId) + 1)))
+      return mappedNode
+    }
+
+    const mappedTree: Tree<K> = new Tree<K>(null)
+    mappedTree._root = map(this._root, '')
+    return mappedTree
+  }
+
+  some(callback: (node?: TreeNode<T>,index?: string, tree?: Tree<T>) => boolean): boolean {
+    function some(node: TreeNode<T>, index: string): boolean {
+      if (callback(node, index, this))
+        return true
+      else if (node.children)
+        for (const childId in node.children)
+          if (some(node.children[childId], (index ? `${index}.` : '') + (Number(childId) + 1)))
+            return true
+
+      return false
+    }
+
+    return some(this.root, '')
+  }
+
+  every(callback: (node?: TreeNode<T>,index?: string, tree?: Tree<T>) => boolean): boolean {
+    function every(node: TreeNode<T>, index: string): boolean {
+      if (!callback(node, index, this))
+        return false
+      else if (node.children)
+        for (const childId in node.children)
+          if (!every(node.children[childId], (index ? `${index}.` : '') + (Number(childId) + 1)))
+            return false
+
+      return true
+    }
+
+    return every(this.root, '')
+  }
+
 }
 
 
-//Interface for tasks
+//Debug interface for task without children reference
 interface Task {
 
   title: string
@@ -38,39 +157,17 @@ interface Task {
 
   extra_info?: {}
 
-  children?: Task[]
-
 }
 
-//Class with static methods to work on tasks
-class Task {
 
-  static getTaskById(task: Task, id: string): Task {
-    if (id.length < 1)
-      return task
-    else {
-      const ids: number[] = id.split('.').map(num => parseInt(num))
-      task = task.children[ids[0] - 1]
-      ids.shift()
-      return this.getTaskById(task, ids.join('.'))
-    }
+//Interface for properties
+interface Property {
+  name: string
+  description: string
+  value: {
+    task: Task
+    key: string
   }
-
-  static getParentTask(task: Task, id: string): Task {
-    const parentId: string = id.split('.').slice(0, -1).join('.')
-    return this.getTaskById(task, parentId)
-  }
-
-  static removeTask(task: Task, id: string): boolean {
-    const parent: Task = this.getParentTask(task, id)
-    const taskId: number = Number(id.split('.').pop()) - 1
-    if(parent.children[taskId] != undefined) {
-      parent.children.splice(taskId, 1)
-      return true
-    }
-    return false
-  }
-
 }
 
 
@@ -97,7 +194,7 @@ interface TabButton extends MenuItem {
 //---------------------------------------------------------------------------------------------------------------
 
 class TabWindowRenderer {
-
+  
   private static windowElement = document.querySelector('#tab-window')
 
 
@@ -153,7 +250,7 @@ class TabWindowRenderer {
 
   static updatePropertiesPanel(taskId: string, tabController: TabController): void {
     //Create a list of properties of the task
-    const task: Task = Task.getTaskById(tabController.tasks, taskId)
+    const task: Task = tabController.tasks.getNodeById(taskId).data
     const properties: Property[] = []
     for(const prop in task)
       properties.push({
@@ -180,7 +277,7 @@ class TabWindowRenderer {
     const deleteButtonElement = document.createElement('div')
       deleteButtonElement.classList.add('button', 'delete-button')
       deleteButtonElement.innerHTML = '<span class="fas fa-trash-alt"></span>'
-      deleteButtonElement.addEventListener('click', () => tabController.removeTask(taskId) )
+      deleteButtonElement.addEventListener('click', () => tabController.removeTask(taskId) ) 
     actionButtonsElement.appendChild(deleteButtonElement)
 
 
@@ -247,7 +344,7 @@ class TabController {
   private _currentTab: number = 0
   private _selectedTaskId: string = ''
 
-  constructor(private tabs: Tab[], public tasks?: Task) {
+  constructor(private tabs: Tab[], public tasks?: Tree<Task>) {
     this.currentTab = 0
   }
 
@@ -279,7 +376,7 @@ class TabController {
   }
 
   removeTask(taskId: string) {
-    Task.removeTask(this.tasks, taskId)
+    this.tasks.removeNodeById(taskId)
     this.update()
   }
 
@@ -291,7 +388,7 @@ class TabController {
 
 //---------------------------------------------------------------------------------------------------------------
 
-const task: Task = {
+const task = {
   title: 'Progetto',
   description: 'desrizione progetto',
   collapsed: false,
@@ -370,6 +467,85 @@ const task: Task = {
   ]
 }
 
+const tasks: Tree<Task> = new Tree({
+  title: 'Progetto',
+  description: 'desrizione progetto',
+  collapsed: false,
+  start_date: '01-01-2018',
+  end_date: '03-01-2018',
+  progress: 50,
+  cost: 3000
+})
+tasks.root.appendChildren([
+  {
+    title: 'Pianificazione',
+    description: 'descrizione pianificazione',
+    collapsed: false,
+    start_date: '01-01-2018',
+    end_date: '03-01-2018',
+    progress: 50,
+    cost: 500
+  },
+  {
+    title: 'Preparazione',
+    description: 'descrizione preparazione',
+    collapsed: false,
+    start_date: '03-01-2018',
+    end_date: '03-01-2018',
+    progress: 30,
+    cost: 2000
+  },
+  {
+    title: 'Realizzazione',
+    description: 'descrizione realizzazione',
+    collapsed: false,
+    start_date: '03-01-2018',
+    end_date: '03-01-2018',
+    progress: 70,
+    cost: 5000
+  }
+])
+tasks.getNodeById('1').appendChildren([
+  {
+    title: 'Raccolta dati',
+    description: 'descrizione raccolta dati',
+    collapsed: false,
+    start_date: '01-01-2018',
+    end_date: '01-01-2018',
+    progress: 50,
+    cost: 100
+  },
+  {
+    title: 'Esaminazione',
+    description: 'descrizione esaminazione',
+    collapsed: false,
+    start_date: '02-01-2018',
+    end_date: '03-01-2018',
+    progress: 50,
+    cost: 400
+  }
+])
+tasks.getNodeById('1.1').appendChildren([
+  {
+    title: 'Raccolta richieste clienti',
+    description: 'descrizione raccolta dati',
+    collapsed: false,
+    start_date: '01-01-2018',
+    end_date: '01-01-2018',
+    progress: 80,
+    cost: 30
+  },
+  {
+    title: 'Raccolta esigenze utenti',
+    description: 'descrizione esaminazione',
+    collapsed: false,
+    start_date: '01-01-2018',
+    end_date: '01-01-2018',
+    progress: 20,
+    cost: 70
+  }
+])
+
 const tabController = new TabController([
   {
     name: 'WBS',
@@ -439,42 +615,20 @@ const tabController = new TabController([
         return parseInt(task.start_date.split('-')[2])
       }
 
-      function createRow(task: Task, taskId: string, taskChildId: string) {
-
-        let idd
-        if (taskChildId == '0')
-          idd = `${taskId}`
-        else
-          idd = `${taskId}.${taskChildId}`
-
+      function createRow(task: Task, taskId: string): HTMLTableRowElement {
         const tr = document.createElement('tr')
-          const td1 = document.createElement('td')
-                td1.innerHTML = `${idd}`
-                td1.addEventListener('click', () => tabController.selectedTaskId = idd)
-          const td2 = document.createElement('td')
-                td2.innerHTML = `${task.title}`
-                td2.addEventListener('click', () => tabController.selectedTaskId = idd)
-          const td3 = document.createElement('td')
-                td3.innerHTML = `${task.start_date}`
-                td3.addEventListener('click', () => tabController.selectedTaskId = idd)
-          const td4 = document.createElement('td')
-                td4.innerHTML = `${task.end_date}`
-                td4.addEventListener('click', () => tabController.selectedTaskId = idd)
-          const td5 = document.createElement('td')
-                td5.innerHTML = `<progress max="100" value="${task.progress}">`
-                td5.addEventListener('click', () => tabController.selectedTaskId = idd)
-          const td6 = document.createElement('td')
-                if (task.cost != null)
-                  td6.innerHTML = `${task.cost}€`
-                else
-                  td6.innerHTML = `0€`
-                td6.addEventListener('click', tabController.selectedTaskId = idd)
-        tr.appendChild(td1)
-        tr.appendChild(td2)
-        tr.appendChild(td3)
-        tr.appendChild(td4)
-        tr.appendChild(td5)
-        tr.appendChild(td6)
+        tr.innerHTML = `
+          <td>${taskId}</td>
+          <td>${task.title}</td>
+          <td>${task.start_date}</td>
+          <td>${task.end_date}</td>
+          <td><progress max="100" value="${task.progress}"></td>
+          <td>${task.cost ? '' : task.cost}</td>
+        `
+        tr.addEventListener('click', () => {
+          console.log(taskId)
+          tabController.selectedTaskId = taskId
+        })
 
         for (let i = 0; i < 8; i++) {
           const td7 = document.createElement('td')
@@ -482,13 +636,7 @@ const tabController = new TabController([
                 tr.appendChild(td7)
         }
 
-        ganttTable.appendChild(tr)
-        if (task.children)
-          for (const childTask of task.children) {
-            taskChildId = (parseInt(taskChildId) + 1).toString()
-            createRow(childTask, taskId, taskChildId)
-          }
-
+        return tr
       }
 
       //Create the gantt's table
@@ -503,17 +651,15 @@ const tabController = new TabController([
         <th rowspan="2">End date</th>
         <th rowspan="2"><progress max="100" value="50"></th>
         <th rowspan="2">Costo</th>
-        <th colspan="${days[getStartMonthTask(tabController.tasks) - 1].length}">${months[getStartMonthTask(tabController.tasks) - 1]} ${getYearTask(tabController.tasks)}</th>
+        <th colspan="${days[getStartMonthTask(tabController.tasks.root.data) - 1].length}">${months[getStartMonthTask(tabController.tasks.root.data) - 1]} ${getYearTask(tabController.tasks.root.data)}</th>
       `
-
-
       ganttTable.appendChild(ganttHeader)
 
       //Add days to the gantt's header row
       const ganttDaysRow = document.createElement('tr')
 
       //controlla in che mese è il progetto e dopodiché crea i giorni
-      for (let i = 0; i < days[getStartMonthTask(tabController.tasks) - 1].length; i++) {
+      for (let i = 0; i < days[getStartMonthTask(tabController.tasks.root.data) - 1].length; i++) {
         const dayCell = document.createElement('th')
               dayCell.innerHTML = (i + 1).toString()
         ganttDaysRow.appendChild(dayCell)
@@ -521,12 +667,11 @@ const tabController = new TabController([
       ganttTable.appendChild(ganttDaysRow)
 
       //Add tasks rows to the gantt's table
-      let taskId = '0'
-      for (const task of tabController.tasks.children) {
-        taskId = (parseInt(taskId) + 1).toString()
-        createRow(task, taskId, '0')
-      }
+      tabController.tasks.forEach(({data: task}, id) => {
+        if(id)
+          ganttTable.appendChild(createRow(task, id))
+      })
       return ganttTable
     }
   }
-], task)
+], tasks)
