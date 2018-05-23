@@ -1,5 +1,5 @@
-import { TaskNoChildren } from '../commons/interfaces';
 //File per il raggruppamento dei file sparsi, DEBUG per problemi ad import/
+
 //Class for the management of a Tree Node
 class TreeNode<T> {
 
@@ -64,7 +64,7 @@ class Tree<T> {
       callback(node, index, this)
       if (node.children)
         for (const childId in node.children)
-          forEach(node.children[childId], `${index}.${childId + 1}`)
+          forEach(node.children[childId], (index ? `${index}.` : '') + (Number(childId) + 1))
     }
 
     forEach(this._root, '')
@@ -75,7 +75,7 @@ class Tree<T> {
       accumulator = callback(accumulator, node, index, this)
       if (node.children)
         for (const childId in node.children)
-          accumulator = reduce(accumulator, node.children[childId], `${index}.${childId + 1}`)
+          accumulator = reduce(accumulator, node.children[childId], (index ? `${index}.` : '') + (Number(childId) + 1))
       return accumulator
     }
 
@@ -88,7 +88,7 @@ class Tree<T> {
       const mappedNode: TreeNode<K> = callback(node, index, this)
       if (node.children)
         for (const childId in node.children)
-          mappedNode.appendChild(map(node.children[childId], `${index}.${childId + 1}`))
+          mappedNode.appendChild(map(node.children[childId], (index ? `${index}.` : '') + (Number(childId) + 1)))
       return mappedNode
     }
 
@@ -97,10 +97,41 @@ class Tree<T> {
     return mappedTree
   }
 
+  some(callback: (node?: TreeNode<T>,index?: string, tree?: Tree<T>) => boolean): boolean {
+    function some(node: TreeNode<T>, index: string): boolean {
+      if (callback(node, index, this))
+        return true
+      else if (node.children)
+        for (const childId in node.children)
+          if (some(node.children[childId], (index ? `${index}.` : '') + (Number(childId) + 1)))
+            return true
+
+      return false
+    }
+
+    return some(this.root, '')
+  }
+
+  every(callback: (node?: TreeNode<T>,index?: string, tree?: Tree<T>) => boolean): boolean {
+    function every(node: TreeNode<T>, index: string): boolean {
+      if (!callback(node, index, this))
+        return false
+      else if (node.children)
+        for (const childId in node.children)
+          if (!every(node.children[childId], (index ? `${index}.` : '') + (Number(childId) + 1)))
+            return false
+
+      return true
+    }
+
+    return every(this.root, '')
+  }
+
 }
 
+
 //Debug interface for task without children reference
-interface TaskNoChildren {
+interface Task {
 
   title: string
   description: string
@@ -140,68 +171,6 @@ interface Property {
 }
 
 
-//Interface for tasks
-interface Task {
-
-  title: string
-  description: string
-
-  wbs_graphics?: {
-    color: string
-  }
-
-  gantt_graphics?: {
-
-  }
-
-  collapsed: boolean
-
-  format?: string[]
-
-  start_date: string
-  end_date: string
-
-  progress: number
-  cost?: number
-  appointee?: string
-
-  extra_info?: {}
-
-  children?: Task[]
-
-}
-
-//Class with static methods to work on tasks
-class Task {
-
-  static getTaskById(task: Task, id: string): Task {
-    if (id.length < 1)
-      return task
-    else {
-      const ids: number[] = id.split('.').map(num => parseInt(num))
-      task = task.children[ids[0] - 1]
-      ids.shift()
-      return this.getTaskById(task, ids.join('.'))
-    }
-  }
-
-  static getParentTask(task: Task, id: string): Task {
-    return this.getTaskById(task, id.slice(0, -1))
-  }
-
-  static removeTask(task: Task, id: string): boolean {
-    const parent: Task = this.getParentTask(task, id)
-    const taskId: number = Number(id.split('.').pop())
-    if(parent.children[taskId] != undefined) {
-      parent.children.splice(taskId, 1)
-      return true
-    }
-    return false
-  }
-
-}
-
-
 //Interface for tabs
 interface Tab {
   name: string
@@ -221,8 +190,6 @@ interface MenuItem {
 interface TabButton extends MenuItem {
   icon: string
 }
-
-
 
 //---------------------------------------------------------------------------------------------------------------
 
@@ -283,7 +250,7 @@ class TabWindowRenderer {
 
   static updatePropertiesPanel(taskId: string, tabController: TabController): void {
     //Create a list of properties of the task
-    const task: TaskNoChildren = tabController.tasks.getNodeById(taskId).data
+    const task: Task = tabController.tasks.getNodeById(taskId).data
     const properties: Property[] = []
     for(const prop in task)
       properties.push({
@@ -377,7 +344,7 @@ class TabController {
   private _currentTab: number = 0
   private _selectedTaskId: string = ''
 
-  constructor(private tabs: Tab[], public tasks?: Tree<TaskNoChildren>) {
+  constructor(private tabs: Tab[], public tasks?: Tree<Task>) {
     this.currentTab = 0
   }
 
@@ -421,7 +388,7 @@ class TabController {
 
 //---------------------------------------------------------------------------------------------------------------
 
-const task: Task = {
+const task = {
   title: 'Progetto',
   description: 'desrizione progetto',
   collapsed: false,
@@ -500,6 +467,85 @@ const task: Task = {
   ]
 }
 
+const tasks: Tree<Task> = new Tree({
+  title: 'Progetto',
+  description: 'desrizione progetto',
+  collapsed: false,
+  start_date: '01-01-2018',
+  end_date: '03-01-2018',
+  progress: 50,
+  cost: 3000
+})
+tasks.root.appendChildren([
+  {
+    title: 'Pianificazione',
+    description: 'descrizione pianificazione',
+    collapsed: false,
+    start_date: '01-01-2018',
+    end_date: '03-01-2018',
+    progress: 50,
+    cost: 500
+  },
+  {
+    title: 'Preparazione',
+    description: 'descrizione preparazione',
+    collapsed: false,
+    start_date: '03-01-2018',
+    end_date: '03-01-2018',
+    progress: 30,
+    cost: 2000
+  },
+  {
+    title: 'Realizzazione',
+    description: 'descrizione realizzazione',
+    collapsed: false,
+    start_date: '03-01-2018',
+    end_date: '03-01-2018',
+    progress: 70,
+    cost: 5000
+  }
+])
+tasks.getNodeById('1').appendChildren([
+  {
+    title: 'Raccolta dati',
+    description: 'descrizione raccolta dati',
+    collapsed: false,
+    start_date: '01-01-2018',
+    end_date: '01-01-2018',
+    progress: 50,
+    cost: 100
+  },
+  {
+    title: 'Esaminazione',
+    description: 'descrizione esaminazione',
+    collapsed: false,
+    start_date: '02-01-2018',
+    end_date: '03-01-2018',
+    progress: 50,
+    cost: 400
+  }
+])
+tasks.getNodeById('1.1').appendChildren([
+  {
+    title: 'Raccolta richieste clienti',
+    description: 'descrizione raccolta dati',
+    collapsed: false,
+    start_date: '01-01-2018',
+    end_date: '01-01-2018',
+    progress: 80,
+    cost: 30
+  },
+  {
+    title: 'Raccolta esigenze utenti',
+    description: 'descrizione esaminazione',
+    collapsed: false,
+    start_date: '01-01-2018',
+    end_date: '01-01-2018',
+    progress: 20,
+    cost: 70
+  }
+])
+
 const tabController = new TabController([
   {
     name: 'WBS',
@@ -560,16 +606,16 @@ const tabController = new TabController([
       ]
 
 
-      function getStartMonthTask(task: TaskNoChildren){
+      function getStartMonthTask(task: Task){
         return parseInt(task.start_date.split('-')[1])
       }
 
 
-      function getYearTask(task: TaskNoChildren){
+      function getYearTask(task: Task){
         return parseInt(task.start_date.split('-')[2])
       }
 
-      function createRow(task: TaskNoChildren, taskId: string, taskChildId: string) {
+      function createRow(task: Task, taskId: string): HTMLTableRowElement {
         const tr = document.createElement('tr')
         tr.innerHTML = `
           <td>${taskId}</td>
@@ -579,7 +625,10 @@ const tabController = new TabController([
           <td><progress max="100" value="${task.progress}"></td>
           <td>${task.cost ? '' : task.cost}</td>
         `
-        tr.addEventListener('click', () => tabController.selectedTaskId = taskId)
+        tr.addEventListener('click', () => {
+          console.log(taskId)
+          tabController.selectedTaskId = taskId
+        })
 
         for (let i = 0; i < 8; i++) {
           const td7 = document.createElement('td')
@@ -587,6 +636,7 @@ const tabController = new TabController([
                 tr.appendChild(td7)
         }
 
+        return tr
       }
 
       //Create the gantt's table
@@ -617,12 +667,11 @@ const tabController = new TabController([
       ganttTable.appendChild(ganttDaysRow)
 
       //Add tasks rows to the gantt's table
-      let taskId = '0'
-      for (const task of tabController.tasks.root.children) {
-        taskId = (parseInt(taskId) + 1).toString()
-        createRow(task.data, taskId, '0')
-      }
+      tabController.tasks.forEach(({data: task}, id) => {
+        if(id)
+          ganttTable.appendChild(createRow(task, id))
+      })
       return ganttTable
     }
   }
-], task)
+], tasks)

@@ -64,7 +64,7 @@ export class Tree<T> {
       callback(node, index, this)
       if (node.children)
         for (const childId in node.children)
-          forEach(node.children[childId], `${index}.${childId + 1}`)
+          forEach(node.children[childId], (index ? `${index}.` : '') + (Number(childId) + 1))
     }
 
     forEach(this._root, '')
@@ -75,7 +75,7 @@ export class Tree<T> {
       accumulator = callback(accumulator, node, index, this)
       if (node.children)
         for (const childId in node.children)
-          accumulator = reduce(accumulator, node.children[childId], `${index}.${childId + 1}`)
+          accumulator = reduce(accumulator, node.children[childId], (index ? `${index}.` : '') + (Number(childId) + 1))
       return accumulator
     }
 
@@ -88,7 +88,7 @@ export class Tree<T> {
       const mappedNode: TreeNode<K> = callback(node, index, this)
       if (node.children)
         for (const childId in node.children)
-          mappedNode.appendChild(map(node.children[childId], `${index}.${childId + 1}`))
+          mappedNode.appendChild(map(node.children[childId], (index ? `${index}.` : '') + (Number(childId) + 1)))
       return mappedNode
     }
 
@@ -103,68 +103,34 @@ export class Tree<T> {
         return true
       else if (node.children)
         for (const childId in node.children)
-          console.log(some(node.children[childId], `${index}.${childId + 1}`))
-      else
-        return false
+          if (some(node.children[childId], (index ? `${index}.` : '') + (Number(childId) + 1)))
+            return true
+
+      return false
     }
 
     return some(this.root, '')
   }
 
+  every(callback: (node?: TreeNode<T>,index?: string, tree?: Tree<T>) => boolean): boolean {
+    function every(node: TreeNode<T>, index: string): boolean {
+      if (!callback(node, index, this))
+        return false
+      else if (node.children)
+        for (const childId in node.children)
+          if (!every(node.children[childId], (index ? `${index}.` : '') + (Number(childId) + 1)))
+            return false
+
+      return true
+    }
+
+    return every(this.root, '')
+  }
+
 }
+
 
 //Debug interface for task without children reference
-export interface TaskNoChildren {
-
-  title: string
-  description: string
-
-  wbs_graphics?: {
-    color: string
-  }
-
-  gantt_graphics?: {
-
-  }
-
-  collapsed: boolean
-
-  format?: string[]
-
-  start_date: string
-  end_date: string
-
-  progress: number
-  cost?: number
-  appointee?: string
-
-  extra_info?: {}
-
-}
-
-
-
-const tree: Tree<string> = new Tree('ciao')
-tree.root.appendChildren(['test', 'prova', 'funziona'])[0].
-appendChild('yee')
-tree.forEach(({data}) => console.log(data))
-console.log(tree.some(({data}) => data.length > 4))
-
-
-
-
-//Interface for properties
-export interface Property {
-  name: string
-  description: string
-  value: {
-    task: Task
-    key: string
-  }
-}
-
-
-//Interface for tasks
 export interface Task {
 
   title: string
@@ -191,38 +157,17 @@ export interface Task {
 
   extra_info?: {}
 
-  children?: Task[]
-
 }
 
-//Class with static methods to work on tasks
-export class Task {
 
-  static getTaskById(task: Task, id: string): Task {
-    if (id.length < 1)
-      return task
-    else {
-      const ids: number[] = id.split('.').map(num => parseInt(num))
-      task = task.children[ids[0] - 1]
-      ids.shift()
-      return this.getTaskById(task, ids.join('.'))
-    }
+//Interface for properties
+export interface Property {
+  name: string
+  description: string
+  value: {
+    task: Task
+    key: string
   }
-
-  static getParentTask(task: Task, id: string): Task {
-    return this.getTaskById(task, id.slice(0, -1))
-  }
-
-  static removeTask(task: Task, id: string): boolean {
-    const parent: Task = this.getParentTask(task, id)
-    const taskId: number = Number(id.split('.').pop())
-    if(parent.children[taskId] != undefined) {
-      parent.children.splice(taskId, 1)
-      return true
-    }
-    return false
-  }
-
 }
 
 
