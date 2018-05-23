@@ -601,17 +601,15 @@ const tabController = new TabController([
         <th rowspan="2">End date</th>
         <th rowspan="2"><progress max="100" value="50"></th>
         <th rowspan="2">Costo</th>
-        <th colspan="${days[getStartMonthTask(tabController.tasks) - 1].length}">${months[getStartMonthTask(tabController.tasks) - 1]} ${getYearTask(tabController.tasks)}</th>
+        <th colspan="${days[getStartMonthTask(tabController.tasks.root.data) - 1].length}">${months[getStartMonthTask(tabController.tasks.root.data) - 1]} ${getYearTask(tabController.tasks.root.data)}</th>
       `
-
-
       ganttTable.appendChild(ganttHeader)
 
       //Add days to the gantt's header row
       const ganttDaysRow = document.createElement('tr')
 
       //controlla in che mese è il progetto e dopodiché crea i giorni
-      for (let i = 0; i < days[getStartMonthTask(tabController.tasks) - 1].length; i++) {
+      for (let i = 0; i < days[getStartMonthTask(tabController.tasks.root.data) - 1].length; i++) {
         const dayCell = document.createElement('th')
               dayCell.innerHTML = (i + 1).toString()
         ganttDaysRow.appendChild(dayCell)
@@ -620,9 +618,9 @@ const tabController = new TabController([
 
       //Add tasks rows to the gantt's table
       let taskId = '0'
-      for (const task of tabController.tasks.children) {
+      for (const task of tabController.tasks.root.children) {
         taskId = (parseInt(taskId) + 1).toString()
-        createRow(task, taskId, '0')
+        createRow(task.data, taskId, '0')
       }
       return ganttTable
     }

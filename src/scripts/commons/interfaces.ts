@@ -97,6 +97,20 @@ export class Tree<T> {
     return mappedTree
   }
 
+  some(callback: (node?: TreeNode<T>,index?: string, tree?: Tree<T>) => boolean): boolean {
+    function some(node: TreeNode<T>, index: string): boolean {
+      if (callback(node, index, this))
+        return true
+      else if (node.children)
+        for (const childId in node.children)
+          console.log(some(node.children[childId], `${index}.${childId + 1}`))
+      else
+        return false
+    }
+
+    return some(this.root, '')
+  }
+
 }
 
 //Debug interface for task without children reference
@@ -127,6 +141,16 @@ export interface TaskNoChildren {
   extra_info?: {}
 
 }
+
+
+
+const tree: Tree<string> = new Tree('ciao')
+tree.root.appendChildren(['test', 'prova', 'funziona'])[0].
+appendChild('yee')
+tree.forEach(({data}) => console.log(data))
+console.log(tree.some(({data}) => data.length > 4))
+
+
 
 
 //Interface for properties
