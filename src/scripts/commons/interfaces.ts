@@ -148,8 +148,8 @@ export interface Task {
 
   format?: string[]
 
-  start_date: string
-  end_date: string
+  start_date: Date
+  end_date: Date
 
   progress: number
   cost?: number
@@ -190,4 +190,3 @@ export interface MenuItem {
 export interface TabButton extends MenuItem {
   icon: string
 }
-

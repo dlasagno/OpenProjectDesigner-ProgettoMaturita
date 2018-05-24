@@ -148,8 +148,8 @@ interface Task {
 
   format?: string[]
 
-  start_date: string
-  end_date: string
+  start_date: Date
+  end_date: Date
 
   progress: number
   cost?: number
@@ -471,8 +471,8 @@ const tasks: Tree<Task> = new Tree({
   title: 'Progetto',
   description: 'desrizione progetto',
   collapsed: false,
-  start_date: '01-01-2018',
-  end_date: '03-01-2018',
+  start_date: new Date(2018, 1, 1),
+  end_date: new Date(2018, 1, 3),
   progress: 50,
   cost: 3000
 })
@@ -481,8 +481,8 @@ tasks.root.appendChildren([
     title: 'Pianificazione',
     description: 'descrizione pianificazione',
     collapsed: false,
-    start_date: '01-01-2018',
-    end_date: '03-01-2018',
+    start_date: new Date('2018-01-03'),
+    end_date: new Date('2018-01-03'),
     progress: 50,
     cost: 500
   },
@@ -490,8 +490,8 @@ tasks.root.appendChildren([
     title: 'Preparazione',
     description: 'descrizione preparazione',
     collapsed: false,
-    start_date: '03-01-2018',
-    end_date: '03-01-2018',
+    start_date: new Date('2018-01-03'),
+    end_date: new Date('2018-01-03'),
     progress: 30,
     cost: 2000
   },
@@ -499,8 +499,8 @@ tasks.root.appendChildren([
     title: 'Realizzazione',
     description: 'descrizione realizzazione',
     collapsed: false,
-    start_date: '03-01-2018',
-    end_date: '03-01-2018',
+    start_date: new Date('2018-01-03'),
+    end_date: new Date('2018-01-03'),
     progress: 70,
     cost: 5000
   }
@@ -510,8 +510,8 @@ tasks.getNodeById('1').appendChildren([
     title: 'Raccolta dati',
     description: 'descrizione raccolta dati',
     collapsed: false,
-    start_date: '01-01-2018',
-    end_date: '01-01-2018',
+    start_date: new Date('2018-01-01'),
+    end_date: new Date('2018-01-01'),
     progress: 50,
     cost: 100
   },
@@ -519,8 +519,8 @@ tasks.getNodeById('1').appendChildren([
     title: 'Esaminazione',
     description: 'descrizione esaminazione',
     collapsed: false,
-    start_date: '02-01-2018',
-    end_date: '03-01-2018',
+    start_date: new Date('2018-01-02'),
+    end_date: new Date('2018-01-03'),
     progress: 50,
     cost: 400
   }
@@ -530,8 +530,8 @@ tasks.getNodeById('1.1').appendChildren([
     title: 'Raccolta richieste clienti',
     description: 'descrizione raccolta dati',
     collapsed: false,
-    start_date: '01-01-2018',
-    end_date: '01-01-2018',
+    start_date: new Date('2018-01-01'),
+    end_date: new Date('2018-01-01'),
     progress: 80,
     cost: 30
   },
@@ -539,8 +539,8 @@ tasks.getNodeById('1.1').appendChildren([
     title: 'Raccolta esigenze utenti',
     description: 'descrizione esaminazione',
     collapsed: false,
-    start_date: '01-01-2018',
-    end_date: '01-01-2018',
+    start_date: new Date('2018-01-01'),
+    end_date: new Date('2018-01-01'),
     progress: 20,
     cost: 70
   }
@@ -638,6 +638,7 @@ const tabController = new TabController([
 
         return tr
       }
+
 
       //Create the gantt's table
       const ganttTable = document.createElement('table')
