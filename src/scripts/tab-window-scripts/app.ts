@@ -22,7 +22,7 @@ class TreeNode<T> {
       this._children.push(child instanceof TreeNode ? child : new TreeNode<T>(child as T))
     return this.children
   }
-  
+
   removeChild(childIndex: number): void { this._children.splice(childIndex, 1) }
   removeChildren(): void { this._children = [] }
 
@@ -69,7 +69,7 @@ class Tree<T> {
 
     forEach(this._root, '')
   }
-  
+
   reduce<K>(callback: (accumulator?: K, node?: TreeNode<T>,index?: string, tree?: Tree<T>) => K, initialValue: K): K {
     function reduce(accumulator: K, node: TreeNode<T>, index: string): K {
       accumulator = callback(accumulator, node, index, this)
@@ -194,7 +194,7 @@ interface TabButton extends MenuItem {
 //---------------------------------------------------------------------------------------------------------------
 
 class TabWindowRenderer {
-  
+
   private static windowElement = document.querySelector('#tab-window')
 
 
@@ -277,7 +277,7 @@ class TabWindowRenderer {
     const deleteButtonElement = document.createElement('div')
       deleteButtonElement.classList.add('button', 'delete-button')
       deleteButtonElement.innerHTML = '<span class="fas fa-trash-alt"></span>'
-      deleteButtonElement.addEventListener('click', () => tabController.removeTask(taskId) ) 
+      deleteButtonElement.addEventListener('click', () => tabController.removeTask(taskId) )
     actionButtonsElement.appendChild(deleteButtonElement)
 
 
