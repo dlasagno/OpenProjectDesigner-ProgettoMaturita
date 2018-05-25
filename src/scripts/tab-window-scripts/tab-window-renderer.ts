@@ -117,7 +117,8 @@ export class TabWindowRenderer {
           inputProperty.setAttribute('value', property.value.task[property.value.key])
           inputProperty.addEventListener('keydown', event => {
             if (event.key === "Enter") {
-              property.value.task[property.value.key] = (event.target as HTMLInputElement).value
+              const value = (event.target as HTMLInputElement).value
+              property.value.task[property.value.key] = property.value.task[property.value.key] instanceof Date ? new Date(value) : value
               tabController.update()
             }
           })

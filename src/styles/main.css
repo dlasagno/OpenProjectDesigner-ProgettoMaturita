@@ -45,6 +45,9 @@ table th {
 table th progress::-webkit-progress-value {
   background-color: #a9a9a9;
 }
+table .fill {
+  background: #87ceeb;
+}
 .list {
   display: flex;
   flex-direction: column;
