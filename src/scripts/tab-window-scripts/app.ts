@@ -277,7 +277,7 @@ class TabWindowRenderer {
     const deleteButtonElement = document.createElement('div')
       deleteButtonElement.classList.add('button', 'delete-button')
       deleteButtonElement.innerHTML = '<span class="fas fa-trash-alt"></span>'
-      deleteButtonElement.addEventListener('click', () => tabController.removeTask(taskId) ) 
+      deleteButtonElement.addEventListener('click', () => tabController.removeTask(taskId) )
     actionButtonsElement.appendChild(deleteButtonElement)
 
 
@@ -565,8 +565,11 @@ const tabController = new TabController([
         }
       }
     ],
-    view() {
-      return document.createElement('h1')
+    view(tabController: TabController): Element {
+      const paper = Raphael(0 , 0, 500, 400)
+      const rect = paper.rect(1, 1, 20, 30).attr('fill', 'red')
+    
+      return paper
     }
   },
   {
@@ -574,7 +577,7 @@ const tabController = new TabController([
     icon: 'fa-th-list',
     menuItems: [],
     view(tabController: TabController): Element {
-  
+
       function createRow(task: Task, taskId: string): HTMLTableRowElement {
         const taskRow = document.createElement('tr')
         taskRow.innerHTML = `
@@ -597,16 +600,16 @@ const tabController = new TabController([
           taskRow.appendChild(dayCell)
           date.setDate(date.getDate() + 1)
         }
-  
+
         taskRow.addEventListener('click', () => tabController.selectedTaskId = taskId)
-  
+
         return taskRow
       }
-  
-  
+
+
       //Create the gantt's table
       const ganttTable = document.createElement('table')
-  
+
       //Craete the gantt's header row
       const ganttHeader = document.createElement('tr')
             ganttHeader.innerHTML = `
@@ -617,45 +620,42 @@ const tabController = new TabController([
               <th rowspan="2"><progress max="100" value="50"></th>
               <th rowspan="2">Costo</th>
             `
-      
+
       //Add days to the gantt's header row
       const ganttDaysRow = document.createElement('tr')
-      
+
       //controlla in che mese è il progetto e dopodiché crea i giorni
       const date = new Date(tabController.tasks.root.data.start_date)
       date.setDate(1)
       while (date.getTime() < tabController.tasks.root.data.end_date.getTime()){
         const monthCell: Element = document.createElement('th')
         monthCell.innerHTML = date.toISOString().slice(0, 7)
-        
+
         const nextMonth = new Date(date)
         nextMonth.setMonth(date.getMonth() + 1)
         let daysCounter: number = 0
         while (date.getTime() < nextMonth.getTime()) {
           const dayCell: Element = document.createElement('th')
           dayCell.innerHTML = date.getDate().toString()
-          
+
           ganttDaysRow.appendChild(dayCell)
           date.setDate(date.getDate() + 1)
           daysCounter++
         }
-        
+
         monthCell.setAttribute('colspan', daysCounter.toString())
         ganttHeader.appendChild(monthCell)
       }
       ganttTable.appendChild(ganttHeader)
       ganttTable.appendChild(ganttDaysRow)
-  
+
       //Add tasks rows to the gantt's table
       tabController.tasks.forEach(({data: task}, id) => {
         if(id)
           ganttTable.appendChild(createRow(task, id))
       })
-  
+
       return ganttTable
     }
   }
 ], tasks)
-
-
-
