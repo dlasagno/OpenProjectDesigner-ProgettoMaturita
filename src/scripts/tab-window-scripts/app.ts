@@ -598,10 +598,7 @@ const tabController = new TabController([
           date.setDate(date.getDate() + 1)
         }
   
-        taskRow.addEventListener('click', () => {
-          console.log(taskId)
-          tabController.selectedTaskId = taskId
-        })
+        taskRow.addEventListener('click', () => tabController.selectedTaskId = taskId)
   
         return taskRow
       }
