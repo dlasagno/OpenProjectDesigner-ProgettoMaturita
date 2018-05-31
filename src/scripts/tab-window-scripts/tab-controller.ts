@@ -42,6 +42,11 @@ export class TabController {
     this.update()
   }
 
+  appendToTask(taskId: string, task: Task) {
+    this.tasks.getNodeById(taskId).appendChild(task)
+    this.update()
+  }
+
   update() {
     TabWindowRenderer.updateView(this.tabs[this._currentTab].view(this))
   }

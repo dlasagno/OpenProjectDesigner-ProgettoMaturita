@@ -1,8 +1,11 @@
 import { Tree, Task } from '../commons/interfaces'
-import * as fs from 'fs'
+//const { Tree, Task } = require('../commons/interfaces')
+const fs = require('fs')
 
-export const FileManager = {
+const FileManager = {
   toFile(tasks: Tree<Task>) {
-    
+    const fileString: string = JSON.stringify(tasks)
   }
 }
+
+module.exports = FileManager

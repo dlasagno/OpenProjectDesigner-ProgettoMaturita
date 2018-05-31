@@ -78,6 +78,11 @@
       width: 2em
       &:not(:hover)
         background: dark-grey[1]
+      &:hover:not(.delete-button)
+        background: skyblue
     .list .property
       padding: 10px
       separator(horizontal, 1px solid white)
+    
+    > #action-buttons
+      display: flex

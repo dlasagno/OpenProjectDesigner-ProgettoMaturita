@@ -1,5 +1,12 @@
 //File per il raggruppamento dei file sparsi, DEBUG per problemi ad import/
 
+const path = require('path')
+
+
+const FileManager = require('../src/scripts/file-managment-scripts/file-manager')
+
+//---------------------------------------------------------------------------------------------------------------
+
 //Class for the management of a Tree Node
 class TreeNode<T> {
 
@@ -279,6 +286,18 @@ class TabWindowRenderer {
       deleteButtonElement.innerHTML = '<span class="fas fa-trash-alt"></span>'
       deleteButtonElement.addEventListener('click', () => tabController.removeTask(taskId) )
     actionButtonsElement.appendChild(deleteButtonElement)
+    const addButtonElement = document.createElement('div')
+      addButtonElement.classList.add('button')
+      addButtonElement.innerHTML = '<span class="fas fa-plus"></span>'
+      addButtonElement.addEventListener('click', () => tabController.appendToTask(taskId, {
+        title: "new task",
+        description: "",
+        collapsed: false,
+        start_date: new Date(tabController.tasks.getNodeById(taskId).data.start_date),
+        end_date: new Date(tabController.tasks.getNodeById(taskId).data.end_date),
+        progress: 0
+      }))
+    actionButtonsElement.appendChild(addButtonElement)
 
 
     //Select the properties list
@@ -381,12 +400,16 @@ class TabController {
     this.update()
   }
 
+  appendToTask(taskId: string, task: Task) {
+    this.tasks.getNodeById(taskId).appendChild(task)
+    this.update()
+  }
+
   update() {
     TabWindowRenderer.updateView(this.tabs[this._currentTab].view(this))
   }
 
 }
-
 //---------------------------------------------------------------------------------------------------------------
 
 const task = {
@@ -566,9 +589,6 @@ const tabController = new TabController([
       }
     ],
     view(tabController: TabController): Element {
-      const paper = Raphael(0 , 0, 500, 400)
-      const rect = paper.rect(1, 1, 20, 30).attr('fill', 'red')
-    
       return document.createElement('div')
     }
   },
@@ -617,7 +637,7 @@ const tabController = new TabController([
               <th rowspan="2">Task</th>
               <th rowspan="2">Start date</th>
               <th rowspan="2">End date</th>
-              <th rowspan="2"><progress max="100" value="50"></th>
+              <th rowspan="2">Progress</th>
               <th rowspan="2">Costo</th>
             `
 
@@ -651,11 +671,12 @@ const tabController = new TabController([
 
       //Add tasks rows to the gantt's table
       tabController.tasks.forEach(({data: task}, id) => {
-        if(id)
-          ganttTable.appendChild(createRow(task, id))
+        ganttTable.appendChild(createRow(task, id))
       })
 
       return ganttTable
     }
   }
 ], tasks)
+
+FileManager.toFile(tasks)

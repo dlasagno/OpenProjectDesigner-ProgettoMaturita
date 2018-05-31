@@ -216,10 +216,16 @@ progress::-webkit-progress-value {
 #tab-window #properties-panel .button:not(:hover) {
   background: #303030;
 }
+#tab-window #properties-panel .button:hover:not(.delete-button) {
+  background: #87ceeb;
+}
 #tab-window #properties-panel .list .property {
   padding: 10px;
   border-bottom: 1px solid #fff;
 }
 #tab-window #properties-panel .list .property:last-child {
   border-bottom: none;
+}
+#tab-window #properties-panel > #action-buttons {
+  display: flex;
 }

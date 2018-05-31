@@ -85,8 +85,20 @@ export class TabWindowRenderer {
     const deleteButtonElement = document.createElement('div')
       deleteButtonElement.classList.add('button', 'delete-button')
       deleteButtonElement.innerHTML = '<span class="fas fa-trash-alt"></span>'
-      deleteButtonElement.addEventListener('click', () => tabController.removeTask(taskId) ) 
+      deleteButtonElement.addEventListener('click', () => tabController.removeTask(taskId) )
     actionButtonsElement.appendChild(deleteButtonElement)
+    const addButtonElement = document.createElement('div')
+      addButtonElement.classList.add('button')
+      addButtonElement.innerHTML = '<span class="fas fa-plus"></span>'
+      addButtonElement.addEventListener('click', () => tabController.appendToTask(taskId, {
+        title: "new task",
+        description: "",
+        collapsed: false,
+        start_date: new Date(tabController.tasks.getNodeById(taskId).data.start_date),
+        end_date: new Date(tabController.tasks.getNodeById(taskId).data.end_date),
+        progress: 0
+      }))
+    actionButtonsElement.appendChild(addButtonElement)
 
 
     //Select the properties list
