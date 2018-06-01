@@ -1,6 +1,5 @@
 import { TabController } from '../tab-window-scripts/tab-controller'
 import { Tab } from './interfaces'
-import 'raphael'
 
 
 const ganttTab: Tab = {
