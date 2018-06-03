@@ -589,7 +589,41 @@ const tabController = new TabController([
       }
     ],
     view(tabController: TabController): Element {
-      return document.createElement('div')
+      const wbsElement = document.createElement('div')
+      const paper = Raphael(wbsElement, 1000, 1000)
+
+      let count = 1
+      const taskCoo = tabController.tasks.map<{x: number, y: number}>((node, id) => {
+	      return new TreeNode({
+		      x: id ? id.split('.').length * 130 : 10,
+          y: 80 * count++
+        })
+      })
+
+      function createRect(x: number, y: number){
+        const rect = paper.rect(x, y, 100, 50)
+      }
+      
+      function createLine(startX: number, startY: number, finishX: number, finishY: number){
+        const path = paper.path(`M ${startX} ${startY} L ${finishX} ${startY} ${finishX} ${finishY}`)
+      }
+  
+
+      taskCoo.forEach((task, id) => { 
+        
+        createRect(task.data.x, task.data.y)
+        if(id != '')
+          createLine(task.data.x, (task.data.y + 25), (taskCoo.getNodeById(id.split('.').slice(0, -1).join('.')).data.x + 50), (taskCoo.getNodeById(id.split('.').slice(0, -1).join('.')).data.y) + 50)
+        
+      })
+      
+      
+
+      
+      
+      
+      return wbsElement
+
     }
   },
   {
