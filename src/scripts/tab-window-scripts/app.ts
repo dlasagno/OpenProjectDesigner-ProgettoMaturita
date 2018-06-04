@@ -592,13 +592,14 @@ const tabController = new TabController([
       const wbsElement = document.createElement('div')
       const paper = Raphael(wbsElement, 1000, 1000)
 
-      let count = 1
+      let count = 0
       const taskCoo = tabController.tasks.map<{x: number, y: number}>((node, id) => {
 	      return new TreeNode({
-		      x: id ? id.split('.').length * 130 : 10,
-          y: 80 * count++
+		      x: (id ? id.split('.').length * 130 : 0) + 100,
+          y: (100 * count++) + 100
         })
       })
+      console.log(taskCoo)
 
       function createRect(x: number, y: number, id: string){
         const rect = paper.rect(x, y, 100, 50).attr({"fill": "white", "cursor": "pointer"}).click(function() {
@@ -617,9 +618,15 @@ const tabController = new TabController([
 
       taskCoo.forEach((task, id) => { 
         createRect(task.data.x, task.data.y, id)
-        //createTitle(tabController.tasks.getNodeById(id).data.title, (task.data.x + 10), (task.data.y))
+        console.log(task.data.x, task.data.y)
+        createTitle(tabController.tasks.getNodeById(id).data.title, task.data.x, task.data.y)
         if(id != '')
-          createLine(task.data.x, (task.data.y + 25), (taskCoo.getNodeById(id.split('.').slice(0, -1).join('.')).data.x + 50), (taskCoo.getNodeById(id.split('.').slice(0, -1).join('.')).data.y) + 50)
+          createLine(
+            task.data.x,
+            task.data.y + 25,
+            taskCoo.getNodeById(id.split('.').slice(0, -1).join('.')).data.x + 50,
+            taskCoo.getNodeById(id.split('.').slice(0, -1).join('.')).data.y + 50
+          )
       })  
       
       

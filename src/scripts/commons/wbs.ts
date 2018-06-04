@@ -1,5 +1,5 @@
 import { TabController } from '../tab-window-scripts/tab-controller'
-import { Tab } from './interfaces'
+import { Tab, Tree, TreeNode } from './interfaces'
 
 
 const ganttTab: Tab = {
@@ -35,7 +35,7 @@ const ganttTab: Tab = {
 
     taskCoo.forEach((task, id) => { 
       createRect(task.data.x, task.data.y, id)
-      //createTitle(tabController.tasks.getNodeById(id).data.title, (task.data.x + 10), (task.data.y))
+      createTitle(tabController.tasks.getNodeById(id).data.title, (task.data.x), (task.data.y))
       if(id != '')
         createLine(task.data.x, (task.data.y + 25), (taskCoo.getNodeById(id.split('.').slice(0, -1).join('.')).data.x + 50), (taskCoo.getNodeById(id.split('.').slice(0, -1).join('.')).data.y) + 50)
     })  
