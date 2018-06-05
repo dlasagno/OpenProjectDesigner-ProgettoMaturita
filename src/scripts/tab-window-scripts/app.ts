@@ -589,43 +589,53 @@ const tabController = new TabController([
       }
     ],
     view(tabController: TabController): Element {
-      const wbsElement = document.createElement('div')
-      const paper = Raphael(wbsElement, 1000, 1000)
+      const xOffset: number = 100
+      const yOffset: number = 50
+      const rectWidth: number = 200
+      const rectHeight: number = 50
+      const rectSpacing: number = 30
+      const fontSize: number = 16
 
-      let count = 0
-      const taskCoo = tabController.tasks.map<{x: number, y: number}>((node, id) => {
-	      return new TreeNode({
-		      x: (id ? id.split('.').length * 130 : 0) + 100,
-          y: (100 * count++) + 100
-        })
-      })
-      console.log(taskCoo)
-
-      function createRect(x: number, y: number, id: string){
-        const rect = paper.rect(x, y, 100, 50).attr({"fill": "white", "cursor": "pointer"}).click(function() {
-          tabController.selectedTaskId = id
-        }) 
+      function createRect(x: number, y: number, id: string, text: string){
+        const rect = paper.rect(x, y, rectWidth, rectHeight)
+          .attr({"fill": "white", "cursor": "pointer"})
+          .click(function() {
+            tabController.selectedTaskId = id
+          })
+        const title = paper.text(x + rectWidth / 2, y + rectHeight / 2, text)
+          .attr({"font-size": fontSize, "cursor": "pointer"})
+          .click(function() {
+            tabController.selectedTaskId = id
+          })
+        title.node.querySelector('tspan')
+          .setAttribute('dy', fontSize / 4)
       }
       
       function createLine(startX: number, startY: number, finishX: number, finishY: number){
         const path = paper.path(`M ${startX} ${startY} L ${finishX} ${startY} ${finishX} ${finishY}`)
       }
 
-      function createTitle(text: string, x: number, y: number){
-        const title = paper.text(x, y, text).attr({"font-size": 18, "text-anchor": "start"})
-       }
-  
 
-      taskCoo.forEach((task, id) => { 
-        createRect(task.data.x, task.data.y, id)
-        console.log(task.data.x, task.data.y)
-        createTitle(tabController.tasks.getNodeById(id).data.title, task.data.x, task.data.y)
+      const wbsElement: Element = document.createElement('div')
+      
+      const paper = Raphael(wbsElement, 1000, 1000)
+
+      let count = 0
+      const tasksCoordinates = tabController.tasks.map<{x: number, y: number}>((node, id) => {
+	      return new TreeNode({
+		      x: (id ? id.split('.').length * (rectWidth + rectSpacing) : 0) + xOffset,
+          y: ((rectHeight + rectSpacing) * count++) + yOffset
+        })
+      })
+
+      tasksCoordinates.forEach((task, id) => { 
+        createRect(task.data.x, task.data.y, id, tabController.tasks.getNodeById(id).data.title)
         if(id != '')
           createLine(
             task.data.x,
-            task.data.y + 25,
-            taskCoo.getNodeById(id.split('.').slice(0, -1).join('.')).data.x + 50,
-            taskCoo.getNodeById(id.split('.').slice(0, -1).join('.')).data.y + 50
+            task.data.y + rectHeight / 2,
+            tasksCoordinates.getNodeById(id.split('.').slice(0, -1).join('.')).data.x + rectWidth / 2,
+            tasksCoordinates.getNodeById(id.split('.').slice(0, -1).join('.')).data.y + rectHeight
           )
       })  
       
