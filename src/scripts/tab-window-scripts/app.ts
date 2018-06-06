@@ -738,24 +738,4 @@ const tabController = new TabController([
 ], tasks)
 
 FileManager.toFile(tasks)
-
-
-const fs = require('fs')
-
-
-//qua prende il task e lo mette nel file (lascialo commentato per far funzionare il codice dopo)
-
-/*const treeNodeString = JSON.stringify(tabController.tasks.root)
-fs.writeFile('src/data/prova.json', treeNodeString, function(err) {
-  if (err) throw err
-  console.log('file scritto')}
-)*/
-
-
-//qua prende il task dal file e lo mette nella variabile
-
-const data = fs.readFileSync('src/data/prova.json', 'utf-8')
-const treeNodeTask = JSON.parse(data)
-console.log(treeNodeTask)
-console.log(tabController.tasks.root)
-
+//FileManager.fromFile('src/data/prova.json')
