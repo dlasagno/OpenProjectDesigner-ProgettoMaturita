@@ -5,16 +5,23 @@ const fs = require('fs')
 const FileManager = {
   toFile(tasks: Tree<Task>) {
     const fileString: string = JSON.stringify(tasks)
-    fs.writeFile('src/data/prova.json', fileString, function(err) {
+    fs.writeFileSync('src/data/prova.json', fileString, function(err) {
     if (err) throw err
     console.log('file scritto')}
     )
   },
 
-  fromFile(path: string){
+  fromFile(path: string): Tree<Task>{
+    
+
     const data = fs.readFileSync(path, 'utf-8')
     const fileTask = JSON.parse(data)
-    console.log(fileTask)
+    const tasks: Tree<Task> = new Tree(fileTask._root.data)
+    for(const child of fileTask._root._children){
+      tasks.root.appendChild(child)
+    }
+    
+    return tasks
   }
 }
 
