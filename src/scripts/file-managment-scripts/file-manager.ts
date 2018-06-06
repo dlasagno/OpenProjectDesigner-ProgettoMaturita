@@ -20,7 +20,6 @@ const FileManager = {
     for(const child of fileTask._root._children){
       tasks.root.appendChild(child)
     }
-    
     return tasks
   }
 }
