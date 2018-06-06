@@ -570,6 +570,9 @@ tasks.getNodeById('1.1').appendChildren([
   }
 ])
 
+FileManager.toFile(tasks)
+const tasks2: Tree<Task> = FileManager.fromFile('src/data/prova.json')
+
 const tabController = new TabController([
   {
     name: 'WBS',
@@ -731,11 +734,8 @@ const tabController = new TabController([
   
       //Add the gantt table to the gantt
       ganttElement.appendChild(ganttTable)
-  
+      
       return ganttElement
     }
   }
 ], tasks)
-
-FileManager.toFile(tasks)
-//FileManager.fromFile('src/data/prova.json')
