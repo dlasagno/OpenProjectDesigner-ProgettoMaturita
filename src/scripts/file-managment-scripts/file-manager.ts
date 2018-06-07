@@ -17,9 +17,13 @@ const FileManager = {
     const data = fs.readFileSync(path, 'utf-8')
     const fileTask = JSON.parse(data)
     const tasks: Tree<Task> = new Tree(fileTask._root.data)
+
+    /*
     for(const child of fileTask._root._children){
-      tasks.root.appendChild(child)
+      tasks.root.appendChild(child.data)
     }
+    */
+   
     return tasks
   }
 }
