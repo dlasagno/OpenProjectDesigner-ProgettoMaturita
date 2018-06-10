@@ -739,5 +739,5 @@ const tabController = new TabController([
 
 FileManager.toFile(tasks)
 const tasksFromFile: Tree<Task> = FileManager.fromFile('src/data/prova.json')
-console.log(tasksFromFile)
-console.log(tasks)
+console.log('task dal file:\n', tasksFromFile)
+console.log('task originale:\n', tasks)
