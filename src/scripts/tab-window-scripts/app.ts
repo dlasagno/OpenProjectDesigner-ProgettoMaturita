@@ -412,7 +412,7 @@ class TabController {
 }
 //---------------------------------------------------------------------------------------------------------------
 
-const task = {
+/* const task = {
   title: 'Progetto',
   description: 'desrizione progetto',
   collapsed: false,
@@ -489,7 +489,7 @@ const task = {
       cost: 5000
     }
   ]
-}
+} */
 
 const tasks: Tree<Task> = new Tree({
   title: 'Progetto',
@@ -569,6 +569,11 @@ tasks.getNodeById('1.1').appendChildren([
     cost: 70
   }
 ])
+
+FileManager.toFile(tasks)
+const tasksFromFile: Tree<Task> = FileManager.fromFile('src/data/prova.json')
+/* console.log('task dal file:\n', tasksFromFile)
+console.log('task originale:\n', tasks) */
 
 const tabController = new TabController([
   {
@@ -735,9 +740,4 @@ const tabController = new TabController([
       return ganttElement
     }
   }
-], tasks)
-
-FileManager.toFile(tasks)
-const tasksFromFile: Tree<Task> = FileManager.fromFile('src/data/prova.json')
-console.log('task dal file:\n', tasksFromFile)
-console.log('task originale:\n', tasks)
+], tasksFromFile)
