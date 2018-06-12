@@ -3,38 +3,33 @@ import { Tree, Task } from '../commons/interfaces'
 const fs = require('fs')
 
 const FileManager = {
-  toFile(tasks: Tree<Task>) {
+  toFile(path: string, tasks: Tree<Task>): void {
+    //Create an array of tasks for an easier reading of the file
+    const tasksArray: {data, id}[] = tasks.reduce((taskArray, {data}, id) => {
+      taskArray.push({data, id})
+      return taskArray
+    }, [])
 
-    let array: Object[] = []
-
-    tasks.forEach((task, id) => {
-      const data = task.data
-      array.push({data, id})
-    })
-
-    const fileString: string = JSON.stringify(array)
-    fs.writeFileSync('src/data/prova.json', fileString, function(err) {
-      if (err) throw err
-      console.log('file scritto')
-    })
-
+    //Write the tasks to the file
+    const fileString: string = JSON.stringify(tasksArray)
+    fs.writeFileSync(path, fileString)
   },
 
   fromFile(path: string): Tree<Task>{
+    //Read the tasks from the file
+    const fileString: string = fs.readFileSync(path, 'utf-8')
+    const fileTasks: {data, id}[] = JSON.parse(fileString)
+    //Convert dates from string to Date
+    fileTasks.forEach(task => {
+      task.data.start_date = new Date(task.data.start_date)
+      task.data.end_date = new Date(task.data.end_date)
+    })
 
-    const data: string = fs.readFileSync(path, 'utf-8')
-    const fileTask = JSON.parse(data)
-    fileTask[0].data.start_date = new Date(fileTask[0].data.start_date)
-    fileTask[0].data.end_date = new Date(fileTask[0].data.end_date)
-    const tasks: Tree<Task> = new Tree(fileTask[0].data)
-    
-    for(let i = 1; i < fileTask.length; i++) {
-      fileTask[i].data.start_date = new Date(fileTask[i].data.start_date)
-      fileTask[i].data.end_date = new Date(fileTask[i].data.end_date)
-      tasks.getNodeById(fileTask[i].id.split('.').slice(0, -1).join('.')).appendChild(fileTask[i].data)
-    }
-    
-    return tasks
+    //Generate the task's tree
+    return fileTasks.slice(1, -1).reduce((tasks, {data: task, id}) => {
+      tasks.getNodeById(id.split('.').slice(0, -1).join('.')).appendChild(task)
+      return tasks
+    }, new Tree(fileTasks[0].data))
   }
 }
 

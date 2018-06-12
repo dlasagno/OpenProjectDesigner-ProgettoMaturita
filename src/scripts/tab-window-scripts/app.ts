@@ -410,6 +410,7 @@ class TabController {
   }
 
 }
+
 //---------------------------------------------------------------------------------------------------------------
 
 /* const task = {
@@ -570,29 +571,14 @@ tasks.getNodeById('1.1').appendChildren([
   }
 ])
 
-FileManager.toFile(tasks)
+FileManager.toFile('src/data/prova.json', tasks)
 const tasksFromFile: Tree<Task> = FileManager.fromFile('src/data/prova.json')
-/* console.log('task dal file:\n', tasksFromFile)
-console.log('task originale:\n', tasks) */
 
 const tabController = new TabController([
   {
     name: 'WBS',
     icon: 'fa-sitemap',
-    menuItems: [
-      {
-        name: "m-test-2 - 1",
-        action() {
-          console.log("Menu1 - Funziona!!!")
-        }
-      },
-      {
-        name: "m-test-2 - 2",
-        action() {
-          console.log("Menu2 - Funziona!!!")
-        }
-      }
-    ],
+    menuItems: [],
     view(tabController: TabController): Element {
       const xOffset: number = 100
       const yOffset: number = 50
