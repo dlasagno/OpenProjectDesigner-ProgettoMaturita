@@ -1,24 +1,12 @@
-import { TabController } from '../tab-window-scripts/tab-controller'
-import { Tab, Tree, TreeNode } from './interfaces'
+import { TabController } from '../tab-window-scripts/tab-controller';
+import { Tab, TreeNode } from './interfaces';
+import * as Raphael from 'raphael'
 
 
 const wbsTab: Tab = {
   name: 'WBS',
   icon: 'fa-sitemap',
-  menuItems: [
-    {
-      name: "m-test-2 - 1",
-      action() {
-        console.log("Menu1 - Funziona!!!")
-      }
-    },
-    {
-      name: "m-test-2 - 2",
-      action() {
-        console.log("Menu2 - Funziona!!!")
-      }
-    }
-  ],
+  menuItems: [],
   view(tabController: TabController): Element {
     const xOffset: number = 100
     const yOffset: number = 50

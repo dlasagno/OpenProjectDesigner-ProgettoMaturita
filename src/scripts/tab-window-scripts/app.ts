@@ -1,6 +1,7 @@
 //File per il raggruppamento dei file sparsi, DEBUG per problemi ad import/
 
 const path = require('path')
+const Raphael = require('raphael')
 
 
 const FileManager = require('../src/scripts/file-managment-scripts/file-manager')

@@ -16,6 +16,6 @@
     "stylus": "^0.54.5"
   },
   "dependencies": {
-    "@types/node": "^10.1.2"
+    "raphael": "^2.2.7"
   }
 }
