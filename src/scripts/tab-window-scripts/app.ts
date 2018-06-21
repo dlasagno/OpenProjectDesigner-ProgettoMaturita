@@ -412,6 +412,35 @@ class TabController {
 
 }
 
+class SideMenuController {
+
+  private sideMenuElement: Element = document.querySelector('#side-menu')
+
+  constructor(private menuItems: MenuItem[]) {
+    this.loadMenu()
+  }
+
+  loadMenu() {
+    //Select the side menu
+    const menuElement = this.sideMenuElement.querySelector('.menu')
+
+    //Empty the side menu
+    while (menuElement.firstChild)
+      menuElement.removeChild(menuElement.firstChild)
+
+    //Populate the side menu
+    for (const menuItem of this.menuItems) {
+      //create a new menu item to append to the menu
+      const menuItemElement = document.createElement('li')
+      menuItemElement.classList.add('button')
+      menuItemElement.addEventListener('click', menuItem.action)
+      menuItemElement.innerHTML = `<span>${menuItem.name}</span>`
+      menuElement.appendChild(menuItemElement)
+    }
+  }
+
+}
+
 //---------------------------------------------------------------------------------------------------------------
 
 /* const task = {
@@ -574,6 +603,26 @@ tasks.getNodeById('1.1').appendChildren([
 
 FileManager.toFile('src/data/prova.json', tasks)
 const tasksFromFile: Tree<Task> = FileManager.fromFile('src/data/prova.json')
+
+const sideMenuController: SideMenuController = new SideMenuController([
+  {
+    name: 'Apri',
+    action() {
+      
+    }
+  },
+  {
+    name: 'Salva',
+    action() {
+      
+    }
+  },{
+    name: 'Nuovo',
+    action() {
+      
+    }
+  }
+])
 
 const tabController = new TabController([
   {

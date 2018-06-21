@@ -3,7 +3,7 @@ import { Property, TabButton, MenuItem, Task } from "../commons/interfaces"
 
 export class TabWindowRenderer {
 
-  private static windowElement = document.querySelector('#tab-window')
+  private static windowElement: Element = document.querySelector('#tab-window')
 
 
   static updateMenu(menuItems: MenuItem[]): void {
