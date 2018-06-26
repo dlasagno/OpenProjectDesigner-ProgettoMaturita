@@ -6,6 +6,7 @@ import { SideMenuController } from './side-menu-script/side-menu-controller'
 //Tabs to display int he tab window
 import { ganttTab } from './commons/gantt'
 import { wbsTab } from './commons/wbs'
+import { projectInfoTab } from './commons/project-info'
 
 //File for the style of page
 import '../styles/main.styl'
@@ -119,4 +120,4 @@ const sideMenuController = new SideMenuController([
 ])
 
 //Load the tab window
-const tabController = new TabController([wbsTab, ganttTab], tasksFromFile)
+const tabController = new TabController([wbsTab, ganttTab, projectInfoTab], tasksFromFile)
