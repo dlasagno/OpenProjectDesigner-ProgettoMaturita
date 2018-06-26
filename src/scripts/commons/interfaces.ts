@@ -183,7 +183,7 @@ export interface Tab {
 //Interface for tab menus
 export interface MenuItem {
   name: string
-  action()
+  action(): void
 }
 
 //Interface for tab buttons

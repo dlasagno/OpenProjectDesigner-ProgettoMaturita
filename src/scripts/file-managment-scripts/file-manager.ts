@@ -1,11 +1,10 @@
 import { Tree, Task } from '../commons/interfaces'
-//const { Tree, Task } = require('../commons/interfaces')
-const fs = require('fs')
+import * as fs from 'fs'
 
-const FileManager = {
-  toFile(path: string, tasks: Tree<Task>): void {
+export class FileManager {
+  static toFile(path: string, tasks: Tree<Task>): void {
     //Create an array of tasks for an easier reading of the file
-    const tasksArray: {data, id}[] = tasks.reduce((taskArray, {data}, id) => {
+    const tasksArray: {data: any, id: string}[] = tasks.reduce((taskArray, {data}, id) => {
       taskArray.push({data, id})
       return taskArray
     }, [])
@@ -13,12 +12,12 @@ const FileManager = {
     //Write the tasks to the file
     const fileString: string = JSON.stringify(tasksArray)
     fs.writeFileSync(path, fileString)
-  },
+  }
 
-  fromFile(path: string): Tree<Task>{
+  static fromFile(path: string): Tree<Task>{
     //Read the tasks from the file
     const fileString: string = fs.readFileSync(path, 'utf-8')
-    const fileTasks: {data, id}[] = JSON.parse(fileString)
+    const fileTasks: {data: any, id: string}[] = JSON.parse(fileString)
     //Convert dates from string to Date
     fileTasks.forEach(task => {
       task.data.start_date = new Date(task.data.start_date)
@@ -32,5 +31,3 @@ const FileManager = {
     }, new Tree(fileTasks[0].data))
   }
 }
-
-module.exports = FileManager

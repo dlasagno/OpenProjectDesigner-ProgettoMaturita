@@ -3,7 +3,7 @@ import { Tab, TreeNode } from './interfaces';
 import * as Raphael from 'raphael'
 
 
-const wbsTab: Tab = {
+export const wbsTab: Tab = {
   name: 'WBS',
   icon: 'fa-sitemap',
   menuItems: [],
@@ -27,7 +27,7 @@ const wbsTab: Tab = {
           tabController.selectedTaskId = id
         })
       title.node.querySelector('tspan')
-        .setAttribute('dy', fontSize / 4)
+        .setAttribute('dy', (fontSize / 4).toString())
     }
     
     function createLine(startX: number, startY: number, finishX: number, finishY: number){
@@ -35,7 +35,7 @@ const wbsTab: Tab = {
     }
 
 
-    const wbsElement: Element = document.createElement('div')
+    const wbsElement: HTMLElement = document.createElement('div')
     
     const paper = Raphael(wbsElement, 1000, 1000)
 

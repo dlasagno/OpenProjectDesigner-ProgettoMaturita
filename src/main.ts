@@ -1,10 +1,6 @@
-import {app, BrowserWindow} from 'electron';
-import * as path from 'path';
-import * as url from 'url';
-import {enableLiveReload} from 'electron-compile';
-
-// Attiva l'aggiornamento automatico della finestra alla modifica di un file dell'app
-enableLiveReload();
+const {app, BrowserWindow} = require('electron');
+//const path = require('path');
+const url = require('url');
 
 // Mantenere un riferimento globale dell'oggetto window, altrimenti la finestra verrà
 // chiusa automaticamente quando l'oggetto JavaScript è raccolto nel Garbage Collector.
@@ -15,9 +11,14 @@ function createWindow () {
   win = new BrowserWindow({width: 800, height: 600});
 
   // e viene caricato il file index.html della nostra app.
-  win.loadURL(url.format({
+  /* win.loadURL(url.format({
     pathname: path.join(__dirname, '../app/index.jade'),
     protocol: 'file:',
+    slashes: true
+  })); */
+  win.loadURL(url.format({
+    pathname: 'localhost:8080/',
+    protocol: 'http:',
     slashes: true
   }));
 

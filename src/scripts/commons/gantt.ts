@@ -2,7 +2,7 @@ import { TabController } from '../tab-window-scripts/tab-controller'
 import { Task, Tab } from './interfaces'
 
 
-const ganttTab: Tab = {
+export const ganttTab: Tab = {
   name: 'GANTT',
   icon: 'fa-th-list',
   menuItems: [],
@@ -12,7 +12,7 @@ const ganttTab: Tab = {
       const taskRow = document.createElement('tr')
       taskRow.innerHTML = `
         <td>${taskId}</td>
-        <td>${(taskId.length > 1 ? '&nbsp;'.repeat(taskId.split('.').length*2) : '') + task.title}</td>
+        <td>${(taskId.length > 1 ? ('&nbsp;' as string).repeat(taskId.split('.').length*2) : '') + task.title}</td>
         <td>${task.start_date.toLocaleDateString()}</td>
         <td>${task.end_date.toLocaleDateString()}</td>
         <td><progress max="100" value="${task.progress}"></td>

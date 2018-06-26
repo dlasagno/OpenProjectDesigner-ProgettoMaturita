@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "es2018", "scripthost"],
+    "module": "es6",
+    "moduleResolution": "node",
+    "target": "es5",
+    "allowJs": true
+  }
+}
