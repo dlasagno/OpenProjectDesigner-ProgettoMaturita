@@ -6,7 +6,7 @@ export class TabController {
   private _currentTab: number = 0
   private _selectedTaskId: string = ''
 
-  constructor(private tabs: Tab[], public tasks?: Tree<Task>) {
+  constructor(private tabs: Tab[], public tasks: Tree<Task>) {
     this.currentTab = 0
   }
 
