@@ -5,7 +5,7 @@ import { Property, Task, Tab } from './interfaces'
 
 export const projectInfoTab: Tab = {
     name: 'Info',
-    icon: 'fa-th-list',
+    icon: 'fa-info-circle',
     menuItems: [],
     view(tabController: TabController): Element {
         
@@ -22,7 +22,6 @@ export const projectInfoTab: Tab = {
                 <th>Description</th>
               `
                 
-
         const infoContent = document.createElement('tr')
             
         //td for the title
