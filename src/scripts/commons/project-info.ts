@@ -26,12 +26,12 @@ export const projectInfoTab: Tab = {
             
         //td for the title
         const title = document.createElement('td')
-        const titleContent = document.createElement('input')
-              titleContent.setAttribute('type', 'text')
-              titleContent.setAttribute('value', tabController.tasks.root.data.title)
+        const titleContent = document.createElement('div')
+              titleContent.innerHTML = tabController.tasks.root.data.title
+              titleContent.setAttribute('contenteditable', 'true')
               titleContent.addEventListener('keydown', event => {
                 if (event.key === "Enter") {
-                    const value = (event.target as HTMLInputElement).value
+                    const value = titleContent.innerHTML
                     tabController.tasks.root.data.title = value
                     tabController.update()
                 }
@@ -41,12 +41,12 @@ export const projectInfoTab: Tab = {
 
         //td for the cost
         const cost = document.createElement('td')
-        const costContent = document.createElement('input')
-              costContent.setAttribute('type', 'text')
-              costContent.setAttribute('value', tabController.tasks.root.data.cost.toString())
+        const costContent = document.createElement('div')
+              costContent.innerHTML = tabController.tasks.root.data.cost.toString()
+              costContent.setAttribute('contenteditable', 'true')
               costContent.addEventListener('keydown', event => {
                 if (event.key === "Enter") {
-                    const value = (event.target as HTMLInputElement).value
+                    const value = costContent.innerHTML
                     tabController.tasks.root.data.cost = parseInt(value)
                     tabController.update()
                 }
@@ -56,12 +56,12 @@ export const projectInfoTab: Tab = {
 
         //td for the progress
         const progress = document.createElement('td')
-        const progressContent = document.createElement('input')
-              progressContent.setAttribute('type', 'text')
-              progressContent.setAttribute('value', tabController.tasks.root.data.progress.toString())
+        const progressContent = document.createElement('div')
+              progressContent.innerHTML = tabController.tasks.root.data.progress.toString()
+              progressContent.setAttribute('contenteditable', 'true')
               progressContent.addEventListener('keydown', event => {
                 if (event.key === "Enter") {
-                    const value = (event.target as HTMLInputElement).value
+                    const value = progressContent.innerHTML
                     tabController.tasks.root.data.progress = parseInt(value)
                     tabController.update()
                 }
@@ -71,12 +71,12 @@ export const projectInfoTab: Tab = {
 
         //td for the start_date
         const startDate = document.createElement('td')
-        const startDateContent = document.createElement('input')
-              startDateContent.setAttribute('type', 'text')
-              startDateContent.setAttribute('value', tabController.tasks.root.data.start_date.toLocaleDateString())
+        const startDateContent = document.createElement('div')
+              startDateContent.innerHTML = tabController.tasks.root.data.start_date.toLocaleDateString()
+              startDateContent.setAttribute('contenteditable', 'true')
               startDateContent.addEventListener('keydown', event => {
                 if (event.key === "Enter") {
-                    const value = (event.target as HTMLInputElement).value
+                    const value = startDateContent.innerHTML
                     tabController.tasks.root.data.start_date = new Date(value)
                     tabController.update()
                 }
@@ -86,12 +86,12 @@ export const projectInfoTab: Tab = {
 
         //td for the end_date
         const endDate = document.createElement('td')
-        const endDateContent = document.createElement('input')
-              endDateContent.setAttribute('type', 'text')
-              endDateContent.setAttribute('value', tabController.tasks.root.data.end_date.toLocaleDateString())
+        const endDateContent = document.createElement('div')
+              endDateContent.innerHTML = tabController.tasks.root.data.end_date.toLocaleDateString()
+              endDateContent.setAttribute('contenteditable', 'true')
               endDateContent.addEventListener('keydown', event => {
                 if (event.key === "Enter") {
-                    const value = (event.target as HTMLInputElement).value
+                    const value = endDateContent.innerHTML
                     tabController.tasks.root.data.end_date = new Date(value)
                     tabController.update()
                 }
@@ -101,12 +101,12 @@ export const projectInfoTab: Tab = {
 
         //td for the description
         const description = document.createElement('td')
-        const descriptionContent = document.createElement('input')
-              descriptionContent.setAttribute('type', 'text')
-              descriptionContent.setAttribute('value', tabController.tasks.root.data.description)
+        const descriptionContent = document.createElement('div')
+              descriptionContent.innerHTML = tabController.tasks.root.data.description
+              descriptionContent.setAttribute('contenteditable', 'true')
               descriptionContent.addEventListener('keydown', event => {
                 if (event.key === "Enter") {
-                    const value = (event.target as HTMLInputElement).value
+                    const value = descriptionContent.innerHTML
                     tabController.tasks.root.data.description = value
                     tabController.update()
                 }
