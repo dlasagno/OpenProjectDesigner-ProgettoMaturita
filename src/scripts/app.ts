@@ -10,7 +10,7 @@ import { projectInfoTab } from './commons/tabs/project-info'
 
 //File for the style of page
 import '../styles/main.styl'
-import '../styles/0-plugins/fontawesome/css/fontawesome-all.css'
+import '../../node_modules/@fortawesome/fontawesome-free/css/all.css'
 import './style-scripts/style-script'
 
 
