@@ -37,8 +37,6 @@ export const wbsTab: Tab = {
 
     const wbsElement: HTMLElement = document.createElement('div')
     
-    const paper = Raphael(wbsElement, 1000, 1000)
-
     let count = 0
     const tasksCoordinates = tabController.tasks.map<{x: number, y: number}>((node, id) => {
       return new TreeNode({
@@ -46,9 +44,20 @@ export const wbsTab: Tab = {
         y: ((rectHeight + rectSpacing) * count++) + yOffset
       })
     })
+    
+    const paper = Raphael(
+      wbsElement,
+      ((tabController.tasks.length + 1) * (rectWidth + rectSpacing)) + xOffset * 2 - rectSpacing,
+      (count * (rectHeight + rectSpacing)) + yOffset * 2 - rectSpacing
+    )
 
     tasksCoordinates.forEach((task, id) => { 
-      createRect(task.data.x, task.data.y, id, tabController.tasks.getNodeById(id).data.title)
+      createRect(
+        task.data.x,
+        task.data.y,
+        id,
+        tabController.tasks.getNodeById(id).data.title
+      )
       if(id != '')
         createLine(
           task.data.x,
