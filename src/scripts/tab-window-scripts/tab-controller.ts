@@ -49,6 +49,7 @@ export class TabController {
 
   update() {
     TabWindowRenderer.updateView(this.tabs[this._currentTab].view(this))
+    TabWindowRenderer.updatePropertiesPanel(this._selectedTaskId, this)
   }
 
 }
