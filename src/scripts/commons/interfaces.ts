@@ -38,6 +38,14 @@ export class Tree<T> {
   }
 
   get root() { return this._root }
+  get length() {
+    return this.reduce((max, node, id) => {
+      if(id && id.split('.').length > max)
+        return id.split('.').length
+      else
+        return max
+    }, 0)
+  }
 
   getNodeById(id: string): TreeNode<T> {
     function getNodeById(root: TreeNode<T>, id: string): TreeNode<T> {
