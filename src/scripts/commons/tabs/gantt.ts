@@ -1,5 +1,5 @@
-import { TabController } from '../tab-window-scripts/tab-controller'
-import { Task, Tab } from './interfaces'
+import { TabController } from '../../tab-window-scripts/tab-controller'
+import { Task, Tab } from '../interfaces'
 
 
 export const ganttTab: Tab = {

@@ -1,5 +1,5 @@
-import { TabController } from '../tab-window-scripts/tab-controller'
-import { Tab } from './interfaces'
+import { TabController } from '../../tab-window-scripts/tab-controller'
+import { Tab } from '../interfaces'
 
 
 
@@ -24,6 +24,7 @@ export const projectInfoTab: Tab = {
         }
         
         const projectInfoElement = document.createElement('div')
+              projectInfoElement.id = 'project-info-view'
         const table = document.createElement('table')
         
         const projectInfoHeader = document.createElement('tr')

@@ -1,5 +1,5 @@
-import { TabController } from '../tab-window-scripts/tab-controller';
-import { Tab, TreeNode } from './interfaces';
+import { TabController } from '../../tab-window-scripts/tab-controller';
+import { Tab, TreeNode } from '../interfaces';
 import * as Raphael from 'raphael'
 
 
@@ -36,6 +36,7 @@ export const wbsTab: Tab = {
 
 
     const wbsElement: HTMLElement = document.createElement('div')
+          wbsElement.id = 'wbs-view'
     
     let count = 0
     const tasksCoordinates = tabController.tasks.map<{x: number, y: number}>((node, id) => {
