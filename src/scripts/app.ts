@@ -2,6 +2,7 @@ import { FileManager } from './file-managment-scripts/file-manager'
 import { Tree, Task } from './commons/interfaces'
 import { TabController } from './tab-window-scripts/tab-controller'
 import { SideMenuController } from './side-menu-script/side-menu-controller'
+import { ModalController } from './style-scripts/modal-controller'
 
 //Tabs to display int he tab window
 import { ganttTab } from './commons/tabs/gantt'
@@ -97,6 +98,14 @@ tasks.getNodeById('1.1').appendChildren([
 //Management of the files
 //FileManager.toFile('src/data/prova.json', tasks)
 const tasksFromFile: Tree<Task> = FileManager.fromFile('src/data/prova.json')
+
+//Create a modal for testing
+const modalController = new ModalController()
+const modalBody = document.createElement('span')
+modalBody.textContent = 'PROVA!'
+modalController.createModal({
+  body: modalBody
+})
 
 //Load the side menu
 const sideMenuController = new SideMenuController([
