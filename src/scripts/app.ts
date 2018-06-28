@@ -101,8 +101,14 @@ const tasksFromFile: Tree<Task> = FileManager.fromFile('src/data/prova.json')
 
 //Create a modal for testing
 const modalController = new ModalController()
-const modalBody = document.createElement('span')
-modalBody.textContent = 'PROVA!'
+const modalBody = document.createElement('div')
+
+FileManager.filesFromFolder('src/data').forEach(file => {
+  const fileDiv = document.createElement('div')
+        fileDiv.textContent = file.split('.')[0]
+  modalBody.appendChild(fileDiv)
+})
+
 modalController.createModal({
   body: modalBody
 })

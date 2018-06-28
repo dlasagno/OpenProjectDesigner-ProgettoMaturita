@@ -30,4 +30,9 @@ export class FileManager {
       return tasks
     }, new Tree(fileTasks[0].data))
   }
+
+  static filesFromFolder(path: string): string[]{
+    const files = fs.readdirSync(path)
+    return files
+  }
 }
