@@ -1,19 +1,17 @@
 {
-  "name": "progettoesame",
+  "name": "open-project-designer",
+  "productName": "Open Project Designer",
   "version": "1.0.0",
   "description": "Software for the creation of WBS, GANTT, ...",
   "main": "src/main.ts",
   "scripts": {
     "start": "npm-run-all --parallel --race dev electron:dev",
     "start:prod": "npm run prod && npm run electron:prod",
-
     "dev": "webpack-dev-server --mode=development",
     "prod": "webpack --mode=production",
-
     "electron": "electron .",
     "electron:dev": "cross-env NODE_ENV=development npm run electron",
     "electron:prod": "cross-env NODE_ENV=production npm run electron",
-
     "stylus": "stylus -w ./src/styles/main.styl --include-css"
   },
   "license": "MIT",
