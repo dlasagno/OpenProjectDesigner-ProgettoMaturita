@@ -99,31 +99,38 @@ tasks.getNodeById('1.1').appendChildren([
 //FileManager.toFile('src/data/prova.json', tasks)
 const tasksFromFile: Tree<Task> = FileManager.fromFile('src/data/prova.json')
 let currentFile: string = 'src/data/prova.json'
+
 //Create a modal for testing
 const modalController = new ModalController()
-const modalBody = document.createElement('div')
-
-FileManager.filesFromFolder('src/data').forEach(file => {
-  const fileDiv = document.createElement('div')
-        fileDiv.textContent = file.split('.')[0]
-        fileDiv.addEventListener('click', () => {
-          tabController.tasks = FileManager.fromFile(`src/data/${file}`)
-          currentFile = `src/data/${file}`
-          tabController.update()
-        })
-  modalBody.appendChild(fileDiv)
-})
-
-modalController.createModal({
-  body: modalBody
-})
 
 //Load the side menu
 const sideMenuController = new SideMenuController([
   {
     name: 'Apri',
     action() {
-      
+      const modalHeader = document.createElement('span')
+        modalHeader.textContent = 'Choose the project to open'
+
+      const modalBody = document.createElement('div')
+        modalBody.classList.add('list')
+
+      FileManager.filesFromFolder('src/data').forEach(file => {
+        const fileDiv = document.createElement('button')
+              fileDiv.classList.add('button')
+              fileDiv.textContent = file.split('.')[0].replace('-', ' ')
+              fileDiv.addEventListener('click', () => {
+                currentFile = `src/data/${file}`
+                tabController.tasks = FileManager.fromFile(currentFile)
+                tabController.update()
+                modalController.closeModal()
+              })
+        modalBody.appendChild(fileDiv)
+      })
+
+      modalController.createModal({
+        header: modalHeader,
+        body: modalBody
+      })
     }
   },
   {
