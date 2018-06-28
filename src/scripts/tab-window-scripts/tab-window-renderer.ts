@@ -135,7 +135,6 @@ export class TabWindowRenderer {
             if (event.key === "Enter") {
               const value = (event.target as HTMLInputElement).value
               property.value.task[property.value.key] = property.value.task[property.value.key] instanceof Date ? new Date(value) : value
-              tabController.cascadeEffect(taskId)
               tabController.update()
             }
           })

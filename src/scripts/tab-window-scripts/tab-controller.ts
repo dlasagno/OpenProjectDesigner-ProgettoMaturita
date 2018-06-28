@@ -4,11 +4,14 @@ import { Tab, Task, Tree, TreeNode } from '../commons/interfaces'
 export class TabController {
   //Attributi
   private _currentTab: number
-  private _selectedTaskId: string = ''
+  private _selectedTaskId: string
 
   constructor(private tabs: Tab[], public tasks: Tree<Task>) {
     //Open the first tab
     this.currentTab = 0
+    
+    //Open the project in the properties panel
+    this.selectedTaskId = ''
 
     //Calculate values of the tasks
     this.tasks.forEach((node, id) => {
@@ -54,6 +57,10 @@ export class TabController {
   }
 
   update() {
+    this.tasks.forEach((node, id) => {
+      if(node.children)
+        this.cascadeEffect(id)
+    })
     this.updateMenu()
     this.updateView()
     this.updatePropertiesPanel()
@@ -67,7 +74,6 @@ export class TabController {
   updatePropertiesPanel() {
     TabWindowRenderer.updatePropertiesPanel(this._selectedTaskId, this, ['title', 'description', 'start_date', 'end_date', 'progress', 'cost'])
   }
-
 
   cascadeEffect(taskId: string){
     const parentNode = this.tasks.getNodeById(taskId.split('.').slice(0, -1).join('.'))
@@ -95,5 +101,4 @@ export class TabController {
     if(taskId != '')
       this.cascadeEffect(taskId.split('.').slice(0, -1).join('.'))
   }
-
 }
