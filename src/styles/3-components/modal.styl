@@ -8,7 +8,9 @@
   width: 100vw
   height: 100vh
   background-color: rgba(0,0,0,0.4)
-  color: #eeeeee
+
+  *
+    color: #eeeeee
 
   &.opened
     display: block
@@ -27,9 +29,26 @@
     #modal-header
     #modal-footer
     #modal-body
-      min-height: 1em
+      box-sizing: border-box
+      min-height: 2em
       padding: 0.5em 3em
       background-color: dark-grey[1]
+    
+    #modal-header
+      position: relative
+
+      .delete-button
+        position: absolute
+        top: 0
+        right: -3em
+        height: 2rem
+        width: 2rem
+        padding: 0.25rem
+        background-color: dark-grey[1]
+        font-size: 0.75em
+
+        &:hover
+          background-color: crimson
 
     #modal-body
       padding: 1em 3em
@@ -40,6 +59,6 @@
       top: -100vh
       opacity: 0
     to
-      top: 20%
+      top: 15%
       opacity: 1
 
