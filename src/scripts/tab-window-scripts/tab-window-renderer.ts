@@ -131,19 +131,18 @@ export class TabWindowRenderer {
         const inputProperty = document.createElement('input')
           inputProperty.setAttribute('type', 'text')
           inputProperty.setAttribute('value', property.value.task[property.value.key])
+
           if(disabledMask){
             if(property.name == 'start_date')
               inputProperty.setAttribute('disabled', '')
-            
             if(property.name == 'end_date')
               inputProperty.setAttribute('disabled', '')
-              
             if(property.name == 'progress')
               inputProperty.setAttribute('disabled', '')
-
             if(property.name == 'cost')
               inputProperty.setAttribute('disabled', '')
           }
+          
           inputProperty.addEventListener('keydown', event => {
             if (event.key === "Enter") {
               const value = (event.target as HTMLInputElement).value

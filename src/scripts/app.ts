@@ -163,7 +163,7 @@ const sideMenuController = new SideMenuController([
             modalFooter.classList.add('button')
             modalFooter.textContent = 'New' 
             modalFooter.addEventListener('click', () => { 
-              FileManager.toFile(`src/data/${inputText.value}`, new Tree({ 
+              FileManager.toFile(`src/data/${inputText.value}.json`, new Tree({ 
                                                             title: inputText.value, 
                                                             description: '', 
                                                             collapsed: false, 
@@ -172,7 +172,7 @@ const sideMenuController = new SideMenuController([
                                                             progress: 0, 
                                                             cost: 0 
                                                           })) 
-              currentFile = `src/data/${inputText.value}` 
+              currentFile = `src/data/${inputText.value}.json` 
               tabController.tasks = FileManager.fromFile(currentFile) 
               tabController.update() 
               modalController.closeModal()
