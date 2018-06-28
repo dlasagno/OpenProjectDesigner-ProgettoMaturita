@@ -25,6 +25,8 @@ function createWindow () {
   // Apertura degli strumenti per sviluppatori.
   win.webContents.openDevTools();
 
+  win.setMenu(null);
+
   // Emesso quando la finestra viene chiusa.
   win.on('closed', () => {
     // Eliminiamo il riferimento dell'oggetto window;  solitamente si tiene traccia delle finestre
