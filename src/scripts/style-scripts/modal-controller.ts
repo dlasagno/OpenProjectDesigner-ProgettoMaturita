@@ -10,8 +10,8 @@ export class ModalController {
 
   createModal({
     header = document.createElement('span'),
-    body = header,
-    footer = header,
+    body = document.createElement('span'),
+    footer = document.createElement('span'),
     canBeClosed = true
   }: {header?: Element, body?: Element, footer?: Element, canBeClosed?: boolean}) {
     //Clear modal
