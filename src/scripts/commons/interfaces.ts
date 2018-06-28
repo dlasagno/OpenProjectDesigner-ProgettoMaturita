@@ -160,7 +160,7 @@ export interface Task {
   end_date: Date
 
   progress: number
-  cost?: number
+  cost: number
   appointee?: string
 
   extra_info?: {}

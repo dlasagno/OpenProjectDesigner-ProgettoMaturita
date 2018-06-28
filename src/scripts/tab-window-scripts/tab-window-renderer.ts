@@ -96,7 +96,8 @@ export class TabWindowRenderer {
         collapsed: false,
         start_date: new Date(tabController.tasks.getNodeById(taskId).data.start_date),
         end_date: new Date(tabController.tasks.getNodeById(taskId).data.end_date),
-        progress: 0
+        progress: 0,
+        cost: 0
       }))
     actionButtonsElement.appendChild(addButtonElement)
 
