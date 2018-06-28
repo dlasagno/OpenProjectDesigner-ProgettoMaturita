@@ -98,7 +98,7 @@ tasks.getNodeById('1.1').appendChildren([
 //Management of the files
 //FileManager.toFile('src/data/prova.json', tasks)
 const tasksFromFile: Tree<Task> = FileManager.fromFile('src/data/prova.json')
-
+let currentFile: string = 'src/data/prova.json'
 //Create a modal for testing
 const modalController = new ModalController()
 const modalBody = document.createElement('div')
@@ -108,6 +108,7 @@ FileManager.filesFromFolder('src/data').forEach(file => {
         fileDiv.textContent = file.split('.')[0]
         fileDiv.addEventListener('click', () => {
           tabController.tasks = FileManager.fromFile(`src/data/${file}`)
+          currentFile = `src/data/${file}`
           tabController.update()
         })
   modalBody.appendChild(fileDiv)
@@ -128,7 +129,7 @@ const sideMenuController = new SideMenuController([
   {
     name: 'Salva',
     action() {
-      
+      FileManager.toFile(currentFile, tabController.tasks)
     }
   },{
     name: 'Nuovo',
