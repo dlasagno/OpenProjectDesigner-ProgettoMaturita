@@ -33,7 +33,7 @@ export class TabController {
     if (taskId || taskId === '') {
       this._selectedTaskId = taskId
 
-      TabWindowRenderer.updatePropertiesPanel(taskId, this, ['title', 'description', 'start_date', 'end_date', 'progress', 'cost'])
+      this.updatePropertiesPanel()
     }
   }
 
@@ -41,16 +41,24 @@ export class TabController {
     this.tasks.removeNodeById(taskId)
     this.update()
   }
-
   appendToTask(taskId: string, task: Task) {
     this.tasks.getNodeById(taskId).appendChild(task)
     this.update()
   }
 
   update() {
+    this.updateMenu()
+    this.updateView()
+    this.updatePropertiesPanel()
+  }
+  updateMenu() {
     TabWindowRenderer.updateMenu(this.tabs[this._currentTab].menuItems)
+  }
+  updateView() {
     TabWindowRenderer.updateView(this.tabs[this._currentTab].view(this))
-    TabWindowRenderer.updatePropertiesPanel(this._selectedTaskId, this)
+  }
+  updatePropertiesPanel() {
+    TabWindowRenderer.updatePropertiesPanel(this._selectedTaskId, this, ['title', 'description', 'start_date', 'end_date', 'progress', 'cost'])
   }
 
 }
