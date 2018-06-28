@@ -4,13 +4,21 @@
   "description": "Software for the creation of WBS, GANTT, ...",
   "main": "src/main.ts",
   "scripts": {
-    "start": "npm-run-all --parallel --race dev electron",
+    "start": "npm-run-all --parallel --race dev electron:dev",
+    "start:prod": "npm run prod && npm run electron:prod",
+
     "dev": "webpack-dev-server --mode=development",
+    "prod": "webpack --mode=production",
+
     "electron": "electron .",
+    "electron:dev": "cross-env NODE_ENV=development npm run electron",
+    "electron:prod": "cross-env NODE_ENV=production npm run electron",
+
     "stylus": "stylus -w ./src/styles/main.styl --include-css"
   },
   "license": "MIT",
   "devDependencies": {
+    "cross-env": "^5.2.0",
     "css-loader": "^0.28.11",
     "electron": "^2.0.3",
     "file-loader": "^1.1.11",
