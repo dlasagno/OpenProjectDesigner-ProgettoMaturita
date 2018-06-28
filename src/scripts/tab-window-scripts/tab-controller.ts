@@ -61,4 +61,36 @@ export class TabController {
     TabWindowRenderer.updatePropertiesPanel(this._selectedTaskId, this, ['title', 'description', 'start_date', 'end_date', 'progress', 'cost'])
   }
 
+
+  cascadeEffect(taskId: string){
+
+    let cost: number = 0
+    let progress: number = 0
+    //let start_date: Date = new Date(this.tasks.getNodeById(taskId).data.start_date)
+    //let end_date: Date = new Date(this.tasks.getNodeById(taskId).data.end_date)
+
+    for(const child of this.tasks.getNodeById(taskId.split('.').slice(0, -1).join('.')).children){
+      cost += parseInt(child.data.cost.toString())
+      progress += parseInt(child.data.progress.toString())
+      
+      /*
+      if(start_date < child.data.start_date)
+        start_date = new Date(child.data.start_date)
+      if(end_date > child.data.end_date)
+        end_date = new Date(child.data.end_date)
+      */
+      
+    }
+
+    progress /= this.tasks.getNodeById(taskId.split('.').slice(0, -1).join('.')).children.length
+    this.tasks.getNodeById(taskId.split('.').slice(0, -1).join('.')).data.cost = cost
+    this.tasks.getNodeById(taskId.split('.').slice(0, -1).join('.')).data.progress = progress
+    //this.tasks.getNodeById(taskId.split('.').slice(0, -1).join('.')).data.start_date = new Date(start_date)
+    //this.tasks.getNodeById(taskId.split('.').slice(0, -1).join('.')).data.end_date = new Date(end_date)
+
+    if(taskId != '')
+      this.cascadeEffect(taskId.split('.').slice(0, -1).join('.'))
+
+  }
+
 }
