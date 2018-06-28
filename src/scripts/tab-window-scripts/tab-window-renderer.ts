@@ -56,7 +56,7 @@ export class TabWindowRenderer {
     }
   }
 
-  static updatePropertiesPanel(taskId: string, tabController: TabController, propertiesMask?: string[]): void {
+  static updatePropertiesPanel(taskId: string, tabController: TabController, propertiesMask: string[] = []): void {
     //Create a list of properties of the task
     const task: Task = tabController.tasks.getNodeById(taskId).data
     const properties: Property[] = []
