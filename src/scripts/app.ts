@@ -137,6 +137,17 @@ const sideMenuController = new SideMenuController([
     name: 'Salva',
     action() {
       FileManager.toFile(currentFile, tabController.tasks)
+      
+      const modalHeader = document.createElement('span')
+        modalHeader.textContent = 'Project saved'
+
+      const modalBody = document.createElement('span')
+        modalBody.textContent = 'The current project has been saved'
+      
+      modalController.createModal({
+        header: modalHeader,
+        body: modalBody
+      })
     }
   },{
     name: 'Nuovo',
