@@ -3,11 +3,18 @@ import { Tab, Task, Tree } from '../commons/interfaces'
 
 export class TabController {
   //Attributi
-  private _currentTab: number = 0
+  private _currentTab: number
   private _selectedTaskId: string = ''
 
   constructor(private tabs: Tab[], public tasks: Tree<Task>) {
+    //Open the first tab
     this.currentTab = 0
+
+    //Calculate values of the tasks
+    this.tasks.forEach((node, id) => {
+      if(node.children)
+        this.cascadeEffect(id)
+    })
   }
 
   get currentTab() { return this._currentTab }
