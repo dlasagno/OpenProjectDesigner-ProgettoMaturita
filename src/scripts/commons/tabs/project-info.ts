@@ -47,11 +47,12 @@ export const projectInfoTab: Tab = {
         projectInfoElement.appendChild(propertyListElement)
 
         for(const propertyName of Object.keys(tabController.tasks.root.data)) {
-            if(propertyName != 'collapsed')
-                propertyListElement.appendChild(renderProperty(
-                    propertyName,
-                    tabController.tasks.root.data[propertyName]
-                ))
+            if(propertyName == 'collapsed')
+                continue
+            propertyListElement.appendChild(renderProperty(
+                propertyName.replace('_', ' '),
+                tabController.tasks.root.data[propertyName]
+            ))
         }
         
         return projectInfoElement

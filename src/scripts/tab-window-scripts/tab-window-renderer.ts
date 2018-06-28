@@ -109,6 +109,9 @@ export class TabWindowRenderer {
       propertiesListElement.removeChild(propertiesListElement.firstChild)
 
     for (const property of properties) {
+      if(property.name == 'collapsed')
+        continue
+
       //create a property to append to the properties list
       const propertyElement = document.createElement('div')
       propertyElement.classList.add('property')
@@ -116,7 +119,7 @@ export class TabWindowRenderer {
       //Create the head of the property
       const propertyHeadElement = document.createElement('div')
         propertyHeadElement.classList.add('property-head')
-        propertyHeadElement.innerHTML = `<span>${property.name}</span>`
+        propertyHeadElement.innerHTML = `<span>${property.name.replace('_', ' ')}</span>`
       propertyElement.appendChild(propertyHeadElement)
 
       //Create the body of the property
