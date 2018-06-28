@@ -1,5 +1,5 @@
 import { TabWindowRenderer } from './tab-window-renderer'
-import { Tab, Task, Tree } from '../commons/interfaces'
+import { Tab, Task, Tree, TreeNode } from '../commons/interfaces'
 
 export class TabController {
   //Attributi
@@ -70,34 +70,30 @@ export class TabController {
 
 
   cascadeEffect(taskId: string){
+    const parentNode = this.tasks.getNodeById(taskId.split('.').slice(0, -1).join('.'))
 
     let cost: number = 0
     let progress: number = 0
-    //let start_date: Date = new Date(this.tasks.getNodeById(taskId).data.start_date)
-    //let end_date: Date = new Date(this.tasks.getNodeById(taskId).data.end_date)
+    let start_date: Date = new Date(this.tasks.getNodeById(taskId).data.start_date)
+    let end_date: Date = new Date(this.tasks.getNodeById(taskId).data.end_date)
 
-    for(const child of this.tasks.getNodeById(taskId.split('.').slice(0, -1).join('.')).children){
+    for(const child of parentNode.children){
       cost += parseInt(child.data.cost.toString())
       progress += parseInt(child.data.progress.toString())
-      
-      /*
-      if(start_date < child.data.start_date)
+      if(start_date.getTime() > child.data.start_date.getTime())
         start_date = new Date(child.data.start_date)
-      if(end_date > child.data.end_date)
-        end_date = new Date(child.data.end_date)
-      */
-      
+      if(end_date.getTime() < child.data.end_date.getTime())
+        end_date = new Date(child.data.end_date)   
     }
 
     progress /= this.tasks.getNodeById(taskId.split('.').slice(0, -1).join('.')).children.length
-    this.tasks.getNodeById(taskId.split('.').slice(0, -1).join('.')).data.cost = cost
-    this.tasks.getNodeById(taskId.split('.').slice(0, -1).join('.')).data.progress = progress
-    //this.tasks.getNodeById(taskId.split('.').slice(0, -1).join('.')).data.start_date = new Date(start_date)
-    //this.tasks.getNodeById(taskId.split('.').slice(0, -1).join('.')).data.end_date = new Date(end_date)
+    parentNode.data.cost = cost
+    parentNode.data.progress = progress
+    parentNode.data.start_date = new Date(start_date)
+    parentNode.data.end_date = new Date(end_date)
 
     if(taskId != '')
       this.cascadeEffect(taskId.split('.').slice(0, -1).join('.'))
-
   }
 
 }
