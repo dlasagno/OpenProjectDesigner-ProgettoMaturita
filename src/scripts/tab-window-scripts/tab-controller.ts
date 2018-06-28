@@ -33,7 +33,7 @@ export class TabController {
     if (taskId || taskId === '') {
       this._selectedTaskId = taskId
 
-      TabWindowRenderer.updatePropertiesPanel(taskId, this)
+      TabWindowRenderer.updatePropertiesPanel(taskId, this, [this.tasks.root.data.title, this.tasks.root.data.description, this.tasks.root.data.start_date.toLocaleDateString(), this.tasks.root.data.end_date.toLocaleDateString(), this.tasks.root.data.progress.toString(), this.tasks.root.data.cost.toString()])
     }
   }
 

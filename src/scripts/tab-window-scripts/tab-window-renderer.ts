@@ -56,7 +56,7 @@ export class TabWindowRenderer {
     }
   }
 
-  static updatePropertiesPanel(taskId: string, tabController: TabController): void {
+  static updatePropertiesPanel(taskId: string, tabController: TabController, propertiesMask?: string[]): void {
     //Create a list of properties of the task
     const task: Task = tabController.tasks.getNodeById(taskId).data
     const properties: Property[] = []
@@ -109,7 +109,7 @@ export class TabWindowRenderer {
       propertiesListElement.removeChild(propertiesListElement.firstChild)
 
     for (const property of properties) {
-      if(property.name == 'collapsed')
+      if(!propertiesMask.includes(property.name))
         continue
 
       //create a property to append to the properties list
