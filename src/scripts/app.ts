@@ -151,9 +151,39 @@ const sideMenuController = new SideMenuController([
     }
   },{
     name: 'Nuovo',
-    action() {
+    action(){
+      const modalHeader = document.createElement('span')
+            modalHeader.textContent = 'Insert the name of the project' 
+      const modalBody = document.createElement('p') 
+            modalBody.textContent = 'Project: ' 
+      const inputText = document.createElement('input') 
+            inputText.setAttribute('type', 'text')
+      const modalFooter = document.createElement('button')
+            modalFooter.classList.add('button')
+            modalFooter.textContent = 'New' 
+            modalFooter.addEventListener('click', () => { 
+              FileManager.toFile(`src/data/${inputText.value}`, new Tree({ 
+                                                            title: inputText.value, 
+                                                            description: '', 
+                                                            collapsed: false, 
+                                                            start_date: new Date('2018-01-01'), 
+                                                            end_date: new Date('2018-01-03'), 
+                                                            progress: 0, 
+                                                            cost: 0 
+                                                          })) 
+              currentFile = `src/data/${inputText.value}` 
+              tabController.tasks = FileManager.fromFile(currentFile) 
+              tabController.update() 
+              modalController.closeModal()
+            }) 
       
-    }
+      modalBody.appendChild(inputText)
+      modalController.createModal({ 
+        header: modalHeader, 
+        body: modalBody,
+        footer: modalFooter
+        }) 
+      }
   }
 ])
 
