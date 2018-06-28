@@ -17,7 +17,7 @@ export const projectInfoTab: Tab = {
             //Create the head of the property
             const propertyHeadElement = document.createElement('div')
                 propertyHeadElement.classList.add('property-head')
-                propertyHeadElement.innerHTML = `<span>${propertyName}</span>`
+                propertyHeadElement.innerHTML = `<span>${propertyName.replace('_', ' ')}</span>`
             propertyElement.appendChild(propertyHeadElement)
 
             //Create the body of the property
@@ -50,7 +50,7 @@ export const projectInfoTab: Tab = {
             if(propertyName == 'collapsed')
                 continue
             propertyListElement.appendChild(renderProperty(
-                propertyName.replace('_', ' '),
+                propertyName,
                 tabController.tasks.root.data[propertyName]
             ))
         }
