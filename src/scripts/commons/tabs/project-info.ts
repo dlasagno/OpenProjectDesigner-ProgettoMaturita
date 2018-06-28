@@ -9,82 +9,51 @@ export const projectInfoTab: Tab = {
     menuItems: [],
     view(tabController: TabController): Element {
 
-        function createCell(cellValue: string, onEnterKeyDown: (event: KeyboardEvent) => void): HTMLTableDataCellElement {
-            const cell = document.createElement('td')
-            const cellContent = document.createElement('div')
-                cellContent.textContent = cellValue
-                cellContent.setAttribute('contenteditable', 'true')
-                cellContent.addEventListener('keydown', event => {
+        function renderProperty(propertyName: string, propertyValue: string): HTMLDivElement {
+            //create a property to append to the properties list
+            const propertyElement = document.createElement('div')
+            propertyElement.classList.add('property')
+
+            //Create the head of the property
+            const propertyHeadElement = document.createElement('div')
+                propertyHeadElement.classList.add('property-head')
+                propertyHeadElement.innerHTML = `<span>${propertyName}</span>`
+            propertyElement.appendChild(propertyHeadElement)
+
+            //Create the body of the property
+            const propertyBodyElement = document.createElement('div')
+                propertyBodyElement.classList.add('property-body')
+                const inputProperty = document.createElement('input')
+                inputProperty.setAttribute('type', 'text')
+                inputProperty.setAttribute('value', propertyValue)
+                inputProperty.addEventListener('keydown', event => {
                     if (event.key === "Enter") {
-                        onEnterKeyDown(event)
+                        const value = (event.target as HTMLInputElement).value
+                        tabController.tasks.root.data[propertyName] = tabController.tasks.root.data[propertyName] instanceof Date ? new Date(value) : value
+                        tabController.update()
                     }
                 })
-            cell.appendChild(cellContent)
-            return cell
+                propertyBodyElement.appendChild(inputProperty)
+            propertyElement.appendChild(propertyBodyElement)
+
+            //Append all to the properties list
+            return propertyElement
         }
         
         const projectInfoElement = document.createElement('div')
-              projectInfoElement.id = 'project-info-view'
-        const table = document.createElement('table')
+            projectInfoElement.id = 'project-info-view'
+        const propertyListElement = document.createElement('div')
+            propertyListElement.classList.add('list')
+        projectInfoElement.appendChild(propertyListElement)
+
+        for(const propertyName of Object.keys(tabController.tasks.root.data)) {
+            if(propertyName != 'collapsed')
+                propertyListElement.appendChild(renderProperty(
+                    propertyName,
+                    tabController.tasks.root.data[propertyName]
+                ))
+        }
         
-        const projectInfoHeader = document.createElement('tr')
-              projectInfoHeader.innerHTML = `
-                <th>Title</th>
-                <th>Cost</th>
-                <th>Progress</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Description</th>
-              `
-        
-        const projectInfoContent = document.createElement('tr')
-
-        //Create the cell for the title
-        projectInfoContent.appendChild(createCell(tabController.tasks.root.data.title, event => {
-            const value = (event.target as Element).textContent
-            tabController.tasks.root.data.title = value
-            tabController.update()
-        }))
-
-        //Create the cell for the cost
-        projectInfoContent.appendChild(createCell(tabController.tasks.root.data.cost.toString(), event => {
-            const value = (event.target as Element).textContent
-            tabController.tasks.root.data.cost = parseInt(value)
-            tabController.update()
-        }))
-
-        //Create the cell for the progress
-        projectInfoContent.appendChild(createCell(tabController.tasks.root.data.progress.toString(), event => {
-            const value = (event.target as Element).textContent
-            tabController.tasks.root.data.progress = parseInt(value)
-            tabController.update()
-        }))
-
-        //Create the cell for the start date
-        projectInfoContent.appendChild(createCell(tabController.tasks.root.data.start_date.toString(), event => {
-            const value = (event.target as Element).textContent
-            tabController.tasks.root.data.start_date = new Date(value)
-            tabController.update()
-        }))
-
-        //Create the cell for the end date
-        projectInfoContent.appendChild(createCell(tabController.tasks.root.data.end_date.toString(), event => {
-            const value = (event.target as Element).textContent
-            tabController.tasks.root.data.end_date = new Date(value)
-            tabController.update()
-        }))
-
-        //Create the cell for the description
-        projectInfoContent.appendChild(createCell(tabController.tasks.root.data.description, event => {
-            const value = (event.target as Element).textContent
-            tabController.tasks.root.data.description = value
-            tabController.update()
-        }))
-
-        table.appendChild(projectInfoHeader)
-        table.appendChild(projectInfoContent)
-        projectInfoElement.appendChild(table)
-    
         return projectInfoElement
     }
 }
