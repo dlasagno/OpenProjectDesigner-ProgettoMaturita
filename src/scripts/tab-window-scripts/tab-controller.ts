@@ -72,7 +72,10 @@ export class TabController {
     TabWindowRenderer.updateView(this.tabs[this._currentTab].view(this))
   }
   updatePropertiesPanel() {
-    TabWindowRenderer.updatePropertiesPanel(this._selectedTaskId, this, ['title', 'description', 'start_date', 'end_date', 'progress', 'cost'])
+    if(this.tasks.getNodeById(this._selectedTaskId).children.length > 0)
+      TabWindowRenderer.updatePropertiesPanel(this._selectedTaskId, this, ['title', 'description', 'start_date', 'end_date', 'progress', 'cost'], true)
+    else
+      TabWindowRenderer.updatePropertiesPanel(this._selectedTaskId, this, ['title', 'description', 'start_date', 'end_date', 'progress', 'cost'], false)
   }
 
   cascadeEffect(taskId: string){

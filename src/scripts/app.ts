@@ -149,7 +149,8 @@ const sideMenuController = new SideMenuController([
         body: modalBody
       })
     }
-  },{
+  },
+  {
     name: 'Nuovo',
     action(){
       const modalHeader = document.createElement('span')
