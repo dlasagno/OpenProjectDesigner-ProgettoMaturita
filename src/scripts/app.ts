@@ -97,7 +97,7 @@ tasks.getNodeById('1.1').appendChildren([
 
 //Management of the files
 //FileManager.toFile('src/data/prova.json', tasks)
-const tasksFromFile: Tree<Task> = FileManager.fromFile('src/data/prova.json')
+let tasksFromFile: Tree<Task> = FileManager.fromFile('src/data/prova.json')
 
 //Create a modal for testing
 const modalController = new ModalController()
@@ -106,6 +106,9 @@ const modalBody = document.createElement('div')
 FileManager.filesFromFolder('src/data').forEach(file => {
   const fileDiv = document.createElement('div')
         fileDiv.textContent = file.split('.')[0]
+        fileDiv.addEventListener('click', () => {
+          tasksFromFile = FileManager.fromFile(`src/data/${file}`)
+        })
   modalBody.appendChild(fileDiv)
 })
 
