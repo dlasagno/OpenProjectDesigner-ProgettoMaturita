@@ -154,37 +154,49 @@ const sideMenuController = new SideMenuController([
     name: 'Nuovo',
     action(){
       const modalHeader = document.createElement('span')
-            modalHeader.textContent = 'Insert the name of the project' 
-      const modalBody = document.createElement('p') 
-            modalBody.textContent = 'Project: ' 
+        modalHeader.textContent = 'Insert the name of the project'
+
       const inputText = document.createElement('input') 
-            inputText.setAttribute('type', 'text')
+        inputText.setAttribute('type', 'text')
+        inputText.required = true
+        inputText.addEventListener('keydown', event => {
+          if(event.key === 'Enter')
+            createProject()
+        })
+
+      const modalBody = document.createElement('p') 
+        modalBody.textContent = 'Project: ' 
+        modalBody.appendChild(inputText)
+        
       const modalFooter = document.createElement('button')
-            modalFooter.classList.add('button')
-            modalFooter.textContent = 'New' 
-            modalFooter.addEventListener('click', () => { 
-              FileManager.toFile(`src/data/${inputText.value}.json`, new Tree({ 
-                                                            title: inputText.value, 
-                                                            description: '', 
-                                                            collapsed: false, 
-                                                            start_date: new Date('2018-01-01'), 
-                                                            end_date: new Date('2018-01-03'), 
-                                                            progress: 0, 
-                                                            cost: 0 
-                                                          })) 
-              currentFile = `src/data/${inputText.value}.json` 
-              tabController.tasks = FileManager.fromFile(currentFile) 
-              tabController.update() 
-              modalController.closeModal()
-            }) 
+        modalFooter.classList.add('button')
+        modalFooter.textContent = 'New' 
+        modalFooter.addEventListener('click', createProject) 
       
-      modalBody.appendChild(inputText)
       modalController.createModal({ 
         header: modalHeader, 
         body: modalBody,
         footer: modalFooter
-        }) 
+      })
+
+      function createProject(){
+        if(inputText.value){
+          FileManager.toFile(`src/data/${inputText.value}.json`, new Tree({ 
+            title: inputText.value, 
+            description: '', 
+            collapsed: false, 
+            start_date: new Date('2018-01-01'), 
+            end_date: new Date('2018-01-03'), 
+            progress: 0, 
+            cost: 0 
+          })) 
+          currentFile = `src/data/${inputText.value}.json` 
+          tabController.tasks = FileManager.fromFile(currentFile) 
+          tabController.update() 
+          modalController.closeModal()
+        }
       }
+    }
   }
 ])
 
