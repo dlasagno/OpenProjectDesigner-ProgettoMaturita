@@ -5,7 +5,8 @@
   "description": "Software for the creation of WBS, GANTT, ...",
   "main": "src/main.ts",
   "scripts": {
-    "start": "npm-run-all --parallel --race dev electron:dev",
+    "start": "npm run start:prod",
+    "start:dev": "npm-run-all --parallel --race dev electron:dev",
     "start:prod": "npm run prod && npm run electron:prod",
     "dev": "webpack-dev-server --mode=development",
     "prod": "webpack --mode=production",
