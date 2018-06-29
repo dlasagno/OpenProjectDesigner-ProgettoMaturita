@@ -8,7 +8,11 @@ export const projectInfoTab: Tab = {
     icon: 'fa-info-circle',
     menuItems: [],
     view(tabController: TabController): Element {
-
+        //Masks
+        const propertiesMask = ['title', 'description', 'start_date', 'end_date', 'progress', 'cost']
+        const disabledPropertiesMask = ['start_date', 'end_date', 'progress', 'cost']
+        
+        //Function to render properties of the project
         function renderProperty(propertyName: string, propertyValue: string): HTMLDivElement {
             //create a property to append to the properties list
             const propertyElement = document.createElement('div')
@@ -26,6 +30,8 @@ export const projectInfoTab: Tab = {
                 const inputProperty = document.createElement('input')
                 inputProperty.setAttribute('type', 'text')
                 inputProperty.setAttribute('value', propertyValue)
+                if(tabController.tasks.root.children.length && disabledPropertiesMask.includes(propertyName))
+                    inputProperty.disabled = true
                 inputProperty.addEventListener('keydown', event => {
                     if (event.key === "Enter") {
                         const value = (event.target as HTMLInputElement).value
@@ -39,7 +45,7 @@ export const projectInfoTab: Tab = {
             //Append all to the properties list
             return propertyElement
         }
-        
+
         const projectInfoElement = document.createElement('div')
             projectInfoElement.id = 'project-info-view'
         const propertyListElement = document.createElement('div')
@@ -47,7 +53,7 @@ export const projectInfoTab: Tab = {
         projectInfoElement.appendChild(propertyListElement)
 
         for(const propertyName of Object.keys(tabController.tasks.root.data)) {
-            if(propertyName == 'collapsed')
+            if(!propertiesMask.includes(propertyName))
                 continue
             propertyListElement.appendChild(renderProperty(
                 propertyName,
