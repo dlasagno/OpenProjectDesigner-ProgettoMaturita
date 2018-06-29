@@ -27,14 +27,17 @@
         text-align: center
       
     tr
+      &:nth-child(3)
+        font-weight: bold
+        
+      &:nth-child(even)
+        background-color: whitesmoke
+
       > .day-cell
         border-left: 1px solid darkgrey
 
         ~ .day-cell
           border-left: none 
-    
-      &:nth-child(even)
-        background-color: whitesmoke
 
     .day-cell
       box-sizing: border-box
