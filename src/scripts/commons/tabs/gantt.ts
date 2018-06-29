@@ -18,9 +18,11 @@ export const ganttTab: Tab = {
         <td><progress max="100" value="${task.progress}"></td>
         <td class="cost">${task.cost == undefined ? '' : task.cost}</td>
       `
-      const endDate = new Date(tabController.tasks.root.data.end_date)
-      endDate.setMonth(endDate.getMonth() + 1)
-      endDate.setDate(1)
+      const endDate = new Date(
+        tabController.tasks.root.data.end_date.getFullYear(),
+        tabController.tasks.root.data.end_date.getMonth() + 1,
+        1
+      )
       const date = new Date(tabController.tasks.root.data.start_date)
       date.setDate(1)
       while (date.getTime() < endDate.getTime()){
@@ -63,7 +65,7 @@ export const ganttTab: Tab = {
     date.setDate(1)
     while (date.getTime() < tabController.tasks.root.data.end_date.getTime()){
       const monthCell: Element = document.createElement('th')
-        monthCell.innerHTML = date.toUTCString().slice(7, 16)
+        monthCell.innerHTML = date.toLocaleDateString().split('/').slice(1).join('-')
 
       const nextMonth = new Date(date)
         nextMonth.setMonth(date.getMonth() + 1)
