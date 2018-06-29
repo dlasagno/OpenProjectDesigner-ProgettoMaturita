@@ -63,14 +63,14 @@ export const ganttTab: Tab = {
     date.setDate(1)
     while (date.getTime() < tabController.tasks.root.data.end_date.getTime()){
       const monthCell: Element = document.createElement('th')
-      monthCell.innerHTML = date.toISOString().slice(0, 7)
+        monthCell.innerHTML = date.toUTCString().slice(7, 16)
 
       const nextMonth = new Date(date)
-      nextMonth.setMonth(date.getMonth() + 1)
+        nextMonth.setMonth(date.getMonth() + 1)
       let daysCounter: number = 0
       while (date.getTime() < nextMonth.getTime()) {
         const dayCell: Element = document.createElement('th')
-        dayCell.innerHTML = date.getDate().toString()
+          dayCell.innerHTML = date.getDate().toString()
 
         ganttDaysRow.appendChild(dayCell)
         date.setDate(date.getDate() + 1)
