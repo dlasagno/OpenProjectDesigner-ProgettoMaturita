@@ -13,11 +13,28 @@
         background-color: darkgrey
     
     td
+      position: relative
       padding: 0.5em
-      border-right: 1px solid gainsboro
+      white-space: nowrap
+      vertical-align: middle
+      
+      &:first-child
+        border-right: 1px solid darkgrey
+      
+      &.date
+        text-align: right 
+      &.cost
+        text-align: center
+      
+    tr
+      > .day-cell
+        border-left: 1px solid darkgrey
+
+        ~ .day-cell
+          border-left: none 
     
-    tr:not(:first-child)
-      border-bottom: 1px solid gainsboro
+      &:nth-child(even)
+        background-color: whitesmoke
 
     .day-cell
       box-sizing: border-box

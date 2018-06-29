@@ -3,9 +3,14 @@ progress
   appearance: none
   
   &::-webkit-progress-bar
-    background-color: gainsboro
+    position: absolute
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 0.75em
     border-radius: 1em
+    background-color: gainsboro
   
   &::-webkit-progress-value
-    background-color: skyblue
     border-radius: 1em
+    background-color: skyblue

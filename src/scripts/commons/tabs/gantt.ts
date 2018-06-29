@@ -13,10 +13,10 @@ export const ganttTab: Tab = {
       taskRow.innerHTML = `
         <td>${taskId}</td>
         <td>${(taskId.length > 1 ? ('&nbsp;' as string).repeat(taskId.split('.').length*2) : '') + task.title}</td>
-        <td>${task.start_date.toLocaleDateString()}</td>
-        <td>${task.end_date.toLocaleDateString()}</td>
+        <td class="date">${task.start_date.toLocaleDateString()}</td>
+        <td class="date">${task.end_date.toLocaleDateString()}</td>
         <td><progress max="100" value="${task.progress}"></td>
-        <td>${task.cost == undefined ? '' : task.cost}</td>
+        <td class="cost">${task.cost == undefined ? '' : task.cost}</td>
       `
       const endDate = new Date(tabController.tasks.root.data.end_date)
       endDate.setMonth(endDate.getMonth() + 1)
