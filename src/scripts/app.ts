@@ -106,7 +106,7 @@ const modalController = new ModalController()
 //Load the side menu
 const sideMenuController = new SideMenuController([
   {
-    name: 'Apri',
+    name: 'Open project',
     action() {
       const modalHeader = document.createElement('span')
         modalHeader.textContent = 'Choose the project to open'
@@ -134,7 +134,7 @@ const sideMenuController = new SideMenuController([
     }
   },
   {
-    name: 'Salva',
+    name: 'Save project',
     action() {
       FileManager.toFile(currentFile, tabController.tasks)
       
@@ -151,7 +151,7 @@ const sideMenuController = new SideMenuController([
     }
   },
   {
-    name: 'Nuovo',
+    name: 'New project',
     action(){
       const modalHeader = document.createElement('span')
         modalHeader.textContent = 'Insert the name of the project'
