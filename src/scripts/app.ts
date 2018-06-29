@@ -165,7 +165,7 @@ const sideMenuController = new SideMenuController([
         })
 
       const modalBody = document.createElement('p') 
-        modalBody.textContent = 'Project: ' 
+        modalBody.textContent = 'Project name: ' 
         modalBody.appendChild(inputText)
         
       const modalFooter = document.createElement('button')
