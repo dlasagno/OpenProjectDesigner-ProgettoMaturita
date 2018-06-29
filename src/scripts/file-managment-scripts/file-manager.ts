@@ -25,7 +25,7 @@ export class FileManager {
     })
 
     //Generate the task's tree
-    return fileTasks.slice(1, -1).reduce((tasks, {data: task, id}) => {
+    return fileTasks.slice(1).reduce((tasks, {data: task, id}) => {
       tasks.getNodeById(id.split('.').slice(0, -1).join('.')).appendChild(task)
       return tasks
     }, new Tree(fileTasks[0].data))
