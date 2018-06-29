@@ -56,7 +56,12 @@ export class TabWindowRenderer {
     }
   }
 
-  static updatePropertiesPanel(taskId: string, tabController: TabController, propertiesMask: string[] = [], disabledMask: boolean): void {
+  static updatePropertiesPanel(
+    taskId: string,
+    tabController: TabController,
+    propertiesMask: string[] = [],
+    disabledPropertiesMask: string[] = []
+  ): void {
     //Create a list of properties of the task
     const task: Task = tabController.tasks.getNodeById(taskId).data
     const properties: Property[] = []
@@ -131,18 +136,8 @@ export class TabWindowRenderer {
         const inputProperty = document.createElement('input')
           inputProperty.setAttribute('type', 'text')
           inputProperty.setAttribute('value', property.value.task[property.value.key])
-
-          if(disabledMask){
-            if(property.name == 'start_date')
-              inputProperty.setAttribute('disabled', '')
-            if(property.name == 'end_date')
-              inputProperty.setAttribute('disabled', '')
-            if(property.name == 'progress')
-              inputProperty.setAttribute('disabled', '')
-            if(property.name == 'cost')
-              inputProperty.setAttribute('disabled', '')
-          }
-          
+          if(disabledPropertiesMask.includes(property.name))
+            inputProperty.setAttribute('disabled', '')
           inputProperty.addEventListener('keydown', event => {
             if (event.key === "Enter") {
               const value = (event.target as HTMLInputElement).value
