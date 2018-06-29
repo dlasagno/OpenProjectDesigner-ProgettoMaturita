@@ -1,2 +1,12 @@
-# ProgettoEsame
-Per il progetto dell'esame abbiamo deciso di realizzare un software per la gestione di un progetto: il programma permettera di gestire task e di creare WBS, GANTT, ...
+# Open Project Designer
+Open Project Designer is an open source software for the creation and the management of projects. The
+software will give to the user the ability to make WBSs and GANTTs of their projects.
+
+# Installation
+To install the software you have to install node.js, then run the following command:
+`$ npm install`
+
+# Run the program
+To run the program you have to write this command:
+`$ npm start`
+Then enjoy the Open Project Designer
