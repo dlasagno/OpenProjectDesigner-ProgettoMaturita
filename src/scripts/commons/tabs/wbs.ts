@@ -10,7 +10,7 @@ export const wbsTab: Tab = {
   view(tabController: TabController): Element {
     const xOffset: number = 100
     const yOffset: number = 50
-    const rectWidth: number = tabController.tasks.reduce((max, {data:{title:{length:chars}}}) => chars > max ? chars : max, 0) * 8
+    const rectWidth: number = tabController.tasks.reduce((max, {data:{title:{length:chars}}}) => chars > max ? chars : max, 0) * 10
     const rectHeight: number = 50
     const rectSpacing: number = 30
     const fontSize: number = 16
