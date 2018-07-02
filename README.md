@@ -3,7 +3,7 @@ Open Project Designer is an open source software for the creation and the manage
 software will give to the user the ability to make WBSs and GANTTs of their projects.
 
 # Installation
-To install the software you have to install node.js, then run the following command:
+To install the software you have to install node.js, clone the repository from Github and then run the following command:
 
 `$ npm install`
 
