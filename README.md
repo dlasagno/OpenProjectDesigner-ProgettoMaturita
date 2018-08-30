@@ -1,4 +1,7 @@
 # Open Project Designer
+![Open Project Designer](assets/preview/OPD1.png)
+
+# Descrizione
 Per il progetto dell’esame abbiamo pensato a un software open source ispirato a Plan Hammer, dove si potranno creare dei progetti, per poi gestirli. Il software darà all’utente agli utenti la possibilità di realizzare WBS e GANTT. Il nostro obiettivo è quello di renderlo semplice da usare, in modo che tutti possano usufruirne.
 
 # Installazione
@@ -36,4 +39,5 @@ I dati sono salvati in dei file json, in modo che siano facili da accedere, in q
 
 # Fatto da
 Razvan Salaru
+
 Daniele Lasagno
