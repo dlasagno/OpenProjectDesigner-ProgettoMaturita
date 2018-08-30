@@ -19,12 +19,19 @@ I dati sono salvati in dei file json, in modo che siano facili da accedere, in q
 
 # Riferimenti
 [PlanHammer](https://planhammer.io/)
+
 [Electron.js](https://electronjs.org/)
+
 [Node.js](https://nodejs.org/it/)
+
 [Github](https://github.com/)
+
 [Stylus](https://stylus-lang.com/)
+
 [Jade](http://jade-lang.com/)
+
 [Typescript](https://www.typescriptlang.org/)
+
 [Raphael](http://dmitrybaranovskiy.github.io/raphael/)
 
 # Fatto da
