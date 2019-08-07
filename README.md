@@ -2,7 +2,7 @@
 ![Open Project Designer](https://github.com/dlasagno/ProgettoEsame/blob/master/assets/Preview/OPD1.PNG)
 
 # Descrizione
-Per il progetto dell’esame abbiamo pensato a un software open source ispirato a Plan Hammer, dove si potranno creare dei progetti, per poi gestirli. Il software darà all’utente agli utenti la possibilità di realizzare WBS e GANTT. Il nostro obiettivo è quello di renderlo semplice da usare, in modo che tutti possano usufruirne.
+Per il progetto dell’esame abbiamo pensato a un software open source ispirato a Plan Hammer, dove si potranno creare dei progetti, per poi gestirli. Il software darà agli utenti la possibilità di realizzare WBS e GANTT. Il nostro obiettivo è quello di renderlo semplice da usare, in modo che tutti possano usufruirne.
 
 # Installazione
 Per installare il programma bisogna prima installare node.js, dopo bisogna clonare questo repository da Github ed inserire il seguente comando nella console:
